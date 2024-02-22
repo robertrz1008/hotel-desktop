@@ -1,0 +1,105 @@
+#root{
+    background-color: #e9ebf2;
+}
+.btn-add{
+    height: 36px;
+    width: 120px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    background-color: rgb(25, 122, 248);
+    cursor: pointer;
+}
+.btn-add:hover{
+    background-color: rgb(25, 110, 223);
+}
+/* los textfield */
+.input-con{
+    width: 40%;
+    height: 30px;
+    border: 2px solid rgb(179, 176, 176);
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.input-select{
+    border: 2px solid blue;
+}
+.input-root{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+}
+
+/* input form */
+.inputform-cont{
+    width: 100%;
+}
+.texfiel-con{
+    width: 100%;
+}
+
+.inputForm-label{
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+.inputform-cont div{
+    width: 100%;
+    height: 40px;
+}
+tr{
+    transition: all .1s ease;
+}
+tr:hover{
+    background-color: rgb(224, 236, 244);
+}
+/* modal comfirm */
+.modal-con{
+    padding: 10px;
+}
+.btn-form-con{
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-form-add{
+    height: 35px;
+    width: 90px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(25, 122, 248);
+    cursor: pointer;
+}
+.btn-form-add:hover{
+    background-color: rgb(25, 110, 223);
+}
+.btn-form-upd{
+    height: 35px;
+    width: 90px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: green;
+    cursor: pointer;
+}
+.btn-form-upd:hover{
+    background-color: rgb(6, 89, 6);
+}
+.btn-form-res{
+    height: 35px;
+    width: 90px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: grey;
+    cursor: pointer;
+}
+.btn-form-res:hover{
+    background-color: rgb(62, 62, 62);
+}
