@@ -126,3 +126,14 @@ body{
 .root{
   background-color: #e4e9f7;
 }
+
+.tr-selected{
+  background-color: rgb(88, 116, 238);
+}
+/* off */
+
+.tr-off{
+  align-items: center;
+  margin-top: 10px;
+  cursor: pointer;
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hotel</title>
 
     <!-- icons -->
     <link rel="stylesheet" href="../lib/fontawesome-free-6.5.1-web/css/all.css">
@@ -20,7 +20,7 @@
     <nav class="sidebar">
         <div class="logo">
             <i class="fa fa-book" aria-hidden="true"></i>
-            <h2>Hotel</h2>
+            <h2>Sistema</h2>
         </div>
 
         <ul class="nav-list">
@@ -47,7 +47,7 @@
                     </div>
                     <!-- submenu -->
                     <ul class="sub-menu">
-                        <li><a href="#/loanRegister" class="link-name">Registrar servicios</a></li>
+                        <li><a href="#/loanRegister" class="link-name">Estadias</a></li>
                       </ul>
                 </li class="tr">
 
@@ -56,17 +56,32 @@
                     <div class="icon-link">
                         <div>
                             <i class="fa fa-table" aria-hidden="true"></i>
-                            <h4>Tablas</h4>
+                            <h4>Registros</h4>
                         </div>
                         <i class="fas fa-caret-down arrow"></i>
                     </div>
     
                     <ul class="sub-menu ">
                         <li><a href="#/clientsTable" class="link-name">Clientes</a></li>
-                        <li><a href="#/readerTable">Servicios</a></li>
-                        <li><a href="#/areaTable">Habitaciones</a></li>
+                        <li><a href="#/servicesTable">Servicios</a></li>
+                        <li><a href="#/roomsTable">Consumiciôn</a></li>
                       </ul>
                 </li>
+                <li class="tr">
+                    <div class="icon-link">
+                        <div>
+                            <i class="fa fa-database" aria-hidden="true"></i>    
+                            <h4>Listados</h4>
+                        </div>
+                        <i class="fas fa-caret-down arrow"></i>
+                    </div>
+                    <!-- submenu -->
+                    <ul class="sub-menu close">
+                        <li><a href="#/loanReport">Listado de clientes</a></li>
+                        <li><a href="#/debtsReport">Listado de consumiciôn</a></li>
+                        <li><a href="#/loanReport">Listado de habitaciones</a></li>
+                      </ul>
+                </li id="tr">
 
                 <!-- Informes -->
                 <li class="tr">
@@ -79,12 +94,8 @@
                     </div>
                     <!-- submenu -->
                     <ul class="sub-menu close">
-                        <li><a href="#/booksList" class="link-name">Listado de habitaciones</a></li>
-                        <li><a href="#/readerList">Listado de clientes</a></li>
-                        <li><a href="#/loanList">Listado de servicios</a></li>
-                        <li><a href="#/areaList">Listado de estadias</a></li>
-                        <li><a href="#/loanReport">Informe de servicios</a></li>
-                        <li><a href="#/debtsReport">Informe de deudas</a></li>
+                        <li><a href="#/loanReport">Informe de cobranzas</a></li>
+                        <li><a href="#/debtsReport">Informe de estadias</a></li>
                       </ul>
                 </li id="tr">
 
@@ -93,15 +104,22 @@
                     <div class="icon-link">
                         <div>
                             <i class="fa fa-cog" aria-hidden="true"></i>
-                            <h4>Utilidades</h4>
+                            <h4>Sistema</h4>
                         </div>
                         <i class="fas fa-caret-down arrow"></i>
                     </div>
 
                     <ul class="sub-menu">
-                        <li><a href="#/datesInit" class="link-name">Iniciacion de datos</a></li>
+                        <li><a href="#/datesInit" class="link-name">Inicializacion de DB</a></li>
                         <li><a href="#/settings" class="link-name">Configuraciones</a></li>
-                      </ul>
+                    </ul>
+                </li>
+
+                <li class="tr-off">
+                    <div>
+                        <i class="fa-solid fa-power-off"></i>
+                        <h4>Salir del sistema</h4>
+                    </div>
                 </li>
             </div>
         </ul>        

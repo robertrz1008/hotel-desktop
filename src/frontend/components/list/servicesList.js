@@ -1,19 +1,17 @@
 import { appendChildList, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
-import { updateMode } from "../../views/tables/clientTemplate.js"
-import clientForm from "../form/ClientForm.js"
+import { updateModeService } from "../../views/tables/servicesTemplate.js"
+import serviceForm from "../form/serviceForm.js"
 
-function clientsList(parent,body, list){
+function servicesList(parent,body, list){
 
     body.innerHTML = ""
 
     list.map((data, id) =>{
         const trB = document.createElement("tr")
         const td0 = setTd(id + 1)
-        const td = setTd(data.cedula)
-        const td2 = setTd(data.nombre)
-        const td3 = setTd(data.apellido)
-        const td4 = setTd(data.direccion)
-        const td5 = setTd(data.telefono)
+        const td = setTd(data.descripcion)
+        const td2 = setTd(data.monto+".00")
+        const td3 = setTd(data.observacion)
 
         const tdAction = document.createElement("td")
         const iconDel = setIcon(["fa-solid", "fa-trash", "btn-del", "table-icon"])
@@ -32,15 +30,13 @@ function clientsList(parent,body, list){
             // openCnfModal("Decea eliminar esta area?", data.codigo)
         })
         iconUpd.addEventListener("click", () => {
-            updateMode({
+            updateModeService({
                 id: data.id,
-                cedula: data.cedula,
-                nombre: data.nombre,
-                apellido: data.apellido,
-                direccion: data.direccion,
-                telefono: data.telefono
+                descripcion: data.descripcion,
+                monto: data.monto,
+                observacion: data.observacion
             })
-            openModalForm(clientForm("Modificar", "btn-form-upd"))
+            openModalForm(serviceForm("Modificar", "btn-form-upd"))
         })
 
         appendChildList(trB, [
@@ -48,8 +44,6 @@ function clientsList(parent,body, list){
             td,
             td2,
             td3,
-            td4,
-            td5,
             tdAction
         ])
         body.appendChild(trB)
@@ -59,4 +53,4 @@ function clientsList(parent,body, list){
 
 }
 
-export default clientsList
+export default servicesList

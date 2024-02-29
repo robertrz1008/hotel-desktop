@@ -1,13 +1,9 @@
 import { appendChildList, closeModalForm, setButton, setDiv, setForm, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
-// import areaContex from "../../contexts/areaContext.js";
-import {tfCedula, tfNombre, tfApellido, tfDireccion, tfTelefono, clearform} from "../../views/tables/clientTemplate.js"
+import {tfMonto, tfobservacion, tfDescripcion, clearServiceform} from "../../views/tables/servicesTemplate.js"
 
-
-function clientForm(btnText, btnClass) {
+function serviceForm(btnText, btnClass) {
     const form = setForm("area-form")
-    
-    const title = setTitleOrP("H2", "Datos del Cliente")
-    const line = setDiv("form-line")
+    const title = setTitleOrP("H2", "Datos del Servicio")
     const btnDiv = setDiv("btn-form-con")
     //botones
     const btnSubmit = document.createElement("button")
@@ -39,7 +35,7 @@ function clientForm(btnText, btnClass) {
     //     })
     // })
     btnReset.addEventListener("click", () => {
-        clearform()
+        clearServiceform()
         closeModalForm()
     })
 
@@ -49,12 +45,9 @@ function clientForm(btnText, btnClass) {
     ])
     appendChildList(form, [
         title, 
-        line,
-        tfCedula,
-        tfNombre,
-        tfApellido,
-        tfDireccion,
-        tfTelefono,
+        tfMonto,
+        tfobservacion,
+        tfDescripcion,
         btnDiv
     ])
     
@@ -62,4 +55,4 @@ function clientForm(btnText, btnClass) {
     return form
 }
 
-export default clientForm
+export default serviceForm

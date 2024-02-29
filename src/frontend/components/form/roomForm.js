@@ -1,13 +1,10 @@
 import { appendChildList, closeModalForm, setButton, setDiv, setForm, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
-// import areaContex from "../../contexts/areaContext.js";
-import {tfCedula, tfNombre, tfApellido, tfDireccion, tfTelefono, clearform} from "../../views/tables/clientTemplate.js"
+import { clearform } from "../../views/tables/clientTemplate.js";
+import {tfDescripcion, tfMontoDia, tfobservacion} from "../../views/tables/roomTemplate.js"
 
-
-function clientForm(btnText, btnClass) {
+function roomForm(btnText, btnClass) {
     const form = setForm("area-form")
-    
-    const title = setTitleOrP("H2", "Datos del Cliente")
-    const line = setDiv("form-line")
+    const title = setTitleOrP("H2", "Datos de la habitacion")
     const btnDiv = setDiv("btn-form-con")
     //botones
     const btnSubmit = document.createElement("button")
@@ -49,12 +46,9 @@ function clientForm(btnText, btnClass) {
     ])
     appendChildList(form, [
         title, 
-        line,
-        tfCedula,
-        tfNombre,
-        tfApellido,
-        tfDireccion,
-        tfTelefono,
+        tfMontoDia,
+        tfobservacion,
+        tfDescripcion,
         btnDiv
     ])
     
@@ -62,4 +56,4 @@ function clientForm(btnText, btnClass) {
     return form
 }
 
-export default clientForm
+export default roomForm

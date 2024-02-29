@@ -1,5 +1,22 @@
+import { closeModal, openModal } from "../frontend/Components/modal.js";
+
 export function navigation(hash) {
     window.location.hash = hash
+}
+
+export function itenSelect( selectRoute){
+    
+    let items = document.getElementsByClassName("tr")
+        let arr = [...items]
+        for (let i = 0; i < arr.length; i++) {
+        let titleItem = arr[i].firstElementChild.firstElementChild.lastElementChild.textContent
+        if(titleItem == selectRoute){
+            arr[i].classList.add("tr-selected")
+        }
+        if(titleItem != selectRoute && arr[i].classList.contains("tr-selected")){
+            arr[i].classList.remove("tr-selected")
+        }
+        }
 }
 
 export function setElementStyle(el, cssObj ) {
@@ -11,6 +28,13 @@ export function setElementStyle(el, cssObj ) {
 export function replaceClass(elem, strOwl, strNew){
     elem.classList.remove(strOwl);
     elem.classList.add(strNew);
+}
+
+export const openModalForm = (form) => {
+    openModal(form)
+}
+export const closeModalForm = () => {
+    closeModal()
 }
 
 // create element
@@ -139,7 +163,6 @@ export function setBoxLink(linkClass, iconClass, name, number){
 export function setInputForm(label, type, placeholder) {
     const title = setTitleOrP("h3", label)
     const div = setDiv("inputform-con")
-    const subDiv = setDiv("inputform-subcon")
     const inputDiv = setDiv("texfiel-con")
     const element = document.createElement("input")
 
@@ -148,6 +171,33 @@ export function setInputForm(label, type, placeholder) {
     element.type = type
     element.placeholder = placeholder
     element.className="input-root"
+
+    inputDiv.addEventListener("click", () =>{
+        inputDiv.classList.add("input-select")
+      })
+    window.addEventListener("click", (e) => {
+        const child = inputDiv.firstElementChild
+        if(e.target != child){
+            inputDiv.classList.remove("input-select")
+        }
+    })
+
+    inputDiv.appendChild(element)
+    appendChildList(div, [
+        title,
+        inputDiv
+    ])
+    return div
+}
+export function setTextArea(label){
+    const title = setTitleOrP("h3", label)
+    const div = setDiv("inputform-con")
+    const inputDiv = setDiv("txtArea-con")
+    const element = document.createElement("textarea")
+
+    inputDiv.classList.add("input-con")
+    title.className = "inputForm-label"
+    element.className="inputArea-root"
 
     inputDiv.addEventListener("click", () =>{
         inputDiv.classList.add("input-select")

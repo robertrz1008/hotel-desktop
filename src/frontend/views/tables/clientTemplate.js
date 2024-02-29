@@ -6,7 +6,7 @@ import clientsTable from "../../components/tables/clientTable.js"
 
 const div = setDiv("area-table-con")
 const titleDiv = setDiv("title-con")
-const title = setTitleOrP("h3", "Registro de Areas")
+const title = setTitleOrP("h3", "Registro de Clientes")
 
 //form inputs
 export const tfCedula = setInputForm("Cedula", "text", "agregar Descripcion")
@@ -87,14 +87,6 @@ export const createClient = async(client) =>{
     // clearform()
     closeModal()
 }
-
-export const openModalForm = (form) => {
-    openModal(form)
-}
-export const closeModalForm = () => {
-    closeModal()
-}
-
 
 function clientTableTemplate(){
     renderList()

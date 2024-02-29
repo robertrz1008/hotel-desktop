@@ -10,9 +10,9 @@ export default function homeTemplate(){
 
     const linksDiv = setDiv("links-con")
     const roadersLink = setBoxLink("roader-link box-link", ["fa-solid", "fa-user", "icon-link-box"], "Clientes", 30)
-    const booksLink = setBoxLink("books-link box-link", ["fa-solid", "fa-book-open", "icon-link-box"], "Estadias", 16)
-    const loanLink = setBoxLink("loan-link box-link", ["fa-solid", "fa-landmark", "icon-link-box"], "Servicios", 20)
-    const areaLink = setDiv("area-link box-link")
+    const booksLink = setBoxLink("books-link box-link", ["fa-solid", "fa-key", "icon-link-box"], "Habitaciones", 16)
+    const loanLink = setBoxLink("loan-link box-link", ["fa-solid", "fa-bell-concierge", "icon-link-box"], "Servicios", 20)
+    const areaLink = setBoxLink("area-link box-link", ["fa-solid", "fa-bed",  "icon-link-box"], "Estadia", 10)
 
     function events(){
 
@@ -25,7 +25,7 @@ export default function homeTemplate(){
             navigate(hash.booksTable)
         })
         roadersLink.addEventListener("click", () =>{
-            navigate(hash.readerTable)
+            navigate(hash.clientsTable)
         })
         booksLink.addEventListener("click", () =>{
             navigate(hash.booksTable)

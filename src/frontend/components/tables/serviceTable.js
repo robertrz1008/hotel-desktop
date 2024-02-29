@@ -1,13 +1,14 @@
 import { appendChildList, appendThList, openModalForm, setButton, setDiv, setIcon, setInput, setTd } from "../../../utils/functionsGlobal.js";
-import clientForm from "../form/ClientForm.js";
-import clientsList from "../list/clientList.js";
+import { servicesFound } from "../../views/tables/servicesTemplate.js";
+import serviceForm from "../form/serviceForm.js";
+import servicesList from "../list/servicesList.js";
 
-function  clientsTable(parent, clients){
+function  servicesTable(parent, services){
 
     const div = setDiv("table-con")
     const tableHead = setDiv("table-heade")
     const tfSeach = setInput("text", "Buscar...")
-    const btn = setButton("Nuevo Cliente", "btn-add", "fa-solid fa-plus")
+    const btn = setButton("Nuevo Servicio", "btn-add", "fa-solid fa-plus")
     const tbody = document.createElement("tbody")
 
     tfSeach.addEventListener("click", () =>{
@@ -21,7 +22,7 @@ function  clientsTable(parent, clients){
     })
 
     btn.addEventListener("click", () =>{
-        openModalForm(clientForm("Guardar", "btn-form-add"))
+        openModalForm(serviceForm("Guardar", "btn-form-add"))
     })
 
     // tabla
@@ -31,23 +32,23 @@ function  clientsTable(parent, clients){
     
 
     //cabezera de la tabla
-    appendThList(tr, ["#", "Cedula", "Nombre", "Apellido", "Direccion", "Telefono", "Accion"])
+    appendThList(tr, ["#", "descripcion", "Monto", "Observacion", "Accion"])
     tHead.appendChild(tr)
     table.appendChild(tHead)
     tr.className = "table-head"
 
-    clientsList(table, tbody, clients)
+    servicesList(table, tbody, services)
 
     async function renderList(filter){
         await renderListByFilter(filter, tbody)
         tbody.innerHTML = ""
-        clientsList(table, tbody, areasFound)
+        servicesList(table, tbody, servicesFound)
     }
-
-    tfSeach.addEventListener("keyup", () =>{
-        const filter = tfSeach.firstChild.value
-        renderList(filter)
-    })
+    //La bu
+    // tfSeach.addEventListener("keyup", () =>{
+    //     const filter = tfSeach.firstChild.value
+    //     renderList(filter)
+    // })
 
     appendChildList(tableHead, [
         tfSeach,
@@ -59,4 +60,4 @@ function  clientsTable(parent, clients){
     ])
     parent.appendChild(div)
 }
-export default clientsTable
+export default servicesTable

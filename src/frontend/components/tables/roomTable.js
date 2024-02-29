@@ -1,13 +1,14 @@
 import { appendChildList, appendThList, openModalForm, setButton, setDiv, setIcon, setInput, setTd } from "../../../utils/functionsGlobal.js";
-import clientForm from "../form/ClientForm.js";
-import clientsList from "../list/clientList.js";
+import { roomsFound } from "../../views/tables/roomTemplate.js";
+import roomForm from "../form/roomForm.js";
+import roomsList from "../list/roomsList.js";
 
-function  clientsTable(parent, clients){
+function  roomTable(parent, rooms){
 
     const div = setDiv("table-con")
     const tableHead = setDiv("table-heade")
     const tfSeach = setInput("text", "Buscar...")
-    const btn = setButton("Nuevo Cliente", "btn-add", "fa-solid fa-plus")
+    const btn = setButton("Nueva Habitacion", "btn-add", "fa-solid fa-plus")
     const tbody = document.createElement("tbody")
 
     tfSeach.addEventListener("click", () =>{
@@ -21,7 +22,7 @@ function  clientsTable(parent, clients){
     })
 
     btn.addEventListener("click", () =>{
-        openModalForm(clientForm("Guardar", "btn-form-add"))
+        openModalForm(roomForm("Guardar", "btn-form-add"))
     })
 
     // tabla
@@ -31,17 +32,17 @@ function  clientsTable(parent, clients){
     
 
     //cabezera de la tabla
-    appendThList(tr, ["#", "Cedula", "Nombre", "Apellido", "Direccion", "Telefono", "Accion"])
+    appendThList(tr, ["#", "Descripcion", "MontoDia", "Observacion", "Accion"])
     tHead.appendChild(tr)
     table.appendChild(tHead)
     tr.className = "table-head"
 
-    clientsList(table, tbody, clients)
+    roomsList(table, tbody, rooms)
 
     async function renderList(filter){
         await renderListByFilter(filter, tbody)
         tbody.innerHTML = ""
-        clientsList(table, tbody, areasFound)
+        clientsList(table, tbody, roomsFound)
     }
 
     tfSeach.addEventListener("keyup", () =>{
@@ -53,10 +54,11 @@ function  clientsTable(parent, clients){
         tfSeach,
         btn
     ])
+
     appendChildList(div, [
         tableHead,
         table,
     ])
     parent.appendChild(div)
 }
-export default clientsTable
+export default roomTable

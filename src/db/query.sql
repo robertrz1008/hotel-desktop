@@ -8,3 +8,11 @@ create table clientes(
     telefono VARCHAR(20) NOT NULL, 
     PRIMARY KEY(id)
 )
+
+create Table habitaciones(
+    id int AUTO_INCREMENT,
+    descripcion VARCHAR(50) not null,
+    montoDia DOUBLE not NULL,
+    observacion VARCHAR(35) NOT NULL,
+    PRIMARY KEY(id)
+)
