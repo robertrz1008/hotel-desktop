@@ -32,6 +32,12 @@
     border: none;
     outline: none;
 }
+.input-error{
+    border: 2px solid red;
+}
+.error-mesage{
+    color: red;
+}
 
 /* form */
 form h2{
@@ -50,6 +56,17 @@ form h2{
     width: 100%;
     margin-top: 5px;
 }
+
+.alert-con{
+    width: 92%;
+    margin: 10px;
+    padding: 5px;
+    background-color: rgb(250, 60, 60);
+    border-radius: 5px;
+    color: white;
+    font-family: sans-serif;
+}
+
 .texfiel-con{
     width: 100%;
 }
@@ -74,7 +91,6 @@ form h2{
 
 .inputform-cont h3{
     font-family: sans-serif;
-    font-weight: lighter;
     color: rgb(53, 52, 52);
 }
 

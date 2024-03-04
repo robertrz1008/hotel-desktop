@@ -1,7 +1,7 @@
 import {appendChildList, setDiv, setInputForm, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { openModal, closeModal } from "../../Components/modal.js"
 import { closeCnfModal } from "../../Components/comfirmModal.js"
-import { getClientsRequest,createClientRequest } from "../../api/clientRequest.js"
+import { getClientsRequest,createClientRequest, updateClientRequest, getClientByFilterRequest, verifyCedula, verifyTelephone } from "../../api/clientRequest.js"
 import clientsTable from "../../components/tables/clientTable.js"
 
 const div = setDiv("area-table-con")
@@ -18,7 +18,7 @@ export const tfTelefono = setInputForm("Telefono", "text", "agregar Observacion"
 export let clientsList = []
 export let clientsFound = []
 export let idClient;
-
+export let verificationMesages = []
 
 export function updateMode(client) {
     const {id, cedula, nombre, apellido, direccion, telefono} = client
@@ -48,23 +48,24 @@ export function clearform(){
 //     closeCnfModal()
 // }
 
-// export const getAreaByFilter = async (filter) => {
-//     areasFound = await getAreaByFilterRequest(filter)
-//     if(!areasFound) throw new Error("no se ha encontrado resultado")
+export const getClientByFilter = async (filter) => {
+    clientsFound = await getClientByFilterRequest(filter)
 
-//     return console.log(areasFound)
-// }
+    if(!clientsFound) throw new Error("no se ha encontrado resultado")
 
-// export const updateArea = async (area) => {
-//     const response = await updateAreaRequest(area)
+    console.log(clientsFound)
+}
 
-//     if(!response) throw new Error("Hubo un problema al realizar la peticion a la db")
+export const updateClient = async (client) => {
+    const response = await updateClientRequest(client)
 
-//     codigoArea = 0;
-//     renderList()
-//     clearform()
-//     closeModal()
-// }
+    if(!response) throw new Error("Hubo un problema al realizar la peticion a la db")
+
+    idClient = 0;
+    renderList()
+    clearform()
+    closeModal()
+}
 
 export const renderList = async () => {
     clientsList = await getClientsRequest()
@@ -84,8 +85,38 @@ export const createClient = async(client) =>{
     if(!response) throw new Error("Error 501")
 
     renderList()
-    // clearform()
+    clearform()
     closeModal()
+}
+
+export const verifyDates = async() => {
+    const hashCedula = await verifyCedula(tfCedula.lastElementChild.firstElementChild.value)
+    const hashTelephone = await verifyTelephone(tfTelefono.lastElementChild.firstElementChild.value)
+
+    verificationMesages = []
+
+    console.log("verificando")
+    if(hashCedula){ //SI LA CEDULA TIPEADA YA ESTA REGISTRADA
+        tfCedula.lastElementChild.classList.add("input-error")
+        verificationMesages.push("El Nº de cedula ya està registrada en otro cliente")
+    } else{
+        tfCedula.lastElementChild.classList.remove("input-error")
+    }
+    if(hashTelephone){ //SI EL TELEFONO TIPEADO YA ESTA REGISTRADO
+        tfTelefono.lastElementChild.classList.add("input-error")
+        verificationMesages.push("El Nº de telefono ya està registrado en otro cliente")
+    }else{
+        tfTelefono.lastElementChild.classList.remove("input-error")
+    }
+
+    let arr = [hashCedula, hashCedula]
+    console.log(arr)
+
+         if(arr.some((x) => x == true)) {
+            return false
+         }else{
+            return true
+         }
 }
 
 function clientTableTemplate(){

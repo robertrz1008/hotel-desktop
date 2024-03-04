@@ -19,6 +19,12 @@ export function itenSelect( selectRoute){
         }
 }
 
+export function removeErrorMessage(arr){
+    for (const i of arr) {
+        i.lastElementChild.classList.remove("input-error")
+    }
+}
+
 export function setElementStyle(el, cssObj ) {
     if(typeof cssObj !== "object")  throw new Error("es segundo parametro debe ser un objeto")
     for (const property in cssObj) {
@@ -215,4 +221,19 @@ export function setTextArea(label){
         inputDiv
     ])
     return div
+}
+
+export function setAlertMesages(parent, mesages){
+    if(mesages.length == 0){
+        parent.innerHTML = ""
+        parent.classList.remove("alert-con")
+        return
+    }
+    parent.innerHTML = ""
+    parent.classList.add("alert-con")
+    for (const i of mesages) {
+        const p = setTitleOrP("p", i)
+        parent.appendChild(p)
+    }
+    
 }

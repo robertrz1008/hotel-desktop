@@ -13,7 +13,7 @@ const getClients = async () =>{
 const createClient = async (client) =>{
   const {cedula, nombre, apellido, direccion, telefono} = client
   try{
-    const sqlQuery = "insert into clientes(cedula, nombre, apellido, direccion, telefono) values(?, ?)"
+    const sqlQuery = "insert into clientes(cedula, nombre, apellido, direccion, telefono) values(?, ?, ?, ?, ?)"
     await conectiondb.query(sqlQuery, [cedula, nombre, apellido, direccion, telefono])
     console.log("Se ha creado nueva Clientes")
     return true

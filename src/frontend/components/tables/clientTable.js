@@ -1,4 +1,5 @@
 import { appendChildList, appendThList, openModalForm, setButton, setDiv, setIcon, setInput, setTd } from "../../../utils/functionsGlobal.js";
+import { clientsFound, getClientByFilter } from "../../views/tables/clientTemplate.js";
 import clientForm from "../form/ClientForm.js";
 import clientsList from "../list/clientList.js";
 
@@ -39,9 +40,9 @@ function  clientsTable(parent, clients){
     clientsList(table, tbody, clients)
 
     async function renderList(filter){
-        await renderListByFilter(filter, tbody)
+        await getClientByFilter(filter)
         tbody.innerHTML = ""
-        clientsList(table, tbody, areasFound)
+        clientsList(table, tbody, clientsFound)
     }
 
     tfSeach.addEventListener("keyup", () =>{

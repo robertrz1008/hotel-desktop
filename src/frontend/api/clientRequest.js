@@ -8,3 +8,7 @@ export const createClientRequest = (clients) => window.ipcApi.createClient(clien
 export const deleteClientRequest = (id) => window.ipcApi.deleteClient(id)
 
 export const updateClientRequest = (client) => window.ipcApi.updateClient(client)
+
+export const verifyCedula = (cedula) => window.ipcApi.verifyCedula(cedula)
+
+export const verifyTelephone = (telefono) => window.ipcApi.verifyTelephone(telefono)
