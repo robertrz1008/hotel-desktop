@@ -22,7 +22,7 @@ const createService = async (service) =>{
   }
 }
 
-const deleteServices = async (id) =>{
+const deleteService = async (id) =>{
   try {
     const query= ` delete from servicios where id = ?`
     await conectiondb.query(query, [id])
@@ -37,7 +37,7 @@ const deleteServices = async (id) =>{
 const updateServices = async (clients) =>{
   const {id, descripcion, monto, observacion } = clients
   try {
-    const sqlQuery = `update servicios set descripcion = ?, monto = ?, observacion = ?, where id = ?`
+    const sqlQuery = `update servicios set descripcion = ?, monto = ?, observacion = ? where id = ?`
     await conectiondb.query(sqlQuery, [descripcion, monto, observacion, id])
     return true
   } catch (error) {
@@ -60,6 +60,6 @@ module.exports = {
   getServices,
   getServicesByFilter,
   createService,
-  deleteServices,
+  deleteService,
   updateServices
 }

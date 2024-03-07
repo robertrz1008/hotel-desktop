@@ -1,6 +1,6 @@
-import {appendChildList, setDiv, setInputForm, setTextArea, setTitleOrP, } from "../../../utils/functionsGlobal.js"
+import {appendChildList, closeConfirmModal, closeModalForm, setDiv, setInputForm, setTextArea, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { closeModal } from "../../Components/modal.js"
-import { getServicesRequest } from "../../api/serviceRequest.js"
+import { createServiceRequest, deleteServiceRequest, getServicesByFilterRequest, getServicesRequest, updateServiceRequest } from "../../api/serviceRequest.js"
 import servicesTable from "../../components/tables/serviceTable.js"
 
 const div = setDiv("area-table-con")
@@ -16,6 +16,23 @@ export let services = []
 export let servicesFound = []
 export let idService;
 
+const renderList = async () => {
+    services = await getServicesRequest()
+    console.log("listando servicios")
+    div.innerHTML = ""
+    titleDiv.appendChild(title)
+    appendChildList(div, [
+        titleDiv
+    ])
+    servicesTable(div, services)  
+}
+
+export const getServiceByFilter = async (filter) => {
+    servicesFound = await getServicesByFilterRequest(filter)
+
+    if(!servicesFound) throw new Error("501 error")
+}
+
 export function updateModeService(service) {
     const {id, descripcion, monto, observacion} = service
     
@@ -23,9 +40,6 @@ export function updateModeService(service) {
     tfMonto.lastElementChild.firstElementChild.value = monto
     tfDescripcion.lastElementChild.firstElementChild.value = descripcion
     tfobservacion.lastElementChild.firstElementChild.value = observacion
-    console.log(tfMonto.lastElementChild.firstElementChild.value)
-    console.log(tfDescripcion.lastElementChild.firstElementChild.value)
-    console.log(tfobservacion.lastElementChild.firstElementChild.value)
 }
 
 export function clearServiceform(){
@@ -33,26 +47,33 @@ export function clearServiceform(){
     tfDescripcion.lastElementChild.firstElementChild.value = ""
     tfobservacion.lastElementChild.firstElementChild.value = ""
 }
+export const updateService = async(service) => {
+    const response = await updateServiceRequest(service)
+    
+    if(!response) throw new Error("No se pudo actualizar")
 
-export const renderList = async () => {
-    services = await getServicesRequest()
-    div.innerHTML = ""
-    titleDiv.appendChild(title)
-    appendChildList(div, [
-        titleDiv
-    ])
-    servicesTable(div, services)  
-} 
-
+    idService = 0;
+    renderList()
+    clearServiceform()
+    closeModal()
+}
 
 export const createService = async(service) =>{
-    const response = await createClientRequest(service)
+    const response = await createServiceRequest(service)
 
     if(!response) throw new Error("Error 501")
 
     renderList()
-    // clearform()
+    clearServiceform()
     closeModal()
+}
+export const deleteService = async(id) => {
+    const response = await deleteServiceRequest(id)
+
+    if(!response) throw new Error("NO se pudo eliminar el servicio")
+
+    renderList()
+    closeConfirmModal()
 }
 
 function servicesTemplate(){

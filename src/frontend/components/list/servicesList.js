@@ -1,5 +1,6 @@
-import { appendChildList, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
+import { appendChildList, openConfirmModal, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
 import { updateModeService } from "../../views/tables/servicesTemplate.js"
+import deleteServiceC from "../confirmContext/deleteServiceContext.js"
 import serviceForm from "../form/serviceForm.js"
 
 function servicesList(parent,body, list){
@@ -27,7 +28,7 @@ function servicesList(parent,body, list){
         ])
 
         iconDel.addEventListener("click", () =>{
-            // openCnfModal("Decea eliminar esta area?", data.codigo)
+            openConfirmModal(deleteServiceC("Decea eliminar el servicio", data.id))
         })
         iconUpd.addEventListener("click", () => {
             updateModeService({

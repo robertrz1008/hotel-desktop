@@ -32,7 +32,7 @@ function  clientsTable(parent, clients){
     
 
     //cabezera de la tabla
-    appendThList(tr, ["#", "Cedula", "Nombre", "Apellido", "Direccion", "Telefono", "Accion"])
+    appendThList(tr, ["Id", "Cedula", "Nombre", "Apellido", "Direccion", "Telefono", "Accion"])
     tHead.appendChild(tr)
     table.appendChild(tHead)
     tr.className = "table-head"

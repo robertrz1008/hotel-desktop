@@ -7,6 +7,8 @@ export default function homeTemplate(){
     const div = setDiv("home-table-con")
     const titleDiv = setDiv("title-con")
     const title = setTitleOrP("h2", "Inicio del Sistema")
+    const name = setTitleOrP("P", "© 2024 | Roberto Ramirez")
+    name.className = "copy-text"
 
     const linksDiv = setDiv("links-con")
     const roadersLink = setBoxLink("roader-link box-link", ["fa-solid", "fa-user", "icon-link-box"], "Clientes", 30)
@@ -43,7 +45,8 @@ export default function homeTemplate(){
     ])
     appendChildList(div, [
         titleDiv,
-        linksDiv
+        linksDiv,
+        name
     ])
 
     return div

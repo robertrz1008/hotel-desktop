@@ -1,5 +1,6 @@
-import { appendChildList, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
+import { appendChildList, openConfirmModal, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
 import { updateMode } from "../../views/tables/clientTemplate.js"
+import deleteClient from "../confirmContext/deleteClient.js"
 import clientForm from "../form/ClientForm.js"
 
 function clientsList(parent,body, list){
@@ -8,7 +9,7 @@ function clientsList(parent,body, list){
 
     list.map((data, id) =>{
         const trB = document.createElement("tr")
-        const td0 = setTd(id + 1)
+        const td0 = setTd(data.id)
         const td = setTd(data.cedula)
         const td2 = setTd(data.nombre)
         const td3 = setTd(data.apellido)
@@ -29,7 +30,7 @@ function clientsList(parent,body, list){
         ])
 
         iconDel.addEventListener("click", () =>{
-            // openCnfModal("Decea eliminar esta area?", data.codigo)
+            openConfirmModal(deleteClient("Decea eliminar a este cliente", data.id))
         })
         iconUpd.addEventListener("click", () => {
             updateMode({

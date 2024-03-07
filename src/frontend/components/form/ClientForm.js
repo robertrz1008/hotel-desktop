@@ -1,6 +1,5 @@
 import { appendChildList, closeModalForm, removeErrorMessage, setAlertMesages, setButton, setDiv, setForm, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
 import validateClient from "../../schema/clientShema.js";
-// import areaContex from "../../contexts/areaContext.js";
 import {tfCedula, tfNombre, tfApellido, tfDireccion, tfTelefono, clearform, updateClient, createClient, idClient, verificationMesages, verifyDates} from "../../views/tables/clientTemplate.js"
 
 
@@ -52,6 +51,7 @@ function clientForm(btnText, btnClass) {
                 return setAlertMesages(alertDiv, verificationMesages)
 
             }else{
+                btnSubmit.textContent = "Guardando..."
                 createClient({
                     cedula: tfCedula.lastElementChild.firstElementChild.value,
                     nombre: tfNombre.lastElementChild.firstElementChild.value,
@@ -59,6 +59,7 @@ function clientForm(btnText, btnClass) {
                     direccion: tfDireccion.lastElementChild.firstElementChild.value,
                     telefono: tfTelefono.lastElementChild.firstElementChild.value 
                 })
+                
             }
         }, 200);
     }
@@ -88,7 +89,6 @@ function clientForm(btnText, btnClass) {
         alertDiv,
         btnDiv
     ])
-    
 
     return form
 }

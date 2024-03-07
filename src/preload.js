@@ -14,6 +14,10 @@ contextBridge.exposeInMainWorld('ipcApi', {
   verifyTelephone: (telefono) => ipcRenderer.invoke("verifyTelephone", telefono),
 
   getServices: () => ipcRenderer.invoke("getServices"),
+  getServicesbyFilter: (filter) => ipcRenderer.invoke("getServicesByFilter", filter),
+  createService: (service) => ipcRenderer.invoke("createService", service),
+  deleteService: (id) => ipcRenderer.invoke("deleteService", id),
+  updateService: (service) => ipcRenderer.invoke("updateService", service),
 
   getRooms: () => ipcRenderer.invoke("getRooms"),
 })

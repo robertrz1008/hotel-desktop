@@ -1,3 +1,4 @@
+import { closeCnfModal, openCnfModal } from "../frontend/Components/comfirmModal.js";
 import { closeModal, openModal } from "../frontend/Components/modal.js";
 
 export function navigation(hash) {
@@ -35,12 +36,18 @@ export function replaceClass(elem, strOwl, strNew){
     elem.classList.remove(strOwl);
     elem.classList.add(strNew);
 }
-
+//modals
 export const openModalForm = (form) => {
     openModal(form)
 }
 export const closeModalForm = () => {
     closeModal()
+}
+export const openConfirmModal = (context) => {
+    openCnfModal(context)
+}
+export const closeConfirmModal = () =>{
+    closeCnfModal()
 }
 
 // create element

@@ -19,6 +19,11 @@ app.whenReady().then(() => {
   ipcMain.handle("verifyTelephone", (event, telefono) => verifyController.isTelephone(telefono))
 
   ipcMain.handle("getServices", () => serviceController.getServices() )
+  ipcMain.handle("createService", (event,service) => serviceController.createService(service))
+  ipcMain.handle("deleteService", (event,id) => serviceController.deleteService(id))
+  ipcMain.handle("updateService", (event,service) => serviceController.updateServices(service))
+  ipcMain.handle("getServicesByFilter", (event,filter) => serviceController.getServicesByFilter(filter))
+
 
   ipcMain.handle("getRooms", () => roomsController.getRooms())
 

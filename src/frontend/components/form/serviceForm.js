@@ -1,10 +1,12 @@
 import { appendChildList, closeModalForm, setButton, setDiv, setForm, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
-import {tfMonto, tfobservacion, tfDescripcion, clearServiceform} from "../../views/tables/servicesTemplate.js"
+import validateService from "../../schema/serviceSchema.js";
+import {tfMonto, tfobservacion, tfDescripcion, clearServiceform, createService, updateService, idService} from "../../views/tables/servicesTemplate.js"
 
 function serviceForm(btnText, btnClass) {
     const form = setForm("area-form")
     const title = setTitleOrP("H2", "Datos del Servicio")
     const btnDiv = setDiv("btn-form-con")
+    const alertDiv = setDiv("")
     //botones
     const btnSubmit = document.createElement("button")
     btnSubmit.textContent = btnText
@@ -15,25 +17,38 @@ function serviceForm(btnText, btnClass) {
     btnReset.textContent = "Cancelar"
 
     form.innerHTML = ""
+
+    function handleSubmit(){
+        if(btnSubmit.textContent == "Modificar"){
+            updateService({
+                id: idService,
+                descripcion: tfDescripcion.lastElementChild.firstElementChild.value,
+                monto: tfMonto.lastElementChild.firstElementChild.value,
+                observacion: tfobservacion.lastElementChild.firstElementChild.value
+            })
+            btnSubmit.textContent = "Guardar"
+            return
+        }
+        alertDiv.innerHTML = ""
+        alertDiv.classList.remove("alert-con")
+        const validate = validateService(tfDescripcion, tfMonto, tfobservacion)
+
+        if(!validate) return
+
+        btnSubmit.textContent = "Guardando..."
+
+        createService({
+            descripcion: tfDescripcion.lastElementChild.firstElementChild.value,
+            monto: tfMonto.lastElementChild.firstElementChild.value,
+            observacion: tfobservacion.lastElementChild.firstElementChild.value
+        })
+    }
     
-    // form.addEventListener("submit", (e) =>{
-    //     e.preventDefault()
+    form.addEventListener("submit", (e) =>{
+        e.preventDefault()
+        handleSubmit()
+    })
 
-    //     if(btnSubmit.textContent == "Modificar"){
-    //         updateArea({
-    //             codigo: codigoArea,
-    //             descripcion: tfDescription.lastElementChild.firstElementChild.value,
-    //             observacion: tfObservacion.lastElementChild.firstElementChild.value
-    //         })
-    //         btnSubmit.textContent = "Guardar"
-    //         return
-    //     }
-
-    //     createArea({
-    //         descripcion: tfDescription.lastElementChild.firstElementChild.value,
-    //         observacion: tfObservacion.lastElementChild.firstElementChild.value
-    //     })
-    // })
     btnReset.addEventListener("click", () => {
         clearServiceform()
         closeModalForm()

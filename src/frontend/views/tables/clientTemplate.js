@@ -1,7 +1,7 @@
-import {appendChildList, setDiv, setInputForm, setTitleOrP, } from "../../../utils/functionsGlobal.js"
+import {appendChildList, closeConfirmModal, openConfirmModal, setDiv, setInputForm, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { openModal, closeModal } from "../../Components/modal.js"
 import { closeCnfModal } from "../../Components/comfirmModal.js"
-import { getClientsRequest,createClientRequest, updateClientRequest, getClientByFilterRequest, verifyCedula, verifyTelephone } from "../../api/clientRequest.js"
+import { getClientsRequest,createClientRequest, updateClientRequest, getClientByFilterRequest, verifyCedula, verifyTelephone, deleteClientRequest } from "../../api/clientRequest.js"
 import clientsTable from "../../components/tables/clientTable.js"
 
 const div = setDiv("area-table-con")
@@ -39,21 +39,20 @@ export function clearform(){
     tfTelefono.lastElementChild.firstElementChild.value = ""
 }
 
-// export const deleteArea = async (id) => {
-//     const response = await deleteAreaRequest(id)
+export const deleteClientById = async (id) => {
+    const response = await deleteClientRequest(id)
 
-//     if(!response) throw new Error("Hubo un problema al realizar la peticion a la db")
+    if(!response) throw new Error("Hubo un problema al realizar la peticion a la db")
 
-//     renderList()
-//     closeCnfModal()
-// }
+    renderList()
+    closeConfirmModal()
+}
 
 export const getClientByFilter = async (filter) => {
     clientsFound = await getClientByFilterRequest(filter)
 
     if(!clientsFound) throw new Error("no se ha encontrado resultado")
 
-    console.log(clientsFound)
 }
 
 export const updateClient = async (client) => {
@@ -69,7 +68,6 @@ export const updateClient = async (client) => {
 
 export const renderList = async () => {
     clientsList = await getClientsRequest()
-    console.log("renderizando areas")
     div.innerHTML = ""
     titleDiv.appendChild(title)
     appendChildList(div, [
@@ -109,7 +107,7 @@ export const verifyDates = async() => {
         tfTelefono.lastElementChild.classList.remove("input-error")
     }
 
-    let arr = [hashCedula, hashCedula]
+    let arr = [hashCedula, hashTelephone]
     console.log(arr)
 
          if(arr.some((x) => x == true)) {
