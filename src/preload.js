@@ -20,4 +20,8 @@ contextBridge.exposeInMainWorld('ipcApi', {
   updateService: (service) => ipcRenderer.invoke("updateService", service),
 
   getRooms: () => ipcRenderer.invoke("getRooms"),
+  getRoomsByFilter: (filter) => ipcRenderer.invoke("getRoomsByFilter", filter),
+  createRoom: (room) => ipcRenderer.invoke("createRoom", room),
+  deleteRoom: (id) => ipcRenderer.invoke("deleteRoom", id),
+  updateRoom: (room) => ipcRenderer.invoke("updateRoom", room)
 })

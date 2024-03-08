@@ -1,5 +1,5 @@
 import { appendChildList, appendThList, openModalForm, setButton, setDiv, setIcon, setInput, setTd } from "../../../utils/functionsGlobal.js";
-import { roomsFound } from "../../views/tables/roomTemplate.js";
+import { getRoomsByFilter, roomsFound } from "../../views/tables/roomTemplate.js";
 import roomForm from "../form/roomForm.js";
 import roomsList from "../list/roomsList.js";
 
@@ -10,6 +10,12 @@ function  roomTable(parent, rooms){
     const tfSeach = setInput("text", "Buscar...")
     const btn = setButton("Nueva Habitacion", "btn-add", "fa-solid fa-plus")
     const tbody = document.createElement("tbody")
+
+    async function renderList(filter){
+        await getRoomsByFilter(filter)
+        tbody.innerHTML = ""
+        servicesList(table, tbody, roomsFound) 
+    }
 
     tfSeach.addEventListener("click", () =>{
         tfSeach.classList.add("input-select")
@@ -23,6 +29,11 @@ function  roomTable(parent, rooms){
 
     btn.addEventListener("click", () =>{
         openModalForm(roomForm("Guardar", "btn-form-add"))
+    })
+
+    tfSeach.addEventListener("keyup", () =>{
+        const value = tfSeach.firstChild.value
+        renderList(value)
     })
 
     // tabla
@@ -40,9 +51,9 @@ function  roomTable(parent, rooms){
     roomsList(table, tbody, rooms)
 
     async function renderList(filter){
-        await renderListByFilter(filter, tbody)
+        await getRoomsByFilter(filter)
         tbody.innerHTML = ""
-        clientsList(table, tbody, roomsFound)
+        roomsList(table, tbody, roomsFound)
     }
 
     tfSeach.addEventListener("keyup", () =>{

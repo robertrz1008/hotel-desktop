@@ -1,6 +1,7 @@
 import { appendChildList, closeModalForm, setButton, setDiv, setForm, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
+import validateRoom from "../../schema/roomSchema.js";
 import { clearform } from "../../views/tables/clientTemplate.js";
-import {tfDescripcion, tfMontoDia, tfobservacion} from "../../views/tables/roomTemplate.js"
+import {createRoom, idRoom, tfDescripcion, tfMontoDia, tfobservacion, updateRoom} from "../../views/tables/roomTemplate.js"
 
 function roomForm(btnText, btnClass) {
     const form = setForm("area-form")
@@ -16,25 +17,33 @@ function roomForm(btnText, btnClass) {
     btnReset.textContent = "Cancelar"
 
     form.innerHTML = ""
+
+    function handleSubmit(){
+        if(btnSubmit.textContent == "Modificar"){
+            updateRoom({
+                id: idRoom,
+                descripcion:  tfDescripcion.lastElementChild.firstElementChild.value,
+                montoDia: tfMontoDia.lastElementChild.firstElementChild.value,
+                observacion: tfobservacion.lastElementChild.firstElementChild.value
+            })
+            return
+        }
+        const validate = validateRoom(tfDescripcion, tfMontoDia, tfobservacion)
+
+        if(!validate) return
+
+        btnSubmit.textContent = "Guardando..."
+        createRoom({
+            descripcion:  tfDescripcion.lastElementChild.firstElementChild.value,
+            montoDia: tfMontoDia.lastElementChild.firstElementChild.value,
+            observacion: tfobservacion.lastElementChild.firstElementChild.value
+        })
+    }
     
-    // form.addEventListener("submit", (e) =>{
-    //     e.preventDefault()
-
-    //     if(btnSubmit.textContent == "Modificar"){
-    //         updateArea({
-    //             codigo: codigoArea,
-    //             descripcion: tfDescription.lastElementChild.firstElementChild.value,
-    //             observacion: tfObservacion.lastElementChild.firstElementChild.value
-    //         })
-    //         btnSubmit.textContent = "Guardar"
-    //         return
-    //     }
-
-    //     createArea({
-    //         descripcion: tfDescription.lastElementChild.firstElementChild.value,
-    //         observacion: tfObservacion.lastElementChild.firstElementChild.value
-    //     })
-    // })
+    form.addEventListener("submit", (e) =>{
+        e.preventDefault()
+        handleSubmit()
+    })
     btnReset.addEventListener("click", () => {
         clearform()
         closeModalForm()

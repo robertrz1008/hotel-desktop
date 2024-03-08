@@ -26,7 +26,10 @@ app.whenReady().then(() => {
 
 
   ipcMain.handle("getRooms", () => roomsController.getRooms())
-
+  ipcMain.handle("getRoomsByFilter", (event, filter) => roomsController.getRoomsByFilter(filter))
+  ipcMain.handle("createRoom", (event, room) => roomsController.createRoom(room))
+  ipcMain.handle("deleteRoom", (event, id) => roomsController.deleteRoom(id))
+  ipcMain.handle("updateRoom", (event, room) => roomsController.updateRoom(room))
 
   
   app.on('activate', () => {

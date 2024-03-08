@@ -1,10 +1,10 @@
 
 export const getRoomsRequest = () => window.ipcApi.getRooms()
 
-// export const getServiceByFilterRequest = (filter) => window.ipcApi.getServiceByFilter(filter)
+export const getRoomsByFilterRequest = (filter) => window.ipcApi.getRoomsByFilter(filter)
 
-// export const createServiceRequest = (service) => window.ipcApi.createService(service)
+export const createRoomRequest = (room) => window.ipcApi.createRoom(room)
 
-// export const deleteServiceRequest = (id) => window.ipcApi.deleteService(id)
+export const deleteRoomRequest = (id) => window.ipcApi.deleteRoom(id)
 
-// export const updateServiceRequest = (service) => window.ipcApi.updateService(service)
+export const updateRoomRequest = (room) => window.ipcApi.updateRoom(room)

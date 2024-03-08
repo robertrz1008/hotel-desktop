@@ -34,11 +34,12 @@ const deleteRoom = async (id) =>{
   }
 }
 
-const updateRoom = async (clients) =>{
-  const {id, descripcion, montoDia, observacion } = clients
+const updateRoom = async (room) =>{
+  const {id, descripcion, montoDia, observacion } = room
   try {
-    const sqlQuery = `update habitaciones set descripcion = ?, montoDia = ?, observacion = ?, where id = ?`
+    const sqlQuery = ` update habitaciones set descripcion = ?, montoDia = ?, observacion = ? where id = ?`
     await conectiondb.query(sqlQuery, [descripcion, montoDia, observacion, id])
+    console.log("room updated")
     return true
   } catch (error) {
     console.log(error)

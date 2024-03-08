@@ -1,5 +1,6 @@
-import { appendChildList, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
+import { appendChildList, openConfirmModal, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
 import { updateModeRoom } from "../../views/tables/roomTemplate.js"
+import deleteRoomC from "../confirmContext/deleteRoomContext.js"
 import roomForm from "../form/roomForm.js"
 
 function roomsList(parent,body, list){
@@ -27,10 +28,11 @@ function roomsList(parent,body, list){
         ])
 
         iconDel.addEventListener("click", () =>{
-            // openCnfModal("Decea eliminar esta area?", data.codigo)
+            openConfirmModal(deleteRoomC("Esta seguro de eliminar", data.id))
         })
         iconUpd.addEventListener("click", () => {
             updateModeRoom({
+                id: data.id,
                 montoDia: data.montoDia,
                 descripcion: data.descripcion,
                 observacion: data.observacion

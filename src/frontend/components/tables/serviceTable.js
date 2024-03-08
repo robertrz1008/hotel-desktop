@@ -28,7 +28,7 @@ function  servicesTable(parent, services){
     async function renderList(filter){
         await getServiceByFilter(filter)
         tbody.innerHTML = ""
-        servicesList(table, tbody, servicesFound)
+        servicesList(table, tbody, servicesFound) 
     }
 
     tfSeach.addEventListener("click", () =>{
