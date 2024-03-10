@@ -3,7 +3,7 @@ import clientTableTemplate from "../frontend/views/tables/clientTemplate.js"
 import roomTemplate from "../frontend/views/tables/roomTemplate.js"
 import servicesTemplate from "../frontend/views/tables/servicesTemplate.js"
 import { hash, itensList } from "../utils/config.js"
-import { itenSelect } from "../utils/functionsGlobal.js"
+import { itemSelect } from "../utils/functionsGlobal.js"
 
 let appContent = document.getElementById("root")
 
@@ -43,7 +43,8 @@ function router(hash){
     const findtemplate = routes.filter((routeObj) => routeObj.route == hash)
     selectRoute = findtemplate[0].li
     appContent.appendChild(findtemplate[0].template)
-    // itenSelect(selectRoute)
+    console.log(selectRoute)
+    itemSelect(selectRoute)
 }
 
 export default router

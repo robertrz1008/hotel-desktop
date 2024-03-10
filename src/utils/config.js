@@ -3,7 +3,7 @@ export let selectRoute= ""
 export const itensList = {
     home: "Inicio",
     processes: "Proceso",
-    tables: "Tablas",
+    tables: "Registros",
     reports: "Informes",
     utils: "Utilidades"
 }

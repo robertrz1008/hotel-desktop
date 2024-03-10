@@ -7,7 +7,7 @@ export default function homeTemplate(){
     const div = setDiv("home-table-con")
     const titleDiv = setDiv("title-con")
     const title = setTitleOrP("h2", "Inicio del Sistema")
-    const name = setTitleOrP("P", "© 2024 | Roberto Ramirez")
+    const name = setTitleOrP("P", "© 2024 | Roberto Ramirez - Facitec")
     name.className = "copy-text"
 
     const linksDiv = setDiv("links-con")

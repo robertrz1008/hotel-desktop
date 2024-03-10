@@ -5,19 +5,24 @@ export function navigation(hash) {
     window.location.hash = hash
 }
 
-export function itenSelect( selectRoute){
+export function itemSelect( selectRoute){
     
     let items = document.getElementsByClassName("tr")
         let arr = [...items]
+
         for (let i = 0; i < arr.length; i++) {
-        let titleItem = arr[i].firstElementChild.firstElementChild.lastElementChild.textContent
-        if(titleItem == selectRoute){
-            arr[i].classList.add("tr-selected")
+            let titleItem = arr[i].firstElementChild.firstElementChild.lastElementChild.textContent
+            let conItem = arr[i].firstElementChild
+
+            if(titleItem == selectRoute){
+                conItem.classList.add("tr-selected")
+                console.log(titleItem)
+            }
+            if(titleItem != selectRoute && conItem.classList.contains("tr-selected")){
+                conItem.classList.remove("tr-selected")
+            }
         }
-        if(titleItem != selectRoute && arr[i].classList.contains("tr-selected")){
-            arr[i].classList.remove("tr-selected")
-        }
-        }
+
 }
 
 export function removeErrorMessage(arr){
