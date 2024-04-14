@@ -1,15 +1,14 @@
 import { appendChildList, appendThList, openModalForm, setButton, setDiv, setIcon, setInput, setTd } from "../../../utils/functionsGlobal.js";
-import { getServiceByFilter, servicesFound } from "../../views/tables/servicesTemplate.js";
-import serviceForm from "../form/serviceForm.js";
-import servicesList from "../list/servicesList.js";
+import { getProcessByFilterRequest } from "../../api/processRequest.js";
+import processList from "../list/processList.js";
 
-function  servicesTable(parent, services){
+function  processTable(parent, stays){
 
-    const div = setDiv("table-con")
+    const div = setDiv("stay-table-con")
     const tableHead = setDiv("table-heade")
     const tfSeach = setInput("text", "Buscar...")
-    const btn = setButton("Nuevo Servicio", "btn-add", "fa-solid fa-plus")
     const tbody = document.createElement("tbody")
+    let stayFound = []
 
     // tabla
     const table = document.createElement("table")
@@ -18,17 +17,17 @@ function  servicesTable(parent, services){
     
 
     //cabezera de la tabla
-    appendThList(tr, ["id", "descripcion", "Monto", "Observacion", "Accion"])
+    appendThList(tr, ["id", "cliente", "habitacion", "Total", "Det."])
     tHead.appendChild(tr)
     table.appendChild(tHead)
     tr.className = "table-head"
 
-    servicesList(table, tbody, services)
-
+    processList(table, tbody, stays) 
+    
     async function renderList(filter){
-        await getServiceByFilter(filter)
+        stayFound = await getProcessByFilterRequest(filter)
         tbody.innerHTML = ""
-        servicesList(table, tbody, servicesFound) 
+        processList(table, tbody, stayFound) 
     }
 
     tfSeach.addEventListener("click", () =>{
@@ -42,9 +41,6 @@ function  servicesTable(parent, services){
         }
     })
 
-    btn.addEventListener("click", () =>{
-        openModalForm(serviceForm("Guardar", "btn-form-add"))
-    })
 
     tfSeach.addEventListener("keyup", () =>{
         const value = tfSeach.firstChild.value
@@ -53,7 +49,6 @@ function  servicesTable(parent, services){
 
     appendChildList(tableHead, [
         tfSeach,
-        btn
     ])
     appendChildList(div, [
         tableHead,
@@ -61,4 +56,4 @@ function  servicesTable(parent, services){
     ])
     parent.appendChild(div)
 }
-export default servicesTable
+export default processTable

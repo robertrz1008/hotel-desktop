@@ -4,6 +4,7 @@ const clientController = require("./controller/clientController")
 const serviceController = require("./controller/serviceController")
 const roomsController = require("./controller/roomController")
 const verifyController = require("./controller/verifyController")
+const processController = require("./controller/processController")
 
 
 app.whenReady().then(() => {
@@ -24,14 +25,20 @@ app.whenReady().then(() => {
   ipcMain.handle("updateService", (event,service) => serviceController.updateServices(service))
   ipcMain.handle("getServicesByFilter", (event,filter) => serviceController.getServicesByFilter(filter))
 
-
   ipcMain.handle("getRooms", () => roomsController.getRooms())
   ipcMain.handle("getRoomsByFilter", (event, filter) => roomsController.getRoomsByFilter(filter))
   ipcMain.handle("createRoom", (event, room) => roomsController.createRoom(room))
   ipcMain.handle("deleteRoom", (event, id) => roomsController.deleteRoom(id))
   ipcMain.handle("updateRoom", (event, room) => roomsController.updateRoom(room))
 
-  
+  ipcMain.handle("createStay", (event, stay) => processController.createStay(stay))
+  ipcMain.handle("createDetail", (event, detail) => processController.createDetail(detail))
+  ipcMain.handle("getStays", () => processController.getStays())
+  ipcMain.handle("getDetails", () => processController.getDetails())
+  ipcMain.handle("getProcess", () => processController.getProcess())
+  ipcMain.handle("getProcessByFilter", (event, filter) => processController.getProcessByFilter(filter))
+  ipcMain.handle("createCredential", (event, crendetial) => processController.createCredential(crendetial))
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })

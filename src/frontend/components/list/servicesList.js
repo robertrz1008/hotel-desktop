@@ -9,9 +9,9 @@ function servicesList(parent,body, list){
 
     list.map((data, id) =>{
         const trB = document.createElement("tr")
-        const td0 = setTd(id + 1)
+        const td0 = setTd(data.id)
         const td = setTd(data.descripcion)
-        const td2 = setTd(data.monto+".00")
+        const td2 = setTd(data.monto)
         const td3 = setTd(data.observacion)
 
         const tdAction = document.createElement("td")

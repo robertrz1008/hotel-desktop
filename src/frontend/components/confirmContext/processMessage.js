@@ -1,38 +1,34 @@
 import { appendChildList, closeConfirmModal, setButton, setDiv, setIcon, setTitleOrP } from "../../../utils/functionsGlobal.js"
-import { deleteClientById } from "../../views/tables/clientTemplate.js"
 
-export default function deleteClient(msg, id){
-    const messaage = setTitleOrP("p", msg)
+function processMsg(msg){
+    const title = setTitleOrP("h2", "Error al crear la transaccion")
+    const messaage = setTitleOrP("h3", msg)
     const modalCon = setDiv("modalC-con")
     const btnDiv = setDiv("btn-form-con")
-    const btnReset = setButton("Cancelar", "btn-form-res") 
-    const btnAccept = setButton("Eliminar", "btn-form-add")
+    const btnReset = setButton("Cancelar", "btn-form-res")
+    const btnAccept = setButton("Aceptar", "btn-form-add")
     const alertIconDiv = setDiv("icon-alert-div")
     const alertIcon = setIcon(["fa-solid", "fa-exclamation", "alert-Icon"])
 
     //los botones
-    btnReset.addEventListener("click", () => {
-        closeConfirmModal()
-    })
     btnAccept.addEventListener("click", () => {
-        deleteClientById(id)
+        closeConfirmModal()
     })
 
     alertIconDiv.appendChild(alertIcon)
-
 
     appendChildList(btnDiv, [
         btnReset,
         btnAccept
     ])
-    appendChildList(alertIconDiv, [
-        alertIcon,
-    ])
     appendChildList(modalCon, [
         alertIconDiv,
+        title,
         messaage,
         btnDiv
     ])
 
     return modalCon
 }
+
+export default processMsg

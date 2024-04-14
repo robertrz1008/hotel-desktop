@@ -23,5 +23,13 @@ contextBridge.exposeInMainWorld('ipcApi', {
   getRoomsByFilter: (filter) => ipcRenderer.invoke("getRoomsByFilter", filter),
   createRoom: (room) => ipcRenderer.invoke("createRoom", room),
   deleteRoom: (id) => ipcRenderer.invoke("deleteRoom", id),
-  updateRoom: (room) => ipcRenderer.invoke("updateRoom", room)
+  updateRoom: (room) => ipcRenderer.invoke("updateRoom", room),
+
+  createStay: (stay) => ipcRenderer.invoke("createStay", stay),
+  createDetail: (detail) => ipcRenderer.invoke("createDetail", detail),
+  getStays: () => ipcRenderer.invoke("getStays"),
+  getDetails: () => ipcRenderer.invoke("getDetails"),
+  getProcess: () => ipcRenderer.invoke("getProcess"),
+  getProcessByFilter: (filter) => ipcRenderer.invoke("getProcessByFilter", filter),
+  createCredential: ( credential) =>  ipcRenderer.invoke("createCredential", credential),
 })

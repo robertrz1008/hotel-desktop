@@ -1,5 +1,4 @@
 import { hashTxt } from "../../utils/validator.js"
-import { verificationMesages, verifyDates } from "../views/tables/clientTemplate.js";
 
 function validateClient(cedula, nombre, apellido, direccion, telefono, ){
 
@@ -19,7 +18,6 @@ function validateClient(cedula, nombre, apellido, direccion, telefono, ){
     const callback = (x) => x == false
 
     if(items.some(callback)){
-        console.log("validacion teminada")
          return false
     }
 

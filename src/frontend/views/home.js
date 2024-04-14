@@ -13,8 +13,12 @@ export default function homeTemplate(){
     const linksDiv = setDiv("links-con")
     const roadersLink = setBoxLink("roader-link box-link", ["fa-solid", "fa-user", "icon-link-box"], "Clientes", 30)
     const booksLink = setBoxLink("books-link box-link", ["fa-solid", "fa-key", "icon-link-box"], "Habitaciones", 16)
-    const loanLink = setBoxLink("loan-link box-link", ["fa-solid", "fa-bell-concierge", "icon-link-box"], "Servicios", 20)
+    const servicesLink = setBoxLink("loan-link box-link", ["fa-solid", "fa-bell-concierge", "icon-link-box"], "Servicios", 20)
     const areaLink = setBoxLink("area-link box-link", ["fa-solid", "fa-bed",  "icon-link-box"], "Estadia", 10)
+
+    const appName = setTitleOrP("h2", "RoomsSys 1.1")
+    const devName = setTitleOrP("h3", "Desarrollador: Roberto Ramirez")
+    const appTextDiv = setDiv("app-text-con")
 
     function events(){
 
@@ -24,28 +28,34 @@ export default function homeTemplate(){
         }
 
         booksLink.addEventListener("click", () =>{
-            navigate(hash.booksTable)
+            navigate(hash.roomTable)
         })
         roadersLink.addEventListener("click", () =>{
             navigate(hash.clientsTable)
         })
-        booksLink.addEventListener("click", () =>{
-            navigate(hash.booksTable)
+        servicesLink.addEventListener("click", () =>{
+            navigate(hash.servicesTable)
         })
     }
 
     events()
 
+    appendChildList(appTextDiv, [
+        appName,
+        devName
+    ])
+
     titleDiv.appendChild(title)
     appendChildList(linksDiv, [
         roadersLink,
         booksLink,
-        loanLink,
+        servicesLink,
         areaLink,
     ])
     appendChildList(div, [
         titleDiv,
         linksDiv,
+        appTextDiv,
         name
     ])
 

@@ -179,7 +179,7 @@ export function setBoxLink(linkClass, iconClass, name, number){
 }
 
 export function setInputForm(label, type, placeholder) {
-    const title = setTitleOrP("h3", label)
+    const title = setTitleOrP("h4", label)
     const div = setDiv("inputform-con")
     const inputDiv = setDiv("texfiel-con")
     const element = document.createElement("input")
@@ -187,7 +187,6 @@ export function setInputForm(label, type, placeholder) {
     inputDiv.classList.add("input-con")
     title.className = "inputForm-label"
     element.type = type
-    element.placeholder = placeholder
     element.className="input-root"
 
     inputDiv.addEventListener("click", () =>{
@@ -208,7 +207,7 @@ export function setInputForm(label, type, placeholder) {
     return div
 }
 export function setTextArea(label){
-    const title = setTitleOrP("h3", label)
+    const title = setTitleOrP("h4", label)
     const div = setDiv("inputform-con")
     const inputDiv = setDiv("txtArea-con")
     const element = document.createElement("textarea")
@@ -248,4 +247,46 @@ export function setAlertMesages(parent, mesages){
         parent.appendChild(p)
     }
     
+}
+export function setInputSelect(items) {
+    const input = document.createElement("select")
+    input.className = "input-select-form"
+    for (const item of items) {
+        const option = document.createElement("option")
+        option.value = item.value
+        option.textContent = item.name
+        input.appendChild(option)
+    }
+    return input
+}
+export function setTogleButton(title){
+    const div = setDiv("checkbox-con")
+    const p = setTitleOrP("h4", title)
+    const input = document.createElement("input")
+    const label = document.createElement("label")
+
+    input.type = "checkbox"
+    input.id="check"
+    label.htmlFor = "check"
+    label.className = "button"
+
+    appendChildList(div, [
+        p,
+        input,
+        label
+    ])
+    return div
+}
+
+export function setDetailText(title, text){
+    const div = setDiv("detail-text-con")
+    const detailTitle = setTitleOrP("h3", title)
+    const detailText = setTitleOrP("h4", text)
+
+    appendChildList(div, [
+        detailTitle, 
+        detailText
+    ])
+
+    return div
 }

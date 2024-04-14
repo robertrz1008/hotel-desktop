@@ -19,7 +19,7 @@ function clientForm(btnText, btnClass) {
     btnReset.classList.add("btn-form-res")
     btnReset.textContent = "Cancelar"
 
-    form.innerHTML = ""
+    form.innerHTML = "" 
 
     async function handleSubmit(){
         if(btnSubmit.textContent == "Modificar"){
@@ -42,7 +42,7 @@ function clientForm(btnText, btnClass) {
         //si los campose estan vacios, se aborta el proceso
         if(!validate) return
 
-        // ser registraran la cedula y el telefono
+        // ser registraran la cedula y el telefono 
         const va = await verifyDates()   
 
         setTimeout(() => {

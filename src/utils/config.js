@@ -5,20 +5,21 @@ export const itensList = {
     processes: "Proceso",
     tables: "Registros",
     reports: "Informes",
-    utils: "Utilidades"
+    listed: "Listados",
+    sistem: "Systema"
 }
 
 export const hash = {
     home: "#/home",
-    loanRegister: "#/loanRegister",
+    stayProcess: "#/stayProcess",
 
     clientsTable: "#/clientsTable",
     servicesTable: "#/servicesTable",
     roomTable: "#/roomsTable",
 
-    booksList: "#/booksList",
-    readerList: "#/readerList",
-    loanList: "#/loanReport",
+    clientsList: "#/clientsListed",
+    roomsList: "#/roomsListed",
+    servicesList: "#/servicesListed",
     areaList: "#/areaList",
     loanReport: "#/loanReport",
     debtsReport: "#/debtsReport",
