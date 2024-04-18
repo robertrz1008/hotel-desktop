@@ -30,6 +30,7 @@ app.whenReady().then(() => {
   ipcMain.handle("createRoom", (event, room) => roomsController.createRoom(room))
   ipcMain.handle("deleteRoom", (event, id) => roomsController.deleteRoom(id))
   ipcMain.handle("updateRoom", (event, room) => roomsController.updateRoom(room))
+  ipcMain.handle("changeRoomState", (event, state) => roomsController.changeRoomState(state))
 
   ipcMain.handle("createStay", (event, stay) => processController.createStay(stay))
   ipcMain.handle("createDetail", (event, detail) => processController.createDetail(detail))

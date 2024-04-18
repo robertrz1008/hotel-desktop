@@ -73,4 +73,8 @@ on es.hab_id = hab.id;
 
 select * from detalles;
 
-select 
+
+alter table habitaciones add COLUMN estado INT DEFAULT 1;
+
+describe habitaciones
+

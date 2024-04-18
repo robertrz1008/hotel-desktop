@@ -8,4 +8,6 @@ export const getProcessRequest = () => window.ipcApi.getProcess()
 
 export const getProcessByFilterRequest = (filter) => window.ipcApi.getProcessByFilter(filter)
 
+export const updateRoomStateRequest = (state) => window.ipcApi.changeRoomState(state)
+
 export const createCredentialRequest = (crendential) => window.ipcApi.createCredential(crendential)

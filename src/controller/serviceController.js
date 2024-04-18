@@ -45,7 +45,6 @@ const updateServices = async (clients) =>{
     return false
   }
 }
-
 const getServicesByFilter = async (filter) =>{
   try {
     const sqlQuery = `select * from servicios where descripcion like "%${filter}%" or observacion like "%${filter}%"`

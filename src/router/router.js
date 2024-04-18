@@ -73,7 +73,6 @@ function router(hash){
     const findtemplate = routes.filter((routeObj) => routeObj.route == hash)
     selectRoute = findtemplate[0].li
     appContent.appendChild(findtemplate[0].template)
-    console.log(selectRoute)
     itemSelect(selectRoute)
 }
 

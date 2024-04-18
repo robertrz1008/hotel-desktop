@@ -270,23 +270,52 @@
   height: 70px;
   margin-top: 10px;
 }
+
+/* detalles del proceso por cliente */
 .process-detail-con{
-  width: 300px;
+  width: 600px;
   height: 510px;
+  display: flex;
+}
+.process-detail-section1{
+  width: 35%;
+  height: 100%;
+}
+.process-detail-section2{
+  width: 65%;
+  height: 100%;
+  margin-top: 30px;
+}
+.process-detail-section2 h3{
+  font-family: sans-serif;
+  color: rgb(44, 42, 42);
+}
+.sprocess-detail-services-table-con{
+  width: 100%;
+  height: 480px;
+  border: 1px solid black;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+.stay-table-div table{
+  position: relative;
+}
+.stay-table-div table thead{ 
+  position: sticky;
+  top: 0;
 }
 
 .detail-text-con{
   margin-top: 10px;
 }
-.detail-text-con h3{
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
+.detail-text-con-title{
+  font-family: sans-serif;
+  color: black;
 }
 
-.detail-text-con h4{
-  font-weight: lighter;
+.detail-text-con-p{
   margin-top: 3px;
-  color: rgb(51, 49, 49);
+  color: rgb(77, 74, 74);
 }
 
 .process-service-info-con{

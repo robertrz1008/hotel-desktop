@@ -24,6 +24,7 @@ contextBridge.exposeInMainWorld('ipcApi', {
   createRoom: (room) => ipcRenderer.invoke("createRoom", room),
   deleteRoom: (id) => ipcRenderer.invoke("deleteRoom", id),
   updateRoom: (room) => ipcRenderer.invoke("updateRoom", room),
+  changeRoomState: (state) => ipcRenderer.invoke("changeRoomState", state),
 
   createStay: (stay) => ipcRenderer.invoke("createStay", stay),
   createDetail: (detail) => ipcRenderer.invoke("createDetail", detail),

@@ -46,6 +46,17 @@ const updateRoom = async (room) =>{
     return false
   }
 }
+const changeRoomState = async(room) => {
+  const {id, state} = room
+  try {
+    const sqlQuery = `update habitaciones set estado = ? where id = ?`
+    await conectiondb.query(sqlQuery, [state, id])
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
 
 const getRoomsByFilter = async (filter) =>{
   try {
@@ -62,5 +73,6 @@ module.exports = {
   getRoomsByFilter,
   createRoom,
   deleteRoom,
-  updateRoom
+  updateRoom,
+  changeRoomState
 }

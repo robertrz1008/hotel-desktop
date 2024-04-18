@@ -4,7 +4,7 @@ import roomList from "../list/roomModalSearchList.js"
 
 function roomModalSearch({roomNameSelect}) {
     const div = setDiv("modal-search-con")
-    const title = setTitleOrP("h4", "seleccionar habitacion")
+    const title = setTitleOrP("h4", "Seleccionar habitaciones")
     const tfSearch = setInputForm("","text", "buscar...")
     const listCon = setDiv("list-con")
     const nameDiv = setDiv("name-con")
@@ -26,6 +26,7 @@ function roomModalSearch({roomNameSelect}) {
 
     const renderList = async (filter) =>{
         roomFound = await getRoomsByFilterRequest(filter)
+        roomFound = roomFound.filter(data => data.estado == 1)
         roomList({
             listCon, 
             roomFound,

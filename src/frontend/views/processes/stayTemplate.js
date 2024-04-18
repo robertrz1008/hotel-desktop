@@ -1,5 +1,5 @@
 import {appendChildList, openConfirmModal, setButton, setDiv, setInputForm, setInputSelect, setTextArea, setTitleOrP, setTogleButton, } from "../../../utils/functionsGlobal.js"
-import { createDetailRequest, createStayRequest, getProcessRequest} from "../../api/processRequest.js"
+import { createDetailRequest, createStayRequest, getProcessRequest, updateRoomStateRequest} from "../../api/processRequest.js"
 import processMsg from "../../components/confirmContext/processMessage.js"
 import detailForm from "../../components/form/detailForm.js"
 import stayForm from "../../components/form/stayForm.js"
@@ -7,6 +7,7 @@ import detailServicesList from "../../components/list/detailServiceList.js"
 import clientModalSearch from "../../components/modalSearch/clientModalSearch.js"
 import roomModalSearch from "../../components/modalSearch/roomModalSearch.js"
 import processTable from "../../components/tables/processTable.js"
+import { getRoomByState } from "../tables/roomTemplate.js"
 
 const div = setDiv("area-table-con")
 const titleDiv = setDiv("title-con")
@@ -139,6 +140,17 @@ async function createProcess(){
 
     if(detailServices.length == 0) return 
 
+    //cambiando el estado de la habitacion
+    let stateN;
+    if(inputSelect.value == 0) stateN = 3
+    if(inputSelect.value == 1) stateN = 2
+    await updateRoomStateRequest({
+        id: roomtSelectId,
+        state: stateN
+    })
+    getRoomByState()
+
+    //creaando los detalles de servicio
     for (const detail of detailServices) {
         const response = await createDetailRequest({
             estadia_id: stayId,

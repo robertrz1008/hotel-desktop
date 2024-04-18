@@ -43,7 +43,7 @@ function  roomTable(parent, rooms){
     
 
     //cabezera de la tabla
-    appendThList(tr, ["Id", "Descripcion", "MontoDia", "Observacion", "Accion"])
+    appendThList(tr, ["Id", "Descripcion", "MontoDia", "Observacion", "Estado", "Accion"])
     tHead.appendChild(tr)
     table.appendChild(tHead)
     tr.className = "table-head"

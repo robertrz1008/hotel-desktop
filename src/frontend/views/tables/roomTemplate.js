@@ -26,6 +26,9 @@ const renderList = async () => {
     ])
     roomTable(div, rooms)  
 } 
+export const getRoomByState = () =>{
+    renderList()
+}
 
 export function updateModeRoom(room) {
     const {id, descripcion, montoDia, observacion} = room

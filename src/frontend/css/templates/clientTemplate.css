@@ -94,6 +94,37 @@ th, td{
 /* form */
 .area-form{
     width: 400px;
-    padding-top: 10px;
+    padding: 10px;
     padding-bottom: 10px;
+}
+
+.service-state-1{
+    height: 25px;
+    width: 120px;
+    border-radius: 3px;
+    background-color: green;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.service-state-2{
+    height: 25px;
+    width: 120px;
+    border-radius: 3px;
+    background-color: rgb(209, 174, 17);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.service-state-3{
+    height: 25px;
+    width: 120px;
+    border-radius: 3px;
+    background-color: rgb(165, 22, 22);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

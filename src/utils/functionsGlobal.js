@@ -280,8 +280,10 @@ export function setTogleButton(title){
 
 export function setDetailText(title, text){
     const div = setDiv("detail-text-con")
-    const detailTitle = setTitleOrP("h3", title)
+    const detailTitle = setTitleOrP("h4", title)
+    detailTitle.className = "detail-text-con-title"
     const detailText = setTitleOrP("h4", text)
+    detailText.className = "detail-text-con-p"
 
     appendChildList(div, [
         detailTitle, 
