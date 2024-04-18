@@ -32,9 +32,15 @@ const createDetail = async (detail) => {
         return false
     }
 }
-const getDetails = async () => {
+const getDetailsByStay = async (stayId) => {
     try {
-        const response = connectdb.query("select * from detalles")
+        const sqlQuery = `
+        select det.id, det.estadia_id, ser.descripcion, det.cantidad , det.costo, det.subtotal 
+        from servicios as ser join detalles as det 
+        on ser.id = det.servicio_id 
+        where det.estadia_id = ?
+        `
+        const response = await connectdb.query(sqlQuery, [stayId])
         return response[0]
     } catch (error) {
         console.log(response)
@@ -88,7 +94,7 @@ const createCredential = async (credential) => {
 
 module.exports = {
     createStay,
-    getDetails,
+    getDetailsByStay,
     createDetail,
     getProcess,
     getProcessByFilter,

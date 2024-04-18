@@ -9,6 +9,7 @@ function  processTable(parent, stays){
     const tfSeach = setInput("text", "Buscar...")
     const tbody = document.createElement("tbody")
     let stayFound = []
+    const tableDiv = setDiv("stay-table-div")
 
     // tabla
     const table = document.createElement("table")
@@ -50,9 +51,10 @@ function  processTable(parent, stays){
     appendChildList(tableHead, [
         tfSeach,
     ])
+    tableDiv.appendChild(table)
     appendChildList(div, [
         tableHead,
-        table,
+        tableDiv
     ])
     parent.appendChild(div)
 }

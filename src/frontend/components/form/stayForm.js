@@ -3,7 +3,7 @@ import { clientBtn, clientInput, clientText, entryDate, entryP, exitDate, exitP,
 
 function stayForm(parent) {
     const form = setDiv("stay-form")
-    const title = setTitleOrP("h3", "Formulario")
+    const title = setTitleOrP("h4", "Formulario")
     const btnDiv = setDiv("btn-form-con")
     const dateTimeDiv = setDiv("date-time-div")
     const clientDiv = setDiv("date-time-div")

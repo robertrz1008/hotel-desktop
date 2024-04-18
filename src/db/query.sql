@@ -72,3 +72,5 @@ on es.cli_id = cli.id
 on es.hab_id = hab.id;
 
 select * from detalles;
+
+select 

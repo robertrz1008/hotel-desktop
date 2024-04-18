@@ -12,6 +12,7 @@
     grid-template-rows: 100vh;
     font-family: sans-serif;
     font-weight: lighter;
+
   }
   nav{
     display: flex;

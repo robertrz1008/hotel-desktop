@@ -1,5 +1,8 @@
 import  { appendChildList, setDetailText, setDiv, setTitleOrP } from "../../../utils/functionsGlobal.js";
 import formatDate from "../../../utils/getDate.js";
+import { getDetailsByStayRequest } from "../../api/processRequest.js";
+import { Tablediv } from "../../views/processes/stayTemplate.js";
+import detailServiceInfoTable from "../tables/ServiceDetailInfoTable.js";
 
 function formatStatus(number){
     let stat = [
@@ -16,6 +19,9 @@ function formatStatus(number){
 function processDetailModal(stay){
     const div = setDiv("process-detail-con")
 
+    const section1 = setDiv("process-detail-section1")
+    const section2 = setDiv("process-detail-section2")
+
     const entradaDate = formatDate(stay.entrada)
     const salidaDate = formatDate(stay.salida)
 
@@ -28,8 +34,18 @@ function processDetailModal(stay){
     const salida = setDetailText("Fecha de Salida", salidaDate.fecha)
     const observacion = setDetailText("Observacion", stay.est_observacion)
     const total = setDetailText("Total", stay.total)
+    const servicio = setTitleOrP("h3", "Servicios")
+
+    let servicesFound = []
     
     div.innerHTML = ""
+
+    async function rederDetailList(id){
+        servicesFound = await getDetailsByStayRequest(id)
+
+        detailServiceInfoTable(Tablediv, servicesFound)
+    }
+    rederDetailList(stay.id)
 
     appendChildList(div, [
         title,
@@ -39,7 +55,9 @@ function processDetailModal(stay){
         entrada,
         salida,
         observacion,
-        total
+        total,
+        servicio,
+        Tablediv
     ])
 
     return div

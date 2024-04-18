@@ -1,5 +1,5 @@
 import { appendChildList, openConfirmModal, openModalForm, setIcon, setTd } from "../../../utils/functionsGlobal.js"
-import { deleteDetailService } from "../../views/processes/stayTemplate.js"
+import deleteDetailServiceC from "../confirmContext/deleteDetailService.js"
 import detailAmaunt from "../form/detailAmaunt.js"
 
 function detailServicesList(parent,body, list){
@@ -29,8 +29,7 @@ function detailServicesList(parent,body, list){
         ])
 
         iconDel.addEventListener("click", () =>{
-            // openConfirmModal(deleteClient("Decea eliminar a este cliente", data.id))
-            deleteDetailService(data.id)
+            openConfirmModal(deleteDetailServiceC("Decea eliminar el detalle", data.id))
         })
         iconMore.addEventListener("click", () => {
             openConfirmModal(detailAmaunt(data.despcripcion, data.cantidad, data.id))

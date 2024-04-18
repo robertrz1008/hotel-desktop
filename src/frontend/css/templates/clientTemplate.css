@@ -50,6 +50,7 @@ table {
 /* table */
 .table-head {
     border-bottom: 1px solid rgb(223, 217, 217);
+    color: rgb(58, 56, 56);
 } 
 
 thead tr th{

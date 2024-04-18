@@ -5,8 +5,8 @@ import serviceModalSearch from "../modalSearch/serviceModalSearch.js";
 
 function detailForm({ formServicesDiv, addService, detailServices }) {
     const div = setDiv("stay-form")
-    const title = setTitleOrP("h3", "Detalle de consumision")
-    addServiceBtn.classList.add("process-detail-btn")
+    const title = setTitleOrP("h4", "Detalle de consumision")
+    addServiceBtn.classList.add("process-detail-btn") 
     const togleMoneyDiv = setDiv("togle-money-con")
     const moneyDiv = setDiv("money-con")
     //table

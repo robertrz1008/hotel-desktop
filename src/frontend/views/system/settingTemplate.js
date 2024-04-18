@@ -33,6 +33,7 @@ function settingTemplate(){
             telefono: tfTelefono.lastElementChild.firstElementChild.value,
             direccion: tfDireccion.lastElementChild.firstElementChild.value
         })
+        console.log("configuracion creada")
     })
 
 

@@ -1,4 +1,5 @@
 import { appendChildList, openConfirmModal, setIcon, setTd } from "../../../utils/functionsGlobal.js"
+import { Tablediv } from "../../views/processes/stayTemplate.js"
 import processDetailModal from "../ModalInfo/processDetail.js"
 
 function processList(parent,body, list){
@@ -36,7 +37,8 @@ function processList(parent,body, list){
         ])
         body.appendChild(trB)
     })
-
+    
+    Tablediv
     parent.appendChild(body)
 
 }
