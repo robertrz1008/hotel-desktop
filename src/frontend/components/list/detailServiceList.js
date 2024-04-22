@@ -11,8 +11,8 @@ function detailServicesList(parent,body, list){
     list.map((data, id) =>{
         const trB = document.createElement("tr")
         const td0 = setTd(data.cantidad)
-        const td = setTd(data.despcripcion)
-        const td2 = setTd(data.monto)
+        const td = setTd(data.descripcion)
+        const td2 = setTd(data.costo)
         const td3 = setTd(data.subtotal)
 
         const tdAction = document.createElement("td")

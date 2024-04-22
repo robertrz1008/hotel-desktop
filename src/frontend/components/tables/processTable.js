@@ -1,15 +1,20 @@
-import { appendChildList, appendThList, openModalForm, setButton, setDiv, setIcon, setInput, setTd } from "../../../utils/functionsGlobal.js";
+import { appendChildList, appendThList, openModalForm, setButton, setDiv, setIcon, setInput, setTd, setTitleOrP } from "../../../utils/functionsGlobal.js";
 import { getProcessByFilterRequest } from "../../api/processRequest.js";
+import { stayfilterSelect } from "../../views/processes/stayTemplate.js";
 import processList from "../list/processList.js";
 
 function  processTable(parent, stays){
 
     const div = setDiv("stay-table-con")
-    const tableHead = setDiv("table-heade")
+    const tableHead = setDiv("stay-table-head")
     const tfSeach = setInput("text", "Buscar...")
     const tbody = document.createElement("tbody")
     let stayFound = []
     const tableDiv = setDiv("stay-table-div")
+    //filtro
+    const stateFilterDiv = setDiv("stay-state-filter-con")
+    const filterSubT = setTitleOrP("p", "Filtrar: ")
+    const stateInputDiv = setDiv("stay-state-input")
 
     // tabla
     const table = document.createElement("table")
@@ -48,8 +53,14 @@ function  processTable(parent, stays){
         renderList(value)
     })
 
+    stateInputDiv.appendChild(stayfilterSelect)
+    appendChildList(stateFilterDiv, [
+        filterSubT,
+        stateInputDiv
+    ])
     appendChildList(tableHead, [
         tfSeach,
+        stateFilterDiv,
     ])
     tableDiv.appendChild(table)
     appendChildList(div, [

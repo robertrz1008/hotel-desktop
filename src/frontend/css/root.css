@@ -234,3 +234,27 @@ tr:hover{
     display: flex;
     justify-content: end;
 }
+.process-btn-con{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.process-btn-submit{
+  width: 49%;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(25, 122, 248);
+  color: white;
+  cursor: pointer;
+}
+.process-btn-reset{
+  width: 49%;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(177, 175, 175);
+  color: white;
+  cursor: pointer;
+}

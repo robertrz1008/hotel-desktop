@@ -27,10 +27,12 @@ contextBridge.exposeInMainWorld('ipcApi', {
   changeRoomState: (state) => ipcRenderer.invoke("changeRoomState", state),
 
   createStay: (stay) => ipcRenderer.invoke("createStay", stay),
-  createDetail: (detail) => ipcRenderer.invoke("createDetail", detail),
+  updateStay: (stay) => ipcRenderer.invoke("updateStay", stay),
   getStays: () => ipcRenderer.invoke("getStays"),
+  createDetail: (detail) => ipcRenderer.invoke("createDetail", detail),
   getDetailsByStay: (stayId) => ipcRenderer.invoke("getDetailsByStay", stayId),
   getProcess: () => ipcRenderer.invoke("getProcess"),
+  getProcessByStatus: (status) => ipcRenderer.invoke("getProcessByStatus", (status)),
   getProcessByFilter: (filter) => ipcRenderer.invoke("getProcessByFilter", filter),
   createCredential: ( credential) =>  ipcRenderer.invoke("createCredential", credential),
 })

@@ -161,7 +161,24 @@
   position: sticky;
   top: 0;
 }
-
+.stay-table-head{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.stay-state-filter-con{
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.stay-state-input{
+  width: 60%;
+}
+.stay-state-input select{
+  height: 30px;
+}
 
 .togle-money-con{
   width: 100%;

@@ -33,10 +33,12 @@ app.whenReady().then(() => {
   ipcMain.handle("changeRoomState", (event, state) => roomsController.changeRoomState(state))
 
   ipcMain.handle("createStay", (event, stay) => processController.createStay(stay))
+  ipcMain.handle("updateStay", (event, stay) => processController.updateStay(stay))
   ipcMain.handle("createDetail", (event, detail) => processController.createDetail(detail))
   ipcMain.handle("getStays", () => processController.getStays())
   ipcMain.handle("getDetailsByStay", (event, stayId) => processController.getDetailsByStay(stayId))
   ipcMain.handle("getProcess", () => processController.getProcess())
+  ipcMain.handle("getProcessByStatus", (event, status) => processController.getProcessByStatus(status))
   ipcMain.handle("getProcessByFilter", (event, filter) => processController.getProcessByFilter(filter))
   ipcMain.handle("createCredential", (event, crendetial) => processController.createCredential(crendetial))
 

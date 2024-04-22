@@ -54,8 +54,8 @@ function serviceModalSearch({renderDetailList}) {
         renderDetailList({
             id: serviceId,
             cantidad: 1,
-            despcripcion: serviceDesciption,
-            monto: serviceMonto
+            descripcion: serviceDesciption,
+            costo: serviceMonto
         })
     })
 

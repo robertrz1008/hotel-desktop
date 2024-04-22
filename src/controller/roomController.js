@@ -51,6 +51,8 @@ const changeRoomState = async(room) => {
   try {
     const sqlQuery = `update habitaciones set estado = ? where id = ?`
     await conectiondb.query(sqlQuery, [state, id])
+    console.log("cambiando estado de la habitacion")
+    console.log(room)
     return true
   } catch (error) {
     console.log(error)

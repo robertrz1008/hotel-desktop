@@ -54,10 +54,12 @@ create TABLE configuracion(
 )
 
 select 
-    es.id, 
+    es.id,  
+    cli.id as "cliente_id",
     cli.nombre, 
     cli.apellido, 
     cli.cedula, 
+    hab.id as "habitacion_id",
     hab.descripcion, 
     es.entrada, 
     es.estado, 
@@ -71,10 +73,13 @@ on es.cli_id = cli.id
     JOIN habitaciones as hab 
 on es.hab_id = hab.id;
 
-select * from detalles;
+select * from detalles; 
 
 
 alter table habitaciones add COLUMN estado INT DEFAULT 1;
 
-describe habitaciones
 
+ select det.id, det.estadia_id, ser.descripcion, det.cantidad , det.costo, det.subtotal 
+        from servicios as ser join detalles as det 
+        on ser.id = det.servicio_id 
+        where det.estadia_id = 43;

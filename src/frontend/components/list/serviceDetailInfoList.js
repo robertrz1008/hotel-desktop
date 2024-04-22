@@ -9,7 +9,7 @@ function detailServicesInfoList(parent,body, list){
     console.log(list)
 
     list.map((data) =>{
-        const trB = document.createElement("tr")
+        const trB = document.createElement("tr") 
         const td0 = setTd(data.cantidad)
         const td = setTd(data.descripcion)
         const td2 = setTd(data.costo)

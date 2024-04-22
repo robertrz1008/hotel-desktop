@@ -11,6 +11,18 @@ const createStay = async (stay) =>{
         console.log(error)
     }
 }
+const updateStay = async (stay) => {
+    const {id, estado} = stay
+    try {
+        const sqlQuery = ` update estadias set estado = ? where id = ?`
+        await connectdb.query(sqlQuery, [estado, id])
+        console.log("room updated")
+        return true
+      } catch (error) {
+        console.log(error)
+        return false
+      }
+}
 const getStays = async () => {
     try {
         const response = connectdb.query("select * from estadias")
@@ -49,7 +61,20 @@ const getDetailsByStay = async (stayId) => {
 
 const getProcess = async () => {
     const sqlQuery = `
-    select es.id, cli.nombre, cli.apellido, cli.cedula, hab.descripcion, es.entrada, es.estado, es.entrada, es.salida, es.observacion AS "est_observacion", es.total
+    select 
+        es.id,  
+        cli.id as "cliente_id",
+        cli.nombre, 
+        cli.apellido, 
+        cli.cedula, 
+        hab.id as "habitacion_id",
+        hab.descripcion, 
+        es.entrada, 
+        es.estado, 
+        es.entrada, 
+        es.salida, 
+        es.observacion AS "est_observacion",
+        es.total
     from estadias as es 
         JOIN clientes as cli
     on es.cli_id = cli.id
@@ -64,9 +89,53 @@ const getProcess = async () => {
         console.log(error)
     }
 }
+const getProcessByStatus = async (status) => {
+    const sqlQuery = `
+    select 
+        es.id,  
+        cli.id as "cliente_id",
+        cli.nombre, 
+        cli.apellido, 
+        cli.cedula, 
+        hab.id as "habitacion_id",
+        hab.descripcion, 
+        es.entrada, 
+        es.estado, 
+        es.entrada, 
+        es.salida, 
+        es.observacion AS "est_observacion",
+        es.total
+    from estadias as es 
+        JOIN clientes as cli
+    on es.cli_id = cli.id
+        JOIN habitaciones as hab 
+    on es.hab_id = hab.id
+    where es.estado = ?
+    order by id;
+    `
+    try {
+        const response = await connectdb.query(sqlQuery, [status])
+        return response[0]
+    } catch (error) {
+        console.log(error)
+    }
+}
 const getProcessByFilter = async (filter) => {
     const sqlQuery = `
-   select es.id, cli.nombre, cli.apellido, cli.cedula, hab.descripcion, es.entrada, es.estado, es.entrada, es.salida, es.observacion AS "est_observacion", es.total
+    select 
+        es.id,  
+        cli.id as "cliente_id",
+        cli.nombre, 
+        cli.apellido, 
+        cli.cedula, 
+        hab.id as "habitacion_id",
+        hab.descripcion, 
+        es.entrada, 
+        es.estado, 
+        es.entrada, 
+        es.salida, 
+        es.observacion AS "est_observacion",
+        es.total
     from estadias as es 
         JOIN clientes as cli
     on es.cli_id = cli.id
@@ -94,9 +163,11 @@ const createCredential = async (credential) => {
 
 module.exports = {
     createStay,
+    updateStay,
     getDetailsByStay,
     createDetail,
     getProcess,
+    getProcessByStatus,
     getProcessByFilter,
     getStays,
     createCredential
