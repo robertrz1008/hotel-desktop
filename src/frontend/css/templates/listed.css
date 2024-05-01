@@ -1,0 +1,46 @@
+.listed-form-con{
+    width: 90%;
+    background: white;
+    box-shadow: 0 0 2px grey;
+    padding: 10px;
+}
+.listed-form-con h3{
+    margin-top: 5px;
+    color: rgb(75, 74, 74);
+}
+.form-rango-con{
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgb(168, 167, 167);
+    padding: 7px;
+    margin-top: 5px;
+}
+.form-rangosub-con{
+    width: 280px;
+}
+.form-select-con{
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    padding: 7px;
+    margin-bottom: 5px;
+}
+.lidted-form-select-div{
+    width: 48%;
+}
+.lidted-form-select-div select{
+    width: 100%;
+}
+.listed1-btn-con{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.listed-btn-con{
+    width: 70%;
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-around;
+    align-self: center;
+}

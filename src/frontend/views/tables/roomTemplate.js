@@ -1,5 +1,6 @@
 import {appendChildList, closeConfirmModal, closeModalForm, setDiv, setInputForm, setTextArea, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { closeModal } from "../../Components/modal.js"
+import { getProcessRequest } from "../../api/processRequest.js"
 import { createRoomRequest, deleteRoomRequest, getRoomsByFilterRequest, getRoomsRequest, updateRoomRequest } from "../../api/roomRequest.js"
 import roomTable from "../../components/tables/roomTable.js"
 
@@ -15,9 +16,26 @@ export const tfobservacion = setInputForm("Observacion", "text", "agregar Observ
 export let rooms = []
 export let roomsFound = []
 export let idRoom;
+export let roomsOcuppedId = []
+export let roomsReservedId = []
 
+async function getDetailOccupedReserved(){
+    const stays = await getProcessRequest()
+    let staysOcupped = stays.filter(data => data.estado == 0)
+    let staysReserved = stays.filter(data => data.estado == 1)
+    
+    for (const stay of staysOcupped) {
+        roomsOcuppedId.push(stay.habitacion_id)
+    }
+    for (const stay of staysReserved) {
+        roomsReservedId.push(stay.habitacion_id)
+    }
+    console.log(roomsOcuppedId)
+    console.log(roomsReservedId)
+}
 
 const renderList = async () => {
+    getDetailOccupedReserved()
     rooms = await getRoomsRequest()
     div.innerHTML = ""
     titleDiv.appendChild(title)

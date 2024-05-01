@@ -1,5 +1,5 @@
 import { appendChildList, openConfirmModal, openModalForm, setDiv, setIcon, setTd, setTitleOrP } from "../../../utils/functionsGlobal.js"
-import { updateModeRoom } from "../../views/tables/roomTemplate.js"
+import { roomsOcuppedId, roomsReservedId, updateModeRoom } from "../../views/tables/roomTemplate.js"
 import deleteRoomC from "../confirmContext/deleteRoomContext.js"
 import roomForm from "../form/roomForm.js"
 
@@ -8,32 +8,27 @@ function roomsList(parent,body, list){
     body.innerHTML = ""
 
     function viewState(n){
-        const div = setDiv("")
-        const state = setTitleOrP("p", "");
-        
-        if(n == 1){
-            state.textContent = "Disponible"
-            div.className = "service-state-1"
+        const idtatediv = setDiv("")
+       
+        if(roomsReservedId.includes(n)){
+            idtatediv.className = "service-state-2"
+        }if(roomsOcuppedId.includes(n)){
+            idtatediv.className = "service-state-3"
         }
-        if(n == 2){
-            state.textContent ="Reservado"
-            div.className = "service-state-2"
+        if(!roomsOcuppedId.includes(n) && !roomsReservedId.includes(n)){
+            idtatediv.className = "service-state-1"
         }
-        if(n == 3){
-            state.textContent = "Ocupado"
-            div.className = "service-state-3"
-        }
-        div.appendChild(state)
-        return div
+
+        idtatediv.textContent = n
+        return idtatediv
     }
 
     list.map((data, id) =>{
         const trB = document.createElement("tr")
-        const td0 = setTd(data.id)
+        const td0 = document.createElement("td")
         const td = setTd(data.descripcion)
         const td2 = setTd(parseFloat(data.montoDia))
         const td3 = setTd(data.observacion)
-        const td4 = document.createElement("td")
 
         const tdAction = document.createElement("td")
         const iconDel = setIcon(["fa-solid", "fa-trash", "btn-del", "table-icon"])
@@ -41,13 +36,13 @@ function roomsList(parent,body, list){
 
         trB.className= "trb"
         td0.className = "td0"
+        td0.appendChild(viewState(data.id))
         tdAction.className = "tdAction"
 
         appendChildList(tdAction, [
             iconDel,
             iconUpd
         ])
-        td4.appendChild(viewState(data.estado))
 
         iconDel.addEventListener("click", () =>{
             openConfirmModal(deleteRoomC("Esta seguro de eliminar", data.id))
@@ -67,7 +62,6 @@ function roomsList(parent,body, list){
             td,
             td2,
             td3,
-            td4,
             tdAction,
         ])
         body.appendChild(trB)

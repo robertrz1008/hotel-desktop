@@ -1,6 +1,7 @@
 import { hash, selectRoute } from "../../utils/config.js"
 import { appendChildList, navigation, setBoxLink, setButtonLink, setDiv, setTitleOrP } from "../../utils/functionsGlobal.js"
 import router from "../../router/router.js"
+import { clientsLength } from "../schema/entityCount.js"
 
 
 export default function homeTemplate(){
@@ -11,7 +12,7 @@ export default function homeTemplate(){
     name.className = "copy-text"
 
     const linksDiv = setDiv("links-con")
-    const roadersLink = setBoxLink("roader-link box-link", ["fa-solid", "fa-user", "icon-link-box"], "Clientes", 30)
+    const roadersLink = setBoxLink("roader-link box-link", ["fa-solid", "fa-user", "icon-link-box"], "Clientes", parseInt(clientsLength()))
     const booksLink = setBoxLink("books-link box-link", ["fa-solid", "fa-key", "icon-link-box"], "Habitaciones", 16)
     const servicesLink = setBoxLink("loan-link box-link", ["fa-solid", "fa-bell-concierge", "icon-link-box"], "Servicios", 20)
     const areaLink = setBoxLink("area-link box-link", ["fa-solid", "fa-bed",  "icon-link-box"], "Estadia", 10)

@@ -29,10 +29,10 @@ function detailServicesList(parent,body, list){
         ])
 
         iconDel.addEventListener("click", () =>{
-            openConfirmModal(deleteDetailServiceC("Decea eliminar el detalle", data.id))
+            openConfirmModal(deleteDetailServiceC("Decea eliminar el detalle", data.id, data.servicio_id))
         })
         iconMore.addEventListener("click", () => {
-            openConfirmModal(detailAmaunt(data.despcripcion, data.cantidad, data.id))
+            openConfirmModal(detailAmaunt(data.despcripcion, data.cantidad, data.id, data.servicio_id))
         })
 
         appendChildList(trB, [

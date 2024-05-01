@@ -1,5 +1,6 @@
-import {appendChildList, openConfirmModal, setButton, setDiv, setInputForm, setInputSelect, setTextArea, setTitleOrP, setTogleButton, } from "../../../utils/functionsGlobal.js"
-import { createDetailRequest, createStayRequest, getDetailsByStayRequest, getProcessByStatusRequest, getProcessRequest, updateRoomStateRequest, updateStayRequest} from "../../api/processRequest.js"
+import {appendChildList, closeConfirmModal, openConfirmModal, setButton, setDiv,  setInputForm, setInputSelect, setTextArea, setTitleOrP, setTogleButton, } from "../../../utils/functionsGlobal.js"
+import formatDate, { setDate } from "../../../utils/getDate.js"
+import { createDetailRequest, createStayRequest, deleteDetailRequest, getDetailsByStayRequest, getProcessByStatusRequest, getProcessRequest, stayFinalizedRequest, updateDetailRequest, updateStayRequest, } from "../../api/processRequest.js"
 import processMsg from "../../components/confirmContext/processMessage.js"
 import detailForm from "../../components/form/detailForm.js"
 import stayForm from "../../components/form/stayForm.js"
@@ -19,9 +20,8 @@ const formServicesDiv = setDiv("process-formser-con")
 const processTableDiv = setDiv("process-table-div")
 //form inputs
 export const entryP = setTitleOrP("h4", "Entada")
-export const exitP = setTitleOrP("h4", "Salida")
 export const entryDate = setDiv("inp-date")
-export const exitDate = setDiv("inp-date")
+export const inputDateDiv = setDiv("inp-date-div")
 export const clientInput = setDiv("stay-input-div")
 export const clientBtn = setButton("buscar", "process-btn")
 export const clientText = setTitleOrP("h4", "Cliente")
@@ -30,6 +30,7 @@ export const roomBtn = setButton("buscar", "process-btn")
 export const addServiceBtn = setButton("agregar", "process-btn")
 export const roomText = setTitleOrP("h4", "habitacion")
 export const tfObservacion = setTextArea()
+export const tfDate = setInputForm("", "date", "")
 export const inputSelect = setInputSelect([
     { value: "0", name: "Ocupado"},
     { value: "1", name: "Reservado"},
@@ -48,7 +49,7 @@ export const tbIsActive = setTogleButton("Activo")
 export const btnAdd = setButton("Guardar", "process-btn-submit")
 export const btnClear = setButton("Limpiar", "process-btn-reset")
 let monto = 0
-export const moneyP = setTitleOrP("h3", "GS "+monto)
+export const moneyP = setTitleOrP("h3", "Total: "+monto)
 
 export const Tablediv = setDiv("process-table-con")
 export const table = document.createElement("table")
@@ -58,6 +59,8 @@ export const tbody = document.createElement("tbody")
 
 let clientSelectId = 0;
 let roomtSelectId = 0;
+let roomMonto = 0;
+
 // detail service
 let detailServices= []
 //procesos
@@ -74,8 +77,10 @@ function clientNameSelect(client){
 function roomNameSelect(room){
     roomText.textContent = room.name
     roomtSelectId = room.id
+    roomMonto = room.montoDia
+    monto += roomMonto
+    moneyP.textContent = "Total: "+monto 
 }
-
 //detail service functions
 function detailSubtotal(){
     detailServices = detailServices.map((item) => ({
@@ -92,7 +97,8 @@ function detailAddCantidad(p) {
 }
 function montoSum(arr){
     monto = arr.reduce((cc, el) => cc + el.subtotal, 0)
-    moneyP.textContent = "GS "+monto 
+    monto += roomMonto
+    moneyP.textContent = "Total: "+monto 
 }
 function addService(serviceSelect){
     //si se selecciona el mismo servicio 
@@ -111,6 +117,19 @@ export function deleteDetailService(id){
     detailServices = detailServices.filter(data => data.id != id)
     detailServicesList(table, tbody, detailServices)
     montoSum(detailServices)
+    closeConfirmModal()
+}
+export async function deleteDetailFromDB(id){
+    const response = await deleteDetailRequest(id)
+
+    if(!response) throw new Error("No se pudo eliminar el detalle")
+
+    //listando los detalles desde el codigo
+    detailServices = detailServices.filter(data => data.id != id)
+    detailServicesList(table, tbody, detailServices)
+    renderList()
+    montoSum(detailServices)
+    closeConfirmModal()
 }
 export function updateAmountDetail(id, amount){
     for (const service of detailServices) {
@@ -122,13 +141,47 @@ export function updateAmountDetail(id, amount){
     detailServicesList(table, tbody, detailServices)
     montoSum(detailServices)
 }
+export async function updateDetailFromDB(id, amount){
+    let response;
+    let detailsFromCode=[];
+    //se obtiene un objeto con los con las propiedades modificadas del serviocio seleccionado
+    for (const service of detailServices) {
+        if(service.id == id){
+            response = await updateDetailRequest({
+                id: service.id,
+                estadiaId: stayId,
+                cantidad: parseInt(amount),
+                subtotal: service.costo * parseInt(amount)
+            })
+        }
+    }
+    //sanvando los serviocios que no estan registradosp
+    for (const detail of detailServices) {
+        if(typeof detail.servicio_id == "undefined"){
+            detailsFromCode.push({...detail})
+        }
+    }
+    detailServices = await getDetailsByStayRequest(stayId)
+    //juntar los detalles de la db con los desde el codigo
+    detailServices = detailServices.concat(detailsFromCode)
+    detailServicesList(table, tbody, detailServices)
+    monto = detailServices.reduce((con, el) => con + el.subtotal, 0)
+    moneyP.textContent = "Total: "+monto 
+    renderList()
+    
+}
 //process functions
 function clear() {
     updateMode = false
+    entryP.textContent = "Entrada"
     clientText.textContent = "Cliente"
     roomText.textContent = "habitacion"
+    clientBtn.disabled = false
+    roomBtn.disabled = false
     inputSelect.value = "0"
     tfObservacion.lastElementChild.firstElementChild.value = ""
+    tfDate.lastElementChild.firstElementChild.disabled = true
+    tfDate.lastElementChild.firstElementChild.value = ""
     clientSelectId = 0
     roomtSelectId = 0
     detailServices = []
@@ -138,7 +191,9 @@ function clear() {
     btnAdd.textContent = "Guardar"
     stayId = 0;
     stayState = ""
-}
+    monto = 0
+    moneyP.textContent = "Total: "+monto 
+} 
 const renderList = async () => {
     stays = await getProcessRequest()
     processTableDiv.innerHTML = ""
@@ -149,32 +204,46 @@ const renderListByStatus = async (data) => {
     processTableDiv.innerHTML = ""
     processTable(processTableDiv, stays) 
 }
+function isDateProcessReserved(){
+    if(!Boolean(tfDate.lastElementChild.firstElementChild.value)){
+        console.log(tfDate.lastElementChild.firstElementChild.value)
+        btnAdd.textContent = "Guardar"
+        openConfirmModal(processMsg("Ingresa una fecha para la reservacion"))
+        return false
+    }
+    return true
+}
 async function createProcess(){
     btnAdd.textContent = "Procesando..."
-    const stay = {
+    const stayOccuped = {
         cli_id: clientSelectId,
         hab_id: roomtSelectId,
         total: monto,
         estado: inputSelect.value,
         observacion: tfObservacion.lastElementChild.firstElementChild.value
     }
-    const stayresponse = await createStayRequest(stay)
+    const stayReserved = {
+        ...stayOccuped, 
+        entrada: tfDate.lastElementChild.firstElementChild.value+" 00:00:00"}
+
+    //si el reservado
+    if(inputSelect.value == "1"){
+        console.log(Boolean(tfDate.lastElementChild.firstElementChild.value))
+        if(!isDateProcessReserved()) return
+
+        await createStayRequest(stayReserved, "1")
+        getRoomByState()
+        clear()
+        return
+    }
+    //se registra la estadia a la db
+    const stayresponse = await createStayRequest(stayOccuped, "0")
     const stayId = stayresponse[0].id
-
-
-    //cambiando el estado de la habitacion
-    let stateN;
-    if(inputSelect.value == 0) stateN = 3
-    if(inputSelect.value == 1) stateN = 2
-    await updateRoomStateRequest({
-        id: roomtSelectId,
-        state: stateN
-    })
+    
     getRoomByState()
 
     if(detailServices.length == 0) return clear()
 
-    console.log("procesando servicios")
     //creaando los detalles de servicio
     for (const detail of detailServices) {
         const response = await createDetailRequest({
@@ -200,21 +269,29 @@ function validateProcess(){
         openConfirmModal(processMsg("Selecciona una habitacion para crear la transaccion"))
         return false
     }
+    if(inputSelect.value == "2") {
+        openConfirmModal(processMsg("Solo se pueden anular estadias reservadas"))
+        return false
+    }
+    if(inputSelect.value == "3") {
+        openConfirmModal(processMsg("Solo se pueden finalizar estadias activas"))
+        return false
+    }
     return true
 }
-
 export async function udpateProcessMode(process){
     updateMode = true
     stayState = process.estado
     stayId = process.id
 
-    // entryP.textContent = process.entrada
+    const entradaDate = formatDate(process.entrada)
+    entryP.textContent = entradaDate.fecha
     roomtSelectId = process.habitacion_id
     clientText.textContent = process.nombre+" "+process.apellido
     roomText.textContent = process.descripcion
     clientBtn.disabled = true
     roomBtn.disabled = true
-    inputSelect.value = "0"
+    inputSelect.value = process.estado
     tfObservacion.lastElementChild.firstElementChild.value = process.observacion
 
     if(process.estado == "0"){
@@ -225,48 +302,118 @@ export async function udpateProcessMode(process){
     }
     //costo de la transaccion
     monto = process.total
-    moneyP.textContent = "GS "+monto 
+    moneyP.textContent = "Total: "+monto 
     // cargando detalles servicios
     detailServices = await getDetailsByStayRequest(process.id)
+    console.log(deleteDetailService)
     detailServicesList(table, tbody, detailServices)
 }
-
-async function processFinalized(){
-    await updateStayRequest({
-        id: stayId,
-        estado: inputSelect.value
-    })
-    await updateRoomStateRequest({
-        id: roomtSelectId,
-        state: 1
-    })
-    getRoomByState()
-    clear()
-    console.log("proceso finalizado")
+function validateProcessOccuped(){
+    if(inputSelect.value == "1"){
+        openConfirmModal(processMsg("No se pueden reservar estadias activas"))
+        btnAdd.textContent = "Guardar"
+        return false
+    }
+    if(inputSelect.value == "2"){
+        openConfirmModal(processMsg("Solo se pueden anular estadias reservadas"))
+        btnAdd.textContent = "Guardar"
+        return false
+    }
+    return true
 }
-async function processAnuled(){
-    await updateStayRequest({
-        id: stayId,
-        estado: inputSelect.value
-    })
-    await updateRoomStateRequest({
-        id: roomtSelectId,
-        state: 1
-    })
-    getRoomByState()
-    clear()
-    console.log("proceso anulado")
+function validateProcessReserved(){
+    if(inputSelect.value == "3"){
+        openConfirmModal(processMsg("Solo se pueden finalizar estadias activas"))
+        btnAdd.textContent = "Guardar"
+        return false
+    }
+    return true
 }
-
 async function updateProcessOccuped(){
+    if(!validateProcessOccuped()) return 
+
+    btnAdd.textContent = "Procesando..."
     //finaliza el processo
-    if(inputSelect.value = "3") processFinalized()
+    if(inputSelect.value == "3") {
+        await updateStayRequest({
+            id: stayId,
+            total: monto,
+            estado: inputSelect.value
+        })
+        //se establece la hora de salida
+        await stayFinalizedRequest({
+            id: stayId,
+            salida: setDate()
+        })
+        //la habitacion estara disponible
+        btnAdd.textContent = "Guardar"
+        getRoomByState()
+    }
+    if(detailServices.length == 0){
+        console.log("no hay servicios")
+        clear()
+        return 
+    }
+    for (const detail of detailServices) {
+        if(typeof detail.servicio_id == "undefined"){
+            console.log("procesando servicios a la db")
+            const response = await createDetailRequest({
+                estadia_id: stayId,
+                servicio_id: detail.id,
+                costo: detail.costo,
+                subtotal: detail.subtotal,
+                cantidad: detail.cantidad
+            })
+            if(!response) break
+        }
+    }
+    await updateStayRequest({
+        id: stayId,
+        total: monto,
+        estado: inputSelect.value
+    })
+    clear()
 }
 async function updateProcessReserved(){
-    //finaliza el processo
-    if(inputSelect.value = "2") processAnuled()
+    if(!validateProcessReserved()) return
+    //se anula el processo
+    btnAdd.textContent = "Procesando..."
+    //si se anula la reservacion
+    if(inputSelect.value == "2") {
+        await updateStayRequest({
+            id: stayId,
+            total: monto,
+            estado: inputSelect.value
+        })
+        getRoomByState()
+        btnAdd.textContent = "Guardar"
+    }
+    //si el estado sera reservado
+    if(inputSelect.value == "0"){
+        for (const detail of detailServices) {
+                console.log("procesando servicios a la db")
+                const response = await createDetailRequest({
+                    estadia_id: stayId,
+                    servicio_id: detail.id,
+                    costo: detail.costo,
+                    subtotal: detail.subtotal,
+                    cantidad: detail.cantidad
+                })
+                if(!response) break
+                
+        }
+        await updateStayRequest({
+            id: stayId,
+            total: monto,
+            estado: inputSelect.value
+        })
+        getRoomByState()
+    }
+   
+    clear()
 }
 function handleUpdateProcess(){
+    btnAdd.textContent = "Procesando..."
     if(stayState == "Ocupado") return updateProcessOccuped()
     if(stayState == "Reservado") return updateProcessReserved()
 } 
@@ -300,11 +447,22 @@ stayfilterSelect.addEventListener("change", (e) => {
     renderListByStatus(e.target.value)
 })
 
+inputSelect.addEventListener("change", (e) => {
+    if(inputSelect.value == "1"){
+        tfDate.lastElementChild.firstElementChild.disabled = false
+        detailServices = []
+        detailServicesList(table, tbody, detailServices)
+        return
+    }
+    tfDate.lastElementChild.firstElementChild.disabled = true
+    tfDate.lastElementChild.firstElementChild.value = ""
+})
 
-const renderForm = async () => {
+const renderForm = async () => { 
     // rooms = await getRoomsRequest()
     div.innerHTML = ""
     titleDiv.appendChild(title)
+    tfDate.lastElementChild.firstElementChild.disabled = true
 
     stayForm(formDiv)
     detailForm({
@@ -329,6 +487,5 @@ function stayProcessTemplate(){
     renderList()
     return div
 }
-
 export default stayProcessTemplate
  

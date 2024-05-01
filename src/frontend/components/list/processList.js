@@ -1,5 +1,6 @@
 import { appendChildList, openConfirmModal, setIcon, setTd } from "../../../utils/functionsGlobal.js"
-import { Tablediv, udpateProcessMode } from "../../views/processes/stayTemplate.js"
+import formatDate, { calculateDaysElapsed, setDate } from "../../../utils/getDate.js"
+import { Tablediv, entryDate, udpateProcessMode } from "../../views/processes/stayTemplate.js"
 import processDetailModal from "../ModalInfo/processDetail.js"
 
 function processList(parent,body, list){

@@ -1,10 +1,17 @@
 const connectdb = require("../db/conectiondb")
 
-const createStay = async (stay) =>{
-    const {cli_id, hab_id, total, estado, observacion} = stay
+const createStay = async (stay, state) =>{
+    const {cli_id, hab_id, total, estado, observacion, entrada} = stay
     try {
-        const sqlQuery = `insert into estadias(cli_id, hab_id, total, estado, observacion) values(?, ?, ?, ?, ?)`
-        await connectdb.query(sqlQuery, [cli_id, hab_id, total, estado, observacion]);
+        const sqlQuery = {
+            "0": `insert into estadias(cli_id, hab_id, total, estado, observacion) values(?, ?, ?, ?, ?)`,
+            "1": `insert into estadias(cli_id, hab_id, total, estado, observacion, entrada) values(?, ?, ?, ?, ?, ?)`
+        }
+        function isState(){
+            if(state == "0") return [cli_id, hab_id, total, estado, observacion]
+            return [cli_id, hab_id, total, estado, observacion, entrada]
+        }
+        await connectdb.query(sqlQuery[state], isState());
         const response = await connectdb.query("select max(id) AS 'id' from estadias;")
         return response[0]
     } catch (error) { 
@@ -12,11 +19,23 @@ const createStay = async (stay) =>{
     }
 }
 const updateStay = async (stay) => {
-    const {id, estado} = stay
+    const {id, total, estado} = stay
     try {
-        const sqlQuery = ` update estadias set estado = ? where id = ?`
-        await connectdb.query(sqlQuery, [estado, id])
+        const sqlQuery = ` update estadias set total = ?, estado = ? where id = ?`
+        await connectdb.query(sqlQuery, [total, estado, id])
         console.log("room updated")
+        return true
+      } catch (error) {
+        console.log(error)
+        return false
+      }
+}
+const setStayFinalized = async (stay) =>{
+    const {id, salida,} = stay
+    try {
+        const sqlQuery = ` update estadias set salida = ? where id = ?`
+        await connectdb.query(sqlQuery, [salida, id])
+        console.log("estadia finalizada")
         return true
       } catch (error) {
         console.log(error)
@@ -47,7 +66,7 @@ const createDetail = async (detail) => {
 const getDetailsByStay = async (stayId) => {
     try {
         const sqlQuery = `
-        select det.id, det.estadia_id, ser.descripcion, det.cantidad , det.costo, det.subtotal 
+        select det.id, det.estadia_id, det.servicio_id, ser.descripcion, det.cantidad , det.costo, det.subtotal 
         from servicios as ser join detalles as det 
         on ser.id = det.servicio_id 
         where det.estadia_id = ?
@@ -58,7 +77,42 @@ const getDetailsByStay = async (stayId) => {
         console.log(response)
     }
 }
+const deleteDetail = async (id) => {
+    try {
+        const res = await connectdb.query("select * from detalles where id = ?", [id])
+        //obtenemos el subtotal y el id de estadia del detalle a eliminar
+        const detailSubtotal= res[0][0].subtotal
+        const estadiaId = res[0][0]. estadia_id
 
+        const stay = await connectdb.query("select * from estadias where id = ?", [estadiaId])
+        //restamos el total de la estadias - el subtotal del detalleServicio que se va a elliminar
+        const result = stay[0][0].total - detailSubtotal
+        //modificamos el total por el total menos el subtotal del detalle 
+        await connectdb.query("update estadias set total = ? where id =  ?", [result, estadiaId])
+        const query= ` delete from detalles where id = ?`
+        await connectdb.query(query, [id])
+        return true
+      } catch (error) {
+        console.log(error)
+        return false
+      }
+}
+const updateAmountDetail = async (detail) => {
+    const {id, estadiaId, cantidad, subtotal} = detail
+    try {
+         //modificamos el detalle
+        await connectdb.query("update detalles set cantidad = ?, subtotal = ? where id = ?", [cantidad, subtotal, id])
+        //obtenemos todos los detalles posteriormente
+        const stays = await connectdb.query("select * from detalles where estadia_id = ?", [estadiaId])
+        const newTotal = stays[0].reduce((con, el) => con + el.subtotal, 0)
+        console.log(newTotal)
+        await connectdb.query("update estadias set total = ? where id = ?", [newTotal, estadiaId])
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
 const getProcess = async () => {
     const sqlQuery = `
     select 
@@ -69,9 +123,11 @@ const getProcess = async () => {
         cli.cedula, 
         hab.id as "habitacion_id",
         hab.descripcion, 
+        hab.montoDia,
         es.entrada, 
         es.estado, 
         es.entrada, 
+        es.observacion,
         es.salida, 
         es.observacion AS "est_observacion",
         es.total
@@ -99,7 +155,9 @@ const getProcessByStatus = async (status) => {
         cli.cedula, 
         hab.id as "habitacion_id",
         hab.descripcion, 
+        hab.montoDia,
         es.entrada, 
+        es.observacion,
         es.estado, 
         es.entrada, 
         es.salida, 
@@ -123,25 +181,27 @@ const getProcessByStatus = async (status) => {
 const getProcessByFilter = async (filter) => {
     const sqlQuery = `
     select 
-        es.id,  
-        cli.id as "cliente_id",
-        cli.nombre, 
-        cli.apellido, 
-        cli.cedula, 
-        hab.id as "habitacion_id",
-        hab.descripcion, 
-        es.entrada, 
-        es.estado, 
-        es.entrada, 
-        es.salida, 
-        es.observacion AS "est_observacion",
-        es.total
-    from estadias as es 
-        JOIN clientes as cli
-    on es.cli_id = cli.id
-        JOIN habitaciones as hab 
-    on es.hab_id = hab.id
-    where cli.nombre like "%${filter}%"`
+    es.id,  
+    cli.id as "cliente_id",
+    cli.nombre, 
+    cli.apellido, 
+    cli.cedula, 
+    hab.id as "habitacion_id",
+    hab.descripcion, 
+    hab.montoDia,
+    es.entrada, 
+    es.observacion,
+    es.estado, 
+    es.entrada, 
+    es.salida, 
+    es.observacion AS "est_observacion",
+    es.total
+from estadias as es 
+    JOIN clientes as cli
+on es.cli_id = cli.id
+    JOIN habitaciones as hab 
+on es.hab_id = hab.id
+where cli.nombre like "%${filter}%"`
     try {
         const response = await connectdb.query(sqlQuery)
         return response[0]
@@ -149,26 +209,17 @@ const getProcessByFilter = async (filter) => {
         console.log(error)
     }
 }
-const createCredential = async (credential) => {
-    const {empresa, telefono, direccion} = credential
-    try {
-        const sqlQuery = `insert into configuracion(empresa, telefono, direccion) VALUES(?, ?, ?);`
-        await connectdb.query(sqlQuery, [empresa, telefono, direccion])
-        return true
-     } catch (error) {
-        console.log(error)
-        return false
-    }
-}
 
 module.exports = {
     createStay,
     updateStay,
+    setStayFinalized,
     getDetailsByStay,
     createDetail,
+    deleteDetail,
+    updateAmountDetail,
     getProcess,
     getProcessByStatus,
     getProcessByFilter,
-    getStays,
-    createCredential
+    getStays
 }

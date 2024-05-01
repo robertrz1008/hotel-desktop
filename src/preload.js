@@ -26,13 +26,20 @@ contextBridge.exposeInMainWorld('ipcApi', {
   updateRoom: (room) => ipcRenderer.invoke("updateRoom", room),
   changeRoomState: (state) => ipcRenderer.invoke("changeRoomState", state),
 
-  createStay: (stay) => ipcRenderer.invoke("createStay", stay),
+  createStay: (stay, state) => ipcRenderer.invoke("createStay", stay, state),
   updateStay: (stay) => ipcRenderer.invoke("updateStay", stay),
+  setStayFinalized: (stay) => ipcRenderer.invoke("setStayFinalized", stay),
   getStays: () => ipcRenderer.invoke("getStays"),
   createDetail: (detail) => ipcRenderer.invoke("createDetail", detail),
   getDetailsByStay: (stayId) => ipcRenderer.invoke("getDetailsByStay", stayId),
+  deleteDetail: (id) => ipcRenderer.invoke("deleteDetail", id),
+  updateAmountDetail: (detail) => ipcRenderer.invoke("updateAmountDetail", detail),
   getProcess: () => ipcRenderer.invoke("getProcess"),
   getProcessByStatus: (status) => ipcRenderer.invoke("getProcessByStatus", (status)),
-  getProcessByFilter: (filter) => ipcRenderer.invoke("getProcessByFilter", filter),
+  getProcessByFilter: (filter) => ipcRenderer.invoke("getProcessByFilter", (filter)),
+
   createCredential: ( credential) =>  ipcRenderer.invoke("createCredential", credential),
+  getCredential: () =>  ipcRenderer.invoke("getCredential"),
+  updateCredential: ( credential) =>  ipcRenderer.invoke("updateCredential", credential),
+  clientsListed: (filter) => ipcRenderer.invoke("clientsListed", (filter)),
 })

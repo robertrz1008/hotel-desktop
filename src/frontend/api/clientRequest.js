@@ -12,3 +12,5 @@ export const updateClientRequest = (client) => window.ipcApi.updateClient(client
 export const verifyCedula = (cedula) => window.ipcApi.verifyCedula(cedula)
 
 export const verifyTelephone = (telefono) => window.ipcApi.verifyTelephone(telefono)
+
+export const getClientListedRequest = (filter) => window.ipcApi.clientsListed(filter)

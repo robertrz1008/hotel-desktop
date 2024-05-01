@@ -1,68 +1,89 @@
-import {appendChildList, setButton, setDiv, setInputForm, setTitleOrP}  from "../../../utils/functionsGlobal.js"
-import { createCredentialRequest } from "../../api/processRequest.js"
+import {appendChildList,closeModalForm,openModalForm,setButton,setDiv,setInputForm,setTitleOrP,} from "../../../utils/functionsGlobal.js";
+import { createCredentialRequest, getCredentialRequest, updateCredentialRequest } from "../../api/credentialRequest.js";
+import credentialForm from "../../components/form/credentialForm.js";
 
-function settingTemplate(){
-    const div = setDiv("area-table-con")
-    const titleDiv = setDiv("title-con")
-    const title = setTitleOrP("h3", "Registro de Habitaciones")
-    const formDiv = setDiv("setting-con")
-    const inputDiv1 = setDiv("setting-input-con")
-    const inputDiv2 = setDiv("setting-input-con")
-    const inputDiv3 = setDiv("setting-input-con")
-    const inputDiv4 = setDiv("setting-input-con")
-    const inputGropuDiv = setDiv("setting-input-group-con")
-    const inputGropuDiv2 = setDiv("setting-input-group-con")
-    const tfEmpresa = setInputForm("Empresa", " ")
-    const tfTelefono = setInputForm("Telefono", " ")
-    const tfDireccion = setInputForm("Direccion", " ")
-    const tfPDFPath = setInputForm("Ruta para documentos PDF")
-    const btnDiv = setDiv("setting-btn-con")
-    const btnAdd = setButton("Guardar", "btn-form-add")
+const div = setDiv("area-table-con");
+const titleDiv = setDiv("title-con");
+const title = setTitleOrP("h3", "Registro de Habitaciones");
+const formDiv = setDiv("setting-con");
 
-    const createCredential = async (crendential) => {
-        const response = await createCredentialRequest(crendential)
+const credentialTitle = setTitleOrP("h3", "Credenciales");
+const credentialDiv = setDiv("credential-con");
+const credentialTextsDiv = setDiv("credential-texts-con");
+const empresaTitle = setTitleOrP("h4", "Empresa");
+const telefonoTitle = setTitleOrP("h4", "Telefono");
+const direccionTitle = setTitleOrP("h4", "Direccion");
+const empresaDiv = setDiv("credencial-text-con");
+const telefonoDiv = setDiv("credencial-text-con");
+const direccionDiv = setDiv("credencial-text-con");
+const empresaText = setTitleOrP("p", "Las venturas");
+const telefonoText = setTitleOrP("p", "0987675678");
+const direccionText = setTitleOrP("p", "Madhattan");
+const tfPDFPath = setInputForm("Ruta para documentos PDF");
+const btnDiv = setDiv("setting-btn-con");
+const btnAdd = setButton("Modificar", "btn-form-add");
 
-        if(response) return console.log("No se pudo crear la credencial")
+export const tfEmpresa = setInputForm("Empresa", " ");
+export const tfTelefono = setInputForm("Telefono", " ");
+export const tfDireccion = setInputForm("Direccion", " ");
 
-        return console.log("Se ha creado la credential")
-    }
+let credential;
 
-    btnAdd.addEventListener("click", () => {
-        createCredential({
-            empresa: tfEmpresa.lastElementChild.firstElementChild.value,
-            telefono: tfTelefono.lastElementChild.firstElementChild.value,
-            direccion: tfDireccion.lastElementChild.firstElementChild.value
-        })
-        console.log("configuracion creada")
-    })
-
-
-    btnDiv.appendChild(btnAdd)
-    titleDiv.appendChild(title)
-
-    inputDiv1.appendChild(tfEmpresa)
-    inputDiv2.appendChild(tfTelefono)
-    inputDiv3.appendChild(tfDireccion)
-    inputDiv4.appendChild(tfPDFPath)
-
-    appendChildList(inputGropuDiv, [
-        inputDiv1,
-        inputDiv2
-    ])
-    appendChildList(inputGropuDiv2, [
-        inputDiv3,
-        inputDiv4
-    ])
-    appendChildList(formDiv, [
-        inputGropuDiv,
-        inputGropuDiv2,
-        btnDiv
-    ])
-    appendChildList(div,[
-        titleDiv,
-        formDiv
-    ])
-
-    return div
+async function renderCredential() {
+    credential = await getCredentialRequest()
+    if(credential.length == 0) return
+    empresaText.textContent = credential[0].empresa
+    telefonoText.textContent = credential[0].telefono
+    direccionText.textContent = credential[0].direccion
 }
-export default settingTemplate
+
+function clear() {
+  tfEmpresa.lastElementChild.firstElementChild.value = "";
+  tfTelefono.lastElementChild.firstElementChild.value = "";
+  tfDireccion.lastElementChild.firstElementChild.value = "";
+}
+
+export async function createCredential(credential) {
+  const response = await createCredentialRequest(credential);
+
+  if (!response) return console.log("error");
+
+  clear();
+  renderCredential()
+  closeModalForm()
+}
+async function updateMode(){
+    tfEmpresa.lastElementChild.firstElementChild.value = credential[0].empresa;
+    tfTelefono.lastElementChild.firstElementChild.value = credential[0].telefono;
+    tfDireccion.lastElementChild.firstElementChild.value = credential[0].direccion;
+}
+export async function updateCredential(credential){
+    const response =  await updateCredentialRequest(credential)
+    if(!response) throw new Error("No se pudo modificar la credencial")
+    renderCredential()
+    clear()
+    closeModalForm()
+}
+
+function settingTemplate() {
+  renderCredential()
+  btnDiv.appendChild(btnAdd);
+  titleDiv.appendChild(title);
+
+  btnAdd.addEventListener("click", () => {
+    updateMode()
+    openModalForm(credentialForm("Modificar", "btn-form-upd"))
+  })
+
+  appendChildList(empresaDiv, [empresaTitle, empresaText]);
+  appendChildList(telefonoDiv, [telefonoTitle, telefonoText]);
+  appendChildList(direccionDiv, [direccionTitle, direccionText]);
+
+  appendChildList(credentialTextsDiv, [empresaDiv, telefonoDiv, direccionDiv]);
+  appendChildList(credentialDiv, [credentialTextsDiv]);
+  appendChildList(formDiv, [credentialTitle, credentialDiv, btnDiv]);
+  appendChildList(div, [titleDiv, formDiv]);
+
+  return div;
+}
+export default settingTemplate;

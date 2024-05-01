@@ -219,13 +219,24 @@ tr:hover{
     background-color: white;
     box-shadow: 0 0 2px gray;
 }
-.setting-input-group-con{
-    width: 100%;
+.setting-btn-con{
+    width: 98%;
+    display: flex;
+    justify-content: end;
+}
+.credential-con{
+    width: 98%;
+    border: 1px solid rgb(202, 199, 199);
+    padding: 10px;
+}
+.credential-texts-con{
+    width: 98%;
     display: flex;
     justify-content: space-between;
 }
-.setting-input-con{
-    width: 48%;
+.credencial-text-con{
+    width: 80px;
+    height: 50px;
 }
 
 .setting-btn-con{
@@ -257,4 +268,9 @@ tr:hover{
   background-color: rgb(177, 175, 175);
   color: white;
   cursor: pointer;
+}
+.btn-disabled{
+    background-color: rgb(185, 181, 181);
+    border: #494949d2;
+    color: rgb(14, 13, 13);
 }

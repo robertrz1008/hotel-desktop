@@ -30,6 +30,7 @@ function processDetailModal(stay){
     const clientName = setDetailText("Cliente", clientT)
     const estado = setDetailText("Estado", formatStatus(stay.estado))
     const habitaicion = setDetailText("Habitacion", stay.descripcion)
+    const montoDia = setDetailText("Monto por día", stay.montoDia)
     const entrada = setDetailText("Fecha de Entrada", entradaDate.fecha)
     const salida = setDetailText("Fecha de Salida", salidaDate.fecha)
     const observacion = setDetailText("Observacion", stay.est_observacion)
@@ -37,7 +38,6 @@ function processDetailModal(stay){
     const servicio = setTitleOrP("h4", "Servicios")
 
     let servicesFound = []
-    
     div.innerHTML = ""
 
     async function rederDetailList(id){
@@ -51,6 +51,7 @@ function processDetailModal(stay){
         title,
         clientName,
         habitaicion,
+        montoDia,
         estado,
         entrada,
         salida,

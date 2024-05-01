@@ -63,6 +63,16 @@
   align-items: center;
   padding-left: 10px;
 }
+.inp-date-div{
+  width: 45%;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+.inp-date-div div div input{
+  height: 100%;
+}
 .inp-date h4{
   font-weight: lighter;
   font-family: sans-serif;
@@ -184,7 +194,7 @@
   width: 100%;
   position: relative;
   display: flex;
-  padding-left: 10px;
+  padding-left: 5px;
   justify-content: space-between;
   bottom: 7px;
 }
@@ -197,7 +207,6 @@
   align-items: center;
   border-radius: 3px;
   margin-right: 10px;
-  padding-left: 20px;
 }
 /* modal search */
 .modal-search-con{

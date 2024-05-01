@@ -21,7 +21,7 @@ function formatDate(fecha) {
     segundos = (segundos < 10) ? '0' + segundos : segundos;
 
     // Crear la cadena de fecha y hora en el formato deseado
-    var fechaFormateada = dia + '/' + mes + '/' + año;
+    var fechaFormateada = año  + '-' + mes + '-' + dia;
     var horaFormateada = hora + ':' + minutos + ':' + segundos;
 
     // Devolver la cadena formateada
@@ -34,5 +34,37 @@ function formatDate(fecha) {
 // console.log("Fecha formateada:", fechaYHoraFormateada.fecha);
 // console.log("Hora formateada:", fechaYHoraFormateada.hora);
 
+export function setDate(){
+    const fechaActual = new Date();
+    const año = fechaActual.getFullYear();
+    const mes = fechaActual.getMonth() + 1; // Los meses en JavaScript se indexan desde 0
+    const día = fechaActual.getDate();
+    const hora = fechaActual.getHours();
+    const minuto = fechaActual.getMinutes();
+    const segundo = fechaActual.getSeconds();
+
+    const fechaHoraPersonalizadaString = `${año}-${mes}-${día} ${hora}:${minuto}:${segundo}`;
+
+    return fechaHoraPersonalizadaString
+}
+
+export function calculateDaysElapsed(startDate, endDate, quantity, total) {
+    // Convert the dates to Date objects
+    var startDateObj = new Date(startDate);
+    var endDateObj = new Date(endDate);
+    console.log([startDate, endDate, quantity, quantity])
+    // Calculate the difference in milliseconds
+    var difference = endDateObj.getTime() - startDateObj.getTime();
+    // Convert the difference from milliseconds to days
+    var daysElapsed = Math.floor(difference / (1000 * 60 * 60 * 24));
+    // Multiply the number of days elapsed by the third parameter
+
+    if(daysElapsed <= 1) return {"costo":quantity, "total": total}
+    let days = daysElapsed - 1
+    //el costo de estadias por los dias menos el
+    var rest = days * quantity;
+    let totalCosto= daysElapsed * quantity
+    return {"costoDias": rest, "total":totalCosto}
+}
 
 export default formatDate

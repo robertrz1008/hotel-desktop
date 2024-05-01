@@ -1,10 +1,16 @@
-export const createStayRequest = (stay) => window.ipcApi.createStay(stay)
+export const createStayRequest = (stay, a) => window.ipcApi.createStay(stay, a)
 
 export const updateStayRequest = (stay) => window.ipcApi.updateStay(stay)
+
+export const stayFinalizedRequest = (stay) => window.ipcApi.setStayFinalized(stay)
 
 export const createDetailRequest = (detail) => window.ipcApi.createDetail(detail)
 
 export const getDetailsByStayRequest = (stayId) => window.ipcApi.getDetailsByStay(stayId)
+
+export const deleteDetailRequest = (id) => window.ipcApi.deleteDetail(id)
+
+export const updateDetailRequest = (stay) => window.ipcApi.updateAmountDetail(stay)
 
 export const getProcessRequest = () => window.ipcApi.getProcess()
 
@@ -12,6 +18,3 @@ export const getProcessByStatusRequest = (status) => window.ipcApi.getProcessByS
 
 export const getProcessByFilterRequest = (filter) => window.ipcApi.getProcessByFilter(filter)
 
-export const updateRoomStateRequest = (state) => window.ipcApi.changeRoomState(state)
-
-export const createCredentialRequest = (crendential) => window.ipcApi.createCredential(crendential)

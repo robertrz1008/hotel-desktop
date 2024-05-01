@@ -55,18 +55,9 @@ create TABLE configuracion(
 
 select 
     es.id,  
-    cli.id as "cliente_id",
-    cli.nombre, 
-    cli.apellido, 
-    cli.cedula, 
-    hab.id as "habitacion_id",
-    hab.descripcion, 
-    es.entrada, 
-    es.estado, 
-    es.entrada, 
-    es.salida, 
-    es.observacion AS "est_observacion",
-    es.total
+    cli.id as "cliente_id", cli.nombre, cli.apellido, cli.cedula, 
+    hab.id as "habitacion_id", hab.descripcion, hab.montoDia,
+    es.entrada, es.estado, es.entrada, es.salida, es.observacion AS "est_observacion", es.total
 from estadias as es 
     JOIN clientes as cli
 on es.cli_id = cli.id
@@ -83,3 +74,29 @@ alter table habitaciones add COLUMN estado INT DEFAULT 1;
         from servicios as ser join detalles as det 
         on ser.id = det.servicio_id 
         where det.estadia_id = 43;
+
+
+        select 
+        es.id,  
+        cli.id as "cliente_id",
+        cli.nombre, 
+        cli.apellido, 
+        cli.cedula, 
+        hab.id as "habitacion_id",
+        hab.descripcion, 
+        hab.montoDia,
+        es.entrada, 
+        es.observacion,
+        es.estado, 
+        es.entrada, 
+        es.salida, 
+        es.observacion AS "est_observacion",
+        es.total
+    from estadias as es 
+        JOIN clientes as cli
+    on es.cli_id = cli.id
+        JOIN habitaciones as hab 
+    on es.hab_id = hab.id
+    where cli.nombre like "%rob%"
+    order by id;
+    `

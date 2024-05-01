@@ -246,7 +246,6 @@ export function setAlertMesages(parent, mesages){
         const p = setTitleOrP("p", i)
         parent.appendChild(p)
     }
-    
 }
 export function setInputSelect(items) {
     const input = document.createElement("select")

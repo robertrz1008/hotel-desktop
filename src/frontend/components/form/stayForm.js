@@ -1,5 +1,5 @@
-import { appendChildList, closeModalForm, setButton, setDiv, setForm, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
-import { clientBtn, clientInput, clientText, entryDate, entryP, exitDate, exitP, inputSelect, roomBtn, roomInput, roomText, tfObservacion } from "../../views/processes/stayTemplate.js";
+import { appendChildList, closeModalForm, setButton, setDiv, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
+import { clientBtn, clientInput, clientText, entryDate, entryP, inputDateDiv, inputSelect, roomBtn, roomInput, roomText, tfDate, tfObservacion } from "../../views/processes/stayTemplate.js";
 
 function stayForm(parent) {
     const form = setDiv("stay-form")
@@ -10,10 +10,9 @@ function stayForm(parent) {
 
     form.innerHTML = ""
 
-
     //dom
     entryDate.appendChild(entryP)
-    exitDate.appendChild(exitP)
+    inputDateDiv.appendChild(tfDate)
     clientInput.appendChild(clientText)
     roomInput.appendChild(roomText)
 
@@ -27,7 +26,7 @@ function stayForm(parent) {
     ])
     appendChildList(dateTimeDiv, [
         entryDate,
-        exitDate
+        inputDateDiv
     ])
     appendChildList(form, [
         title, 

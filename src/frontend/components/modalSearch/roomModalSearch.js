@@ -13,6 +13,7 @@ function roomModalSearch({roomNameSelect}) {
     let roomFound;
     let roomName = ""
     let roomId;
+    let monto=0;
     div.innerHTML = ""
     button.disabled = true
 
@@ -22,11 +23,11 @@ function roomModalSearch({roomNameSelect}) {
         roomName = roomFound.name
         nameP.textContent = "Seleccionado: "+roomFound.name
         roomId = roomFound.id
+        monto = roomFound.montoDia
     }
 
     const renderList = async (filter) =>{
         roomFound = await getRoomsByFilterRequest(filter)
-        roomFound = roomFound.filter(data => data.estado == 1)
         roomList({
             listCon, 
             roomFound,
@@ -52,6 +53,7 @@ function roomModalSearch({roomNameSelect}) {
         roomNameSelect({
             id: roomId,
             name: roomName,
+            montoDia: monto
         })
     })
 

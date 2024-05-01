@@ -13,7 +13,8 @@ function roomList( {listCon, roomFound, buttonEnabled}){
         li.addEventListener("click", () => {
             buttonEnabled({
                 name: roomNameLasName,
-                id: data.id
+                id: data.id,
+                montoDia: data.montoDia
             })
         })
 

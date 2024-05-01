@@ -1,8 +1,8 @@
 import { appendChildList, closeConfirmModal, setButton, setDiv, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js"
 import serviceAmoutSchema from "../../schema/serviceAmoutSchema.js"
-import { updateAmountDetail } from "../../views/processes/stayTemplate.js"
+import { updateAmountDetail, updateDetailFromDB } from "../../views/processes/stayTemplate.js"
 
-function detailAmaunt(description, amount, id){
+function detailAmaunt(description, amount, id, serviceId){
     const div = setDiv("detailAmount-con")
     const title = setTitleOrP("h4", "Cantidad del servicio")
     const formCon = setDiv("detail-Amount-form-con")
@@ -16,13 +16,22 @@ function detailAmaunt(description, amount, id){
 
     div.innertHtml = ""
 
+    console.log(serviceId)
+
+    function updateServiceIfFromDB() {
+        if(typeof serviceId == "undefined") {
+            updateAmountDetail(id, tfCantidadAdd.lastElementChild.firstElementChild.value)
+            closeConfirmModal()
+            return
+        }
+        updateDetailFromDB(id, tfCantidadAdd.lastElementChild.firstElementChild.value)
+        closeConfirmModal()
+    }
+
     function hanldeSubmit(){
         const validate = serviceAmoutSchema(tfCantidadAdd)
-
         if(!validate) return 
-
-        updateAmountDetail(id, tfCantidadAdd.lastElementChild.firstElementChild.value)
-        closeConfirmModal()
+        updateServiceIfFromDB()
     }
 
     btnReset.addEventListener("click", () =>{
