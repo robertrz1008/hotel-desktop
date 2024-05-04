@@ -1,5 +1,8 @@
-import { appendChildList, setButton, setDiv, setInputForm, setInputSelect, setTitleOrP } from "../../../utils/functionsGlobal.js"
+import { appendChildList, closeModalForm, openModalForm, setButton, setDiv, setInputForm, setInputSelect, setTitleOrP } from "../../../utils/functionsGlobal.js"
 import { getClientListedRequest } from "../../api/clientRequest.js"
+import { clientReportRequest } from "../../api/reportPDFRequest.js"
+import clientReport from "../../components/ModalInfo/clientReport.js"
+import clientReportTable from "../../components/tables/clientReportTable.js"
 
 function clientListedTemplate(){
     const div = setDiv("area-table-con")
@@ -28,7 +31,7 @@ function clientListedTemplate(){
     const selectDiv1 = setDiv("lidted-form-select-div")
     const selectDiv2 = setDiv("lidted-form-select-div")
     const inputSelect = setInputSelect([
-        {value: "1", name: "Id"},
+        {value: "1", name: "id"},
         {value: "2", name: "Nombre y Apellido"},
         {value: "3", name: "Direccion"}
     ])
@@ -40,6 +43,7 @@ function clientListedTemplate(){
     const btnDiv = setDiv("listed-btn-con")
     const btnAdd = setButton("Filtrar", "process-btn-submit")
     const btnClear = setButton("Limpiar", "process-btn-reset")
+    
 
     titleDiv.appendChild(title)
     let listed=[]
@@ -54,10 +58,15 @@ function clientListedTemplate(){
         inputSelect.value = "1"
         inputSelectOrder.value= "1"
     }
+    async function clientReportBuild(route, credential, clients){
+        await clientReportRequest(route, credential, clients)
 
+        closeModalForm()
+    }
     async function getClientListed(filter){
         listed= await getClientListedRequest(filter)
         console.log(listed)
+        openModalForm(clientReport({ filter, listed, clientReportBuild}))
     }
 
     btnAdd.addEventListener("click", () =>{

@@ -42,4 +42,6 @@ contextBridge.exposeInMainWorld('ipcApi', {
   getCredential: () =>  ipcRenderer.invoke("getCredential"),
   updateCredential: ( credential) =>  ipcRenderer.invoke("updateCredential", credential),
   clientsListed: (filter) => ipcRenderer.invoke("clientsListed", (filter)),
+  
+  clientReport: (route, credential, clients) =>  ipcRenderer.invoke("clientReport", route, credential, clients),
 })

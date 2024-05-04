@@ -245,6 +245,16 @@ tr:hover{
     display: flex;
     justify-content: end;
 }
+.route-con{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tfrouter-con{
+    width: 80%;
+}
+
 .process-btn-con{
     width: 100%;
     display: flex;

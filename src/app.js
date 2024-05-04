@@ -6,6 +6,7 @@ const roomsController = require("./controller/roomController")
 const verifyController = require("./controller/verifyController")
 const processController = require("./controller/processController")
 const settingController = require("./controller/settingController")
+const PDFBuild = require("./lib/pdfKit")
 
 
 app.whenReady().then(() => {
@@ -50,6 +51,8 @@ app.whenReady().then(() => {
   ipcMain.handle("getCredential", () => settingController.getCredential())
   ipcMain.handle("updateCredential", (event, crendetial) => settingController.updateCredential(crendetial))
 
+  //PDFBuild
+  ipcMain.handle("clientReport", (event, route, credential, clients) => PDFBuild.clientReport(route, credential, clients))
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow() 

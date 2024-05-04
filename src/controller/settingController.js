@@ -20,10 +20,10 @@ const getCredential = async () => {
     }
 }
 const updateCredential = async (credential) => {
-    const {empresa, telefono, direccion} = credential
+    const {id, empresa, telefono, direccion} = credential
     try {
-        const sqlQuery = `update configuracion set empresa = ?, telefono = ?, direccion = ?`
-        await connectdb.query(sqlQuery, [empresa, telefono, direccion])
+        const sqlQuery = `update configuracion set empresa = ?, telefono = ?, direccion = ? where id = ?`
+        await connectdb.query(sqlQuery, [empresa, telefono, direccion, id])
         return true
      } catch (error) {
         console.log(error)

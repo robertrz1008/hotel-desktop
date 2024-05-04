@@ -19,7 +19,6 @@ const direccionDiv = setDiv("credencial-text-con");
 const empresaText = setTitleOrP("p", "Las venturas");
 const telefonoText = setTitleOrP("p", "0987675678");
 const direccionText = setTitleOrP("p", "Madhattan");
-const tfPDFPath = setInputForm("Ruta para documentos PDF");
 const btnDiv = setDiv("setting-btn-con");
 const btnAdd = setButton("Modificar", "btn-form-add");
 
@@ -27,7 +26,17 @@ export const tfEmpresa = setInputForm("Empresa", " ");
 export const tfTelefono = setInputForm("Telefono", " ");
 export const tfDireccion = setInputForm("Direccion", " ");
 
-let credential;
+const pathTTitle = setTitleOrP("h4", "Ruta para generacion de ruta");
+const pathDiv = setDiv("route-con")
+const tfPathDiv = setDiv("tfrouter-con")
+const tfPath = setInputForm("", "text", "")
+const btnPath = setButton("Definir", "btn-form-add");
+
+export let credential;
+export let pathPDF;
+let credentialId;
+let pathId;
+
 
 async function renderCredential() {
     credential = await getCredentialRequest()
@@ -35,6 +44,38 @@ async function renderCredential() {
     empresaText.textContent = credential[0].empresa
     telefonoText.textContent = credential[0].telefono
     direccionText.textContent = credential[0].direccion
+    credentialId = credential[0].id
+
+    if(credential.length == 2){
+      pathPDF = credential[1].direccion
+      tfPath.lastElementChild.firstElementChild.value = pathPDF
+      pathId = credential[1].id
+    }
+}
+
+async function definirRuta(path){
+  const response = await createCredentialRequest({
+    empresa: "+++++++",
+    telefono: "++++++++",
+    direccion: path.replace(/\\/g, "/")
+  });
+
+  if (!response) return console.log("error");
+
+  clear();
+  renderCredential()
+}
+async function updatePath(path){
+  const response = await updateCredentialRequest({
+    id: pathId,
+    empresa: "+++++++",
+    telefono: "++++++++",
+    direccion: path.replace(/\\/g, "/")
+  });
+  if (!response) return console.log("error");
+
+  clear();
+  renderCredential()
 }
 
 function clear() {
@@ -74,14 +115,22 @@ function settingTemplate() {
     updateMode()
     openModalForm(credentialForm("Modificar", "btn-form-upd"))
   })
+  btnPath.addEventListener("click", () => {
+    if(pathId) return updatePath(tfPath.lastElementChild.firstElementChild.value)
+      definirRuta(tfPath.lastElementChild.firstElementChild.value)
+
+  })
 
   appendChildList(empresaDiv, [empresaTitle, empresaText]);
   appendChildList(telefonoDiv, [telefonoTitle, telefonoText]);
   appendChildList(direccionDiv, [direccionTitle, direccionText]);
 
+  appendChildList(tfPathDiv, [tfPath])
+  appendChildList(pathDiv, [tfPathDiv, btnPath])
+
   appendChildList(credentialTextsDiv, [empresaDiv, telefonoDiv, direccionDiv]);
   appendChildList(credentialDiv, [credentialTextsDiv]);
-  appendChildList(formDiv, [credentialTitle, credentialDiv, btnDiv]);
+  appendChildList(formDiv, [credentialTitle, credentialDiv, btnDiv, pathTTitle, pathDiv]);
   appendChildList(div, [titleDiv, formDiv]);
 
   return div;

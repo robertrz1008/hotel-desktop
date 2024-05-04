@@ -1,0 +1,1 @@
+export const clientReportRequest = (route, credential, clients) => window.ipcApi.clientReport(route, credential, clients)

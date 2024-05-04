@@ -83,7 +83,6 @@ const clientsListed = async(filter) => {
         script += `and apellido between "${filtro.lastNameDesde}" and "${filtro.lastNameHasta}" `
     }
     script += `order by ${orderobj[filtro.orderBy]} ${orderDirection[filtro.order]}`
-    console.log(script)
     return script
   }
   try {
