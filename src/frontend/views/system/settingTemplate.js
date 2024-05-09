@@ -26,15 +26,15 @@ export const tfEmpresa = setInputForm("Empresa", " ");
 export const tfTelefono = setInputForm("Telefono", " ");
 export const tfDireccion = setInputForm("Direccion", " ");
 
-const pathTTitle = setTitleOrP("h4", "Ruta para generacion de ruta");
+const pathTTitle = setTitleOrP("h4", "Ruta para generacion de reportes");
 const pathDiv = setDiv("route-con")
 const tfPathDiv = setDiv("tfrouter-con")
 const tfPath = setInputForm("", "text", "")
 const btnPath = setButton("Definir", "btn-form-add");
 
 export let credential;
-export let pathPDF;
-let credentialId;
+export let pathPDF= "";
+export let credentialId;
 let pathId;
 
 
@@ -55,6 +55,7 @@ async function renderCredential() {
 
 async function definirRuta(path){
   const response = await createCredentialRequest({
+    id: credentialId,
     empresa: "+++++++",
     telefono: "++++++++",
     direccion: path.replace(/\\/g, "/")
@@ -118,7 +119,6 @@ function settingTemplate() {
   btnPath.addEventListener("click", () => {
     if(pathId) return updatePath(tfPath.lastElementChild.firstElementChild.value)
       definirRuta(tfPath.lastElementChild.firstElementChild.value)
-
   })
 
   appendChildList(empresaDiv, [empresaTitle, empresaText]);

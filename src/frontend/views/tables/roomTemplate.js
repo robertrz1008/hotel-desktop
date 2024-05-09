@@ -3,6 +3,7 @@ import { closeModal } from "../../Components/modal.js"
 import { getProcessRequest } from "../../api/processRequest.js"
 import { createRoomRequest, deleteRoomRequest, getRoomsByFilterRequest, getRoomsRequest, updateRoomRequest } from "../../api/roomRequest.js"
 import roomTable from "../../components/tables/roomTable.js"
+import { tablesCountFromHome } from "../home.js"
 
 const div = setDiv("area-table-con")
 const titleDiv = setDiv("title-con")
@@ -82,6 +83,7 @@ export const createRoom = async(room) =>{
     renderList()
     clearform()
     closeModal()
+    tablesCountFromHome()
 }
 
 export const deleteRoom = async(id) => {
@@ -97,6 +99,7 @@ export const getRoomsByFilter = async (filter) => {
     roomsFound = await getRoomsByFilterRequest(filter)
 
     if(!roomsFound) throw new Error("501 error")
+    tablesCountFromHome()
 }
 
 function roomTemplate(){

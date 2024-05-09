@@ -8,6 +8,7 @@ import detailServicesList from "../../components/list/detailServiceList.js"
 import clientModalSearch from "../../components/modalSearch/clientModalSearch.js"
 import roomModalSearch from "../../components/modalSearch/roomModalSearch.js"
 import processTable from "../../components/tables/processTable.js"
+import { tablesCountFromHome } from "../home.js"
 import { getRoomByState } from "../tables/roomTemplate.js"
 
 
@@ -241,6 +242,7 @@ async function createProcess(){
     const stayId = stayresponse[0].id
     
     getRoomByState()
+    tablesCountFromHome()
 
     if(detailServices.length == 0) return clear()
 

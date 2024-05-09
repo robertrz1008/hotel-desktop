@@ -13,7 +13,7 @@ function clientListedTemplate(){
     const formTitle = setTitleOrP("h3", "Filtro de datos para listado de Clientes")
 
     const rangoDiv = setDiv("form-rango-con")
-    const rengoTitle = setTitleOrP("h3", "Rangos")
+    const rengoTitle = setTitleOrP("h3", "Filtros")
     const rangoDivName = setDiv("form-rangosub-con")
     const rangoDivLasName = setDiv("form-rangosub-con")
     const rangoDivId = setDiv("form-rangosub-con")
@@ -59,7 +59,9 @@ function clientListedTemplate(){
         inputSelectOrder.value= "1"
     }
     async function clientReportBuild(route, credential, clients){
-        await clientReportRequest(route, credential, clients)
+        const response = await clientReportRequest(route, credential, clients)
+
+        if(!response) throw new Error("no se ha podido generar el reporte")
 
         closeModalForm()
     }

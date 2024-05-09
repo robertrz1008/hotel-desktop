@@ -1,6 +1,7 @@
 
 const connectdb = require("../db/conectiondb.js")
 const conectiondb = require("../db/conectiondb.js")
+const { leftLetter, nextLetter } = require("../lib/date.js")
 
 const getClients = async () =>{
   try {
@@ -63,7 +64,7 @@ const clientsListed = async(filter) => {
 
     const orderobj={
         "1":"Id",
-        "2": "nombre, apellido",
+        "2": "nombre",
         "3": "direccion"
     }
     const orderDirection = {
@@ -77,10 +78,10 @@ const clientsListed = async(filter) => {
         script += `and id between ${filtro.idDesde} and ${filtro.idHasta} `
     }
     if(filtro.nameDesde && filtro.nameHasta){
-        script += `and nombre between "${filtro.nameDesde}" and "${filtro.nameHasta}" `
+        script += `and nombre between "${filtro.nameDesde}" and "${nextLetter(filtro.nameHasta)}" `
     }
     if(filtro.lastNameDesde && filtro.lastNameHasta){
-        script += `and apellido between "${filtro.lastNameDesde}" and "${filtro.lastNameHasta}" `
+        script += `and apellido between "${filtro.lastNameDesde}" and "${nextLetter(filtro.lastNameHasta)}" `
     }
     script += `order by ${orderobj[filtro.orderBy]} ${orderDirection[filtro.order]}`
     return script

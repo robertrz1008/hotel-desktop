@@ -1,4 +1,5 @@
 const connectdb = require("../db/conectiondb")
+const { nextLetter } = require("../lib/date")
 
 const createStay = async (stay, state) =>{
     const {cli_id, hab_id, total, estado, observacion, entrada} = stay
@@ -210,6 +211,64 @@ where cli.nombre like "%${filter}%"`
     }
 }
 
+const staysListed = async (filter) =>{
+    function query(filtro){
+        let script = ` select 
+            es.id,  
+            cli.id as "cliente_id",
+            cli.nombre, 
+            cli.apellido,
+            cli.cedula, 
+            hab.descripcion, 
+            hab.montoDia,
+            es.observacion,
+            es.estado, 
+            es.entrada, 
+            es.salida, 
+            es.observacion AS "est_observacion",
+            es.total
+        from estadias as es 
+            JOIN clientes as cli
+        on es.cli_id = cli.id
+            JOIN habitaciones as hab 
+        on es.hab_id = hab.id
+        where cli.nombre like "%%" ` 
+        const orderobj={
+            "1":"es.id",
+            "2": "cli.nombre",
+            "3": "hab.descripcion",
+            "4": "es.total",
+            "5": "es.entrada"
+        }
+        const orderDirection = {
+            "1":"asc",
+            "2": "desc",
+        }
+
+        if(filtro.fechaDesde && filtro.fechaHasta){
+            script += `and id between ${filtro.fechaDesde} and ${filtro.fechaHasta} `
+        }
+        if(filtro.clientDesde && filtro.clientHasta){
+            script += `and nombre between "${filtro.clientDesde}" and "${nextLetter(filtro.clientHasta)}" `
+        }
+        if(filtro.roomHasta && filtro.roomHasta){
+            script += `and apellido between "${filtro.roomHasta}" and "${nextLetter(filtro.roomHasta)}" `
+        }
+        if(filtro.state != 4){
+            script += `and es.estado = ${filtro.state} `
+        }
+        script += `order by ${orderobj[filtro.orderBy]} ${orderDirection[filtro.order]}`
+
+        return script
+    }
+    try {
+        const response = await connectdb.query(query(filter))
+        return response[0]
+      } catch (error) {
+        console.log(error)
+      }
+}
+
 module.exports = {
     createStay,
     updateStay,
@@ -221,5 +280,6 @@ module.exports = {
     getProcess,
     getProcessByStatus,
     getProcessByFilter,
-    getStays
+    getStays,
+    staysListed
 }

@@ -3,6 +3,7 @@ import clientListedTemplate from "../frontend/views/listed/ClientListed.js"
 import roomsListedTemplate from "../frontend/views/listed/roomListed.js"
 import servicesListedTemplate from "../frontend/views/listed/servicesListed.js"
 import stayProcessTemplate from "../frontend/views/processes/stayTemplate.js"
+import stayReportTemplate from "../frontend/views/reports/stayReportTemplate.js"
 import settingTemplate from "../frontend/views/system/settingTemplate.js"
 import clientTableTemplate from "../frontend/views/tables/clientTemplate.js"
 import roomTemplate from "../frontend/views/tables/roomTemplate.js"
@@ -62,9 +63,9 @@ const routes = [
         template: servicesListedTemplate()
     },
     {
-        route:hash.loanReport,
-        li: itensList.listed,
-        template: servicesListedTemplate()
+        route:hash.stayReport,
+        li: itensList.reports,
+        template: stayReportTemplate()
     },
 ]
 

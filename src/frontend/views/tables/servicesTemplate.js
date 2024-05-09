@@ -2,6 +2,7 @@ import {appendChildList, closeConfirmModal, closeModalForm, setDiv, setInputForm
 import { closeModal } from "../../Components/modal.js"
 import { createServiceRequest, deleteServiceRequest, getServicesByFilterRequest, getServicesRequest, updateServiceRequest } from "../../api/serviceRequest.js"
 import servicesTable from "../../components/tables/serviceTable.js"
+import { tablesCountFromHome } from "../home.js"
 
 const div = setDiv("area-table-con")
 const titleDiv = setDiv("title-con")
@@ -66,6 +67,7 @@ export const createService = async(service) =>{
     renderList()
     clearServiceform()
     closeModal()
+    tablesCountFromHome()
 }
 export const deleteService = async(id) => {
     const response = await deleteServiceRequest(id)
@@ -74,6 +76,7 @@ export const deleteService = async(id) => {
 
     renderList()
     closeConfirmModal()
+    tablesCountFromHome()
 }
 
 function servicesTemplate(){

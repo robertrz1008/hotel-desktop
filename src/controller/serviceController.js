@@ -1,4 +1,5 @@
 const conectiondb = require("../db/conectiondb.js")
+const { nextLetter } = require("../lib/date.js")
 
 const getServices = async () =>{
   try {
@@ -55,10 +56,46 @@ const getServicesByFilter = async (filter) =>{
   }
 }
 
+const servicesListed = async(filter) => {
+  function sqlQuiery(filtro){
+
+    const orderobj={
+        "1":"Id",
+        "2": "descripcion",
+        "3": "monto"
+    }
+    const orderDirection = {
+        "1":"asc",
+        "2": "desc",
+    }
+
+    let script = `select * from servicios where descripcion like "%%" `
+    
+    if(filtro.idDesde && filtro.idHasta){
+        script += `and id between ${filtro.idDesde} and ${filtro.idHasta} `
+    }
+    if(filtro.descriptionDesde && filtro.descriptionHasta){
+        script += `and descripcion between "${filtro.descriptionDesde}" and "${nextLetter(filtro.descriptionHasta)}" `
+    }
+    if(filtro.montoDesde && filtro.montoHasta){
+        script += `and monto between ${filtro.montoDesde} and ${filtro.montoHasta} `
+    }
+    script += `order by ${orderobj[filtro.orderBy]} ${orderDirection[filtro.order]}`
+    return script
+  }
+  try {
+    const response = await conectiondb.query(sqlQuiery(filter))
+    return response[0]
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   getServices,
   getServicesByFilter,
   createService,
   deleteService,
-  updateServices
+  updateServices,
+  servicesListed
 }

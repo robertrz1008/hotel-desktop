@@ -1,6 +1,6 @@
 import { appendChildList, closeModalForm, setButton, setDiv, setForm, setInputForm, setTitleOrP } from "../../../utils/functionsGlobal.js";
 import validateCredential from "../../schema/credentialShema.js";
-import { createCredential, tfDireccion, tfEmpresa, tfTelefono, updateCredential } from "../../views/system/settingTemplate.js";
+import { createCredential, credentialId, tfDireccion, tfEmpresa, tfTelefono, updateCredential } from "../../views/system/settingTemplate.js";
 
 function credentialForm(btnText, btnClass) {
     const form = setForm("area-form")
@@ -28,6 +28,7 @@ function credentialForm(btnText, btnClass) {
 
     function handleSubmit(){
         const credentialObj = {
+            id: credentialId,
             empresa: tfEmpresa.lastElementChild.firstElementChild.value,
             telefono: tfTelefono.lastElementChild.firstElementChild.value,
             direccion: tfDireccion.lastElementChild.firstElementChild.value

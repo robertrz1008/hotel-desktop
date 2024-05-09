@@ -1,7 +1,7 @@
 import { appendChildList, closeConfirmModal, setButton, setDiv, setIcon, setTitleOrP } from "../../../utils/functionsGlobal.js"
 
 function processMsg(msg){
-    const title = setTitleOrP("h2", "Error al crear la transaccion")
+    const title = setTitleOrP("h2", "Error")
     const messaage = setTitleOrP("h3", msg)
     const modalCon = setDiv("modalC-con")
     const btnDiv = setDiv("btn-form-con")

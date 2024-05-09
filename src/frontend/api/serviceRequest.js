@@ -8,3 +8,5 @@ export const createServiceRequest = (service) => window.ipcApi.createService(ser
 export const deleteServiceRequest = (id) => window.ipcApi.deleteService(id)
 
 export const updateServiceRequest = (service) => window.ipcApi.updateService(service)
+
+export const getServicesListedRequest = (filter) => window.ipcApi.servicesListed(filter)

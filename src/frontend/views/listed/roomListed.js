@@ -1,35 +1,38 @@
-import { appendChildList, setButton, setDiv, setInputForm, setInputSelect, setTitleOrP } from "../../../utils/functionsGlobal.js"
+import { appendChildList, closeModalForm, openModalForm, setButton, setDiv, setInputForm, setInputSelect, setTitleOrP } from "../../../utils/functionsGlobal.js"
+import { roomsReportRequest } from "../../api/reportPDFRequest.js"
+import { getRoomsListedRequest } from "../../api/roomRequest.js"
+import roomsReport from "../../components/ModalInfo/roomReport.js"
 
 function roomsListedTemplate(){
     const div = setDiv("area-table-con")
     const titleDiv = setDiv("title-con")
-    const title = setTitleOrP("h3", "Listado de Clientes")
+    const title = setTitleOrP("h3", "Listado de Habitaciones")
 
     const formDiv = setDiv("listed-form-con")
-    const formTitle = setTitleOrP("h3", "Filtro de datos para listado de Clientes")
+    const formTitle = setTitleOrP("h3", "Filtro de datos para listado de Habitaciones")
 
     const rangoDiv = setDiv("form-rango-con")
-    const rengoTitle = setTitleOrP("h3", "Rangos")
-    const rangoDivName = setDiv("form-rangosub-con")
-    const rangoDivLasName = setDiv("form-rangosub-con")
+    const rengoTitle = setTitleOrP("h3", "Filtros")
+    const rangoDivDescription = setDiv("form-rangosub-con")
+    const rangoDivMontoDia = setDiv("form-rangosub-con")
     const rangoDivId = setDiv("form-rangosub-con")
     const rangoDivIdTitle = setTitleOrP("h4", "Id")
-    const rangoDivNameTitle = setTitleOrP("h4", "Nombre")
-    const rangoDivLasNameTitle = setTitleOrP("h4", "Apellido")
+    const rangoDivDescriptionTitle = setTitleOrP("h4", "Descripcion")
+    const rangoDivMonsotDiaTitle = setTitleOrP("h4", "MontoDia")
     const tfIdDesde = setInputForm("Desde", "number", "")
     const tfIdHasta = setInputForm("Hasta", "number", "")
-    const tfNameDesde = setInputForm("Desde", "text", "")
-    const tfNameHasta = setInputForm("Hasta", "text", "")
-    const tfLastNameDesde = setInputForm("Desde", "text", "")
-    const tfLastNameHasta = setInputForm("Hasta", "text", "")
+    const tfDescriptionDesde = setInputForm("Desde", "text", "")
+    const tfDescriptionHasta = setInputForm("Hasta", "text", "")
+    const tfMontoDiaDesde = setInputForm("Desde", "number", "")
+    const tfMontoDiaHasta = setInputForm("Hasta", "number", "")
     const ordenTitle = setTitleOrP("h3", "Ordenamiento")
     const selectDiv = setDiv("form-select-con")
     const selectDiv1 = setDiv("lidted-form-select-div")
     const selectDiv2 = setDiv("lidted-form-select-div")
     const inputSelect = setInputSelect([
         {value: "1", name: "id"},
-        {value: "2", name: "Nombre y Apellido"},
-        {value: "3", name: "Direccion"}
+        {value: "2", name: "Descripcion"},
+        {value: "3", name: "MontoDia"}
     ])
     const inputSelectOrder = setInputSelect([
         {value: "1", name: "Ascendente"},
@@ -47,44 +50,44 @@ function roomsListedTemplate(){
     function clear(){
         tfIdDesde.lastElementChild.firstElementChild.value = "";
         tfIdHasta.lastElementChild.firstElementChild.value = ""
-        tfNameDesde.lastElementChild.firstElementChild.value =""
-        tfNameHasta.lastElementChild.firstElementChild.value = ""
-        tfLastNameDesde.lastElementChild.firstElementChild.value = ""
-        tfLastNameHasta.lastElementChild.firstElementChild.value = ""
+        tfDescriptionDesde.lastElementChild.firstElementChild.value =""
+        tfDescriptionHasta.lastElementChild.firstElementChild.value = ""
+        tfMontoDiaDesde.lastElementChild.firstElementChild.value = ""
+        tfMontoDiaHasta.lastElementChild.firstElementChild.value = ""
         inputSelect.value = "1"
         inputSelectOrder.value= "1"
     }
-    async function clientReportBuild(route, credential, clients){
-        await clientReportRequest(route, credential, clients)
+    async function roomReportBuild(route, credential, clients){
+        await roomsReportRequest(route, credential, clients)
 
         closeModalForm()
     }
-    async function getClientListed(filter){
-        listed= await getClientListedRequest(filter)
+    async function getRoomsListed(filter){
+        listed= await getRoomsListedRequest(filter)
         console.log(listed)
-        openModalForm(clientReport({ filter, listed, clientReportBuild}))
+        openModalForm(roomsReport({ filter, listed, roomReportBuild}))
     }
 
     btnAdd.addEventListener("click", () =>{
-        let clientFiltro ={
+        const roomFiltro ={
             idDesde: tfIdDesde.lastElementChild.firstElementChild.value,
             idHasta: tfIdHasta.lastElementChild.firstElementChild.value,
-            nameDesde: tfNameDesde.lastElementChild.firstElementChild.value,
-            nameHasta: tfNameHasta.lastElementChild.firstElementChild.value,
-            lastNameDesde: tfLastNameDesde.lastElementChild.firstElementChild.value,
-            lastNameHasta: tfLastNameHasta.lastElementChild.firstElementChild.value,
+            descriptionDesde: tfDescriptionDesde.lastElementChild.firstElementChild.value,
+            descriptionHasta: tfDescriptionHasta.lastElementChild.firstElementChild.value,
+            montoDiaDesde: tfMontoDiaDesde.lastElementChild.firstElementChild.value,
+            montoDiaHasta: tfMontoDiaHasta.lastElementChild.firstElementChild.value,
             orderBy: inputSelect.value,
             order: inputSelectOrder.value
         }
-        getClientListed(clientFiltro)
+        getRoomsListed(roomFiltro)
     })
     btnClear.addEventListener("click", () => {
         clear()
     })
 
     appendChildList(rangoDivId,[rangoDivIdTitle, tfIdDesde, tfIdHasta])
-    appendChildList(rangoDivName,[rangoDivNameTitle, tfNameDesde, tfNameHasta])
-    appendChildList(rangoDivLasName,[rangoDivLasNameTitle, tfLastNameDesde, tfLastNameHasta])
+    appendChildList(rangoDivDescription,[rangoDivDescriptionTitle, tfDescriptionDesde, tfDescriptionHasta])
+    appendChildList(rangoDivMontoDia,[rangoDivMonsotDiaTitle, tfMontoDiaDesde, tfMontoDiaHasta])
 
     appendChildList(selectDiv1, [inputSelect])
     appendChildList(selectDiv2, [inputSelectOrder])
@@ -92,8 +95,9 @@ function roomsListedTemplate(){
 
     appendChildList(btnDiv, [btnClear,btnAdd])
     btnDiv1.appendChild(btnDiv)
-    appendChildList(rangoDiv, [rangoDivId, rangoDivName, rangoDivLasName])
+    appendChildList(rangoDiv, [rangoDivId, rangoDivDescription, rangoDivMontoDia])
     appendChildList(formDiv,[formTitle, rengoTitle, rangoDiv, ordenTitle, selectDiv, btnDiv1])
     appendChildList(div,[titleDiv, formDiv])
     return div
+}
 export default roomsListedTemplate

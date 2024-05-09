@@ -12,12 +12,14 @@ contextBridge.exposeInMainWorld('ipcApi', {
   updateClient: (area) => ipcRenderer.invoke("updateClient", area),
   verifyCedula: (cedula) => ipcRenderer.invoke("verifyCedula", cedula),
   verifyTelephone: (telefono) => ipcRenderer.invoke("verifyTelephone", telefono),
+  clientsListed: (filter) => ipcRenderer.invoke("clientsListed", (filter)),
 
   getServices: () => ipcRenderer.invoke("getServices"),
   getServicesbyFilter: (filter) => ipcRenderer.invoke("getServicesByFilter", filter),
   createService: (service) => ipcRenderer.invoke("createService", service),
   deleteService: (id) => ipcRenderer.invoke("deleteService", id),
   updateService: (service) => ipcRenderer.invoke("updateService", service),
+  servicesListed: (filter) => ipcRenderer.invoke("servicesListed", (filter)),
 
   getRooms: () => ipcRenderer.invoke("getRooms"),
   getRoomsByFilter: (filter) => ipcRenderer.invoke("getRoomsByFilter", filter),
@@ -25,6 +27,7 @@ contextBridge.exposeInMainWorld('ipcApi', {
   deleteRoom: (id) => ipcRenderer.invoke("deleteRoom", id),
   updateRoom: (room) => ipcRenderer.invoke("updateRoom", room),
   changeRoomState: (state) => ipcRenderer.invoke("changeRoomState", state),
+  roomsListed: (filter) => ipcRenderer.invoke("roomsListed", (filter)),
 
   createStay: (stay, state) => ipcRenderer.invoke("createStay", stay, state),
   updateStay: (stay) => ipcRenderer.invoke("updateStay", stay),
@@ -37,11 +40,16 @@ contextBridge.exposeInMainWorld('ipcApi', {
   getProcess: () => ipcRenderer.invoke("getProcess"),
   getProcessByStatus: (status) => ipcRenderer.invoke("getProcessByStatus", (status)),
   getProcessByFilter: (filter) => ipcRenderer.invoke("getProcessByFilter", (filter)),
+  staysListed: (filter) => ipcRenderer.invoke("staysListed", (filter)),
 
   createCredential: ( credential) =>  ipcRenderer.invoke("createCredential", credential),
   getCredential: () =>  ipcRenderer.invoke("getCredential"),
   updateCredential: ( credential) =>  ipcRenderer.invoke("updateCredential", credential),
-  clientsListed: (filter) => ipcRenderer.invoke("clientsListed", (filter)),
   
   clientReport: (route, credential, clients) =>  ipcRenderer.invoke("clientReport", route, credential, clients),
+  roomsReport: (route, credential, clients) =>  ipcRenderer.invoke("roomsReport", route, credential, clients),
+  servicesReport: (route, credential, clients) =>  ipcRenderer.invoke("servicesReport", route, credential, clients),
+  staysDetailedReport: (route, credential, stays) =>  ipcRenderer.invoke("staysDetailedReport", route, credential, stays),
+  staysSummarizedReport: (route, credential, stays) =>  ipcRenderer.invoke("staysSummarizedReport", route, credential, stays),
+
 })

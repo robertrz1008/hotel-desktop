@@ -1,4 +1,5 @@
 const conectiondb = require("../db/conectiondb.js")
+const { nextLetter } = require("../lib/date.js")
 
 const getRooms = async () =>{
   try {
@@ -70,11 +71,47 @@ const getRoomsByFilter = async (filter) =>{
   }
 }
 
+const roomsListed = async(filter) => {
+  function sqlQuiery(filtro){
+
+    const orderobj={
+        "1":"Id",
+        "2": "descripcion",
+        "3": "montoDia"
+    }
+    const orderDirection = {
+        "1":"asc",
+        "2": "desc",
+    }
+
+    let script = `select * from habitaciones where descripcion like "%%" `
+    
+    if(filtro.idDesde && filtro.idHasta){
+        script += `and id between ${filtro.idDesde} and ${filtro.idHasta} `
+    }
+    if(filtro.descriptionDesde && filtro.descriptionHasta){
+        script += `and descripcion between "${filtro.descriptionDesde}" and "${nextLetter(filtro.descriptionHasta)}" `
+    }
+    if(filtro.montoDiaDesde && filtro.montoDiaHasta){
+        script += `and montoDia between ${filtro.montoDiaDesde} and ${filtro.montoDiaHasta} `
+    }
+    script += `order by ${orderobj[filtro.orderBy]} ${orderDirection[filtro.order]}`
+    return script
+  }
+  try {
+    const response = await conectiondb.query(sqlQuiery(filter))
+    return response[0]
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   getRooms,
   getRoomsByFilter,
   createRoom,
   deleteRoom,
   updateRoom,
-  changeRoomState
+  changeRoomState,
+  roomsListed
 }

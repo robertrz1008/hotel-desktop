@@ -18,3 +18,6 @@ export const getProcessByStatusRequest = (status) => window.ipcApi.getProcessByS
 
 export const getProcessByFilterRequest = (filter) => window.ipcApi.getProcessByFilter(filter)
 
+export const getStaysListedRequest = (filter) => window.ipcApi.staysListed(filter)
+
+

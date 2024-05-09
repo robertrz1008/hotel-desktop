@@ -20,9 +20,7 @@ export const hash = {
     clientsList: "#/clientsListed",
     roomsList: "#/roomsListed",
     servicesList: "#/servicesListed",
-    areaList: "#/areaList",
-    loanReport: "#/loanReport",
-    debtsReport: "#/debtsReport",
+    stayReport: "#/staysReport",
 
     dataInit: "#/datesInit",
     setting: "#/settings"

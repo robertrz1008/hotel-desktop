@@ -216,6 +216,7 @@ tr:hover{
 .setting-con{
     width: 89%;
     padding: 10px;
+    border-radius: 3px;
     background-color: white;
     box-shadow: 0 0 2px gray;
 }
@@ -254,6 +255,9 @@ tr:hover{
 .tfrouter-con{
     width: 80%;
 }
+
+
+
 
 .process-btn-con{
     width: 100%;

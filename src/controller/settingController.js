@@ -24,6 +24,7 @@ const updateCredential = async (credential) => {
     try {
         const sqlQuery = `update configuracion set empresa = ?, telefono = ?, direccion = ? where id = ?`
         await connectdb.query(sqlQuery, [empresa, telefono, direccion, id])
+        console.log("se ha modificado los datos de la empresa")
         return true
      } catch (error) {
         console.log(error)

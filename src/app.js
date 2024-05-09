@@ -27,6 +27,7 @@ app.whenReady().then(() => {
   ipcMain.handle("deleteService", (event,id) => serviceController.deleteService(id))
   ipcMain.handle("updateService", (event,service) => serviceController.updateServices(service))
   ipcMain.handle("getServicesByFilter", (event,filter) => serviceController.getServicesByFilter(filter))
+  ipcMain.handle("servicesListed", (event, filter) => serviceController.servicesListed(filter))
 
   ipcMain.handle("getRooms", () => roomsController.getRooms())
   ipcMain.handle("getRoomsByFilter", (event, filter) => roomsController.getRoomsByFilter(filter))
@@ -34,6 +35,7 @@ app.whenReady().then(() => {
   ipcMain.handle("deleteRoom", (event, id) => roomsController.deleteRoom(id))
   ipcMain.handle("updateRoom", (event, room) => roomsController.updateRoom(room))
   ipcMain.handle("changeRoomState", (event, state) => roomsController.changeRoomState(state))
+  ipcMain.handle("roomsListed", (event, filter) => roomsController.roomsListed(filter))
 
   ipcMain.handle("createStay", (event, stay, state) => processController.createStay(stay, state))
   ipcMain.handle("updateStay", (event, stay) => processController.updateStay(stay))
@@ -46,6 +48,7 @@ app.whenReady().then(() => {
   ipcMain.handle("getProcess", () => processController.getProcess())
   ipcMain.handle("getProcessByStatus", (event, status) => processController.getProcessByStatus(status))
   ipcMain.handle("getProcessByFilter", (event, filter) => processController.getProcessByFilter(filter))
+  ipcMain.handle("staysListed", (event, filter) => processController.staysListed(filter))
 
   ipcMain.handle("createCredential", (event, crendetial) => settingController.createCredential(crendetial))
   ipcMain.handle("getCredential", () => settingController.getCredential())
@@ -53,6 +56,11 @@ app.whenReady().then(() => {
 
   //PDFBuild
   ipcMain.handle("clientReport", (event, route, credential, clients) => PDFBuild.clientReport(route, credential, clients))
+  ipcMain.handle("roomsReport", (event, route, credential, clients) => PDFBuild.roomsReport(route, credential, clients))
+  ipcMain.handle("servicesReport", (event, route, credential, clients) => PDFBuild.servicesReport(route, credential, clients))
+  ipcMain.handle("staysDetailedReport", (event, route, credential, clients) => PDFBuild.staysDetailedReport(route, credential, clients))
+  ipcMain.handle("staysSummarizedReport", (event, route, credential, clients) => PDFBuild.staysSummarizedReport(route, credential, clients))
+
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow() 

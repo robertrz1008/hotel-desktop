@@ -81,7 +81,6 @@ alter table habitaciones add COLUMN estado INT DEFAULT 1;
         cli.id as "cliente_id",
         cli.nombre, 
         cli.apellido, 
-        cli.cedula, 
         hab.id as "habitacion_id",
         hab.descripcion, 
         hab.montoDia,
@@ -97,6 +96,10 @@ alter table habitaciones add COLUMN estado INT DEFAULT 1;
     on es.cli_id = cli.id
         JOIN habitaciones as hab 
     on es.hab_id = hab.id
-    where cli.nombre like "%rob%"
-    order by id;
+    where cli.nombre BETWEEN "j" and "s" AND
+     es.entrada BETWEEN "24-04-11 " AND "24-05-12" AND
+     hab.descripcion BETWEEN "habitacion 2" AND "habitacion 4" AND
+     es.estado = 3
+    ORDER BY cli.nombre ASC
+    ;
     `

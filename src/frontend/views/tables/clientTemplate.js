@@ -1,8 +1,8 @@
 import {appendChildList, closeConfirmModal, openConfirmModal, setDiv, setInputForm, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { openModal, closeModal } from "../../Components/modal.js"
-import { closeCnfModal } from "../../Components/comfirmModal.js"
 import { getClientsRequest,createClientRequest, updateClientRequest, getClientByFilterRequest, verifyCedula, verifyTelephone, deleteClientRequest } from "../../api/clientRequest.js"
 import clientsTable from "../../components/tables/clientTable.js"
+import { tablesCountFromHome } from "../home.js"
 
 const div = setDiv("area-table-con")
 const titleDiv = setDiv("title-con")
@@ -46,6 +46,7 @@ export const deleteClientById = async (id) => {
 
     renderList()
     closeConfirmModal()
+    tablesCountFromHome()
 }
 
 export const getClientByFilter = async (filter) => {
@@ -85,6 +86,7 @@ export const createClient = async(client) =>{
     renderList()
     clearform()
     closeModal()
+    tablesCountFromHome()
 }
 
 export const verifyDates = async() => {
