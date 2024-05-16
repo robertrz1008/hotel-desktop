@@ -25,7 +25,7 @@ function processDetailModal(stay){
     const entradaDate = formatDate(stay.entrada)
     const salidaDate = formatDate(stay.salida)
 
-    const title  = setTitleOrP("h3", "Detalles de la estadia")
+    const title  = setTitleOrP("h4", "Detalles de la estadia")
     const clientT = stay.nombre + " "+ stay.apellido
     const clientName = setDetailText("Cliente", clientT)
     const estado = setDetailText("Estado", formatStatus(stay.estado))

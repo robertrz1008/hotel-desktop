@@ -1,4 +1,4 @@
-import {appendChildList, closeConfirmModal, openConfirmModal, setButton, setDiv,  setInputForm, setInputSelect, setTextArea, setTitleOrP, setTogleButton, } from "../../../utils/functionsGlobal.js"
+import {appendChildList, closeConfirmModal, openConfirmModal, replaceClass, setButton, setDiv,  setInputForm, setInputSelect, setTextArea, setTitleOrP, setTogleButton, } from "../../../utils/functionsGlobal.js"
 import formatDate, { setDate } from "../../../utils/getDate.js"
 import { createDetailRequest, createStayRequest, deleteDetailRequest, getDetailsByStayRequest, getProcessByStatusRequest, getProcessRequest, stayFinalizedRequest, updateDetailRequest, updateStayRequest, } from "../../api/processRequest.js"
 import processMsg from "../../components/confirmContext/processMessage.js"
@@ -171,14 +171,27 @@ export async function updateDetailFromDB(id, amount){
     renderList()
     
 }
+
+function buttonEnabled(){
+    clientBtn.disabled = false
+    roomBtn.disabled = false
+    replaceClass(clientBtn, "process-btn-disabled", "process-btn")
+    replaceClass(roomBtn, "process-btn-disabled", "process-btn")
+}
+function buttonDisabled(){
+    clientBtn.disabled = true
+    roomBtn.disabled = true
+    replaceClass(clientBtn, "process-btn", "process-btn-disabled")
+    replaceClass(roomBtn,"process-btn", "process-btn-disabled", )
+}
+
 //process functions
 function clear() {
     updateMode = false
     entryP.textContent = "Entrada"
     clientText.textContent = "Cliente"
     roomText.textContent = "habitacion"
-    clientBtn.disabled = false
-    roomBtn.disabled = false
+    buttonEnabled() //activando los botones
     inputSelect.value = "0"
     tfObservacion.lastElementChild.firstElementChild.value = ""
     tfDate.lastElementChild.firstElementChild.disabled = true
@@ -295,6 +308,7 @@ export async function udpateProcessMode(process){
     roomBtn.disabled = true
     inputSelect.value = process.estado
     tfObservacion.lastElementChild.firstElementChild.value = process.observacion
+    buttonDisabled()
 
     if(process.estado == "0"){
         stayState = "Ocupado"

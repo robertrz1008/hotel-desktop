@@ -13,7 +13,7 @@ function  staySummarizedReportTable( div,list ){
 
     //cabezera de la tabla
 
-    appendThList(tr, ["Id", "Cliente","Habitacion", "Estado", "Entrada", "total"])
+    appendThList(tr, ["Id", "Cliente","Habitacion", "Estado", "Entrada", "Total", "Cons."])
     tHead.appendChild(tr)
     table.appendChild(tHead)
     tr.className = "table-head"

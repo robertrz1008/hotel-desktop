@@ -5,7 +5,7 @@ import {createRoom, idRoom, tfDescripcion, tfMontoDia, tfobservacion, updateRoom
 
 function roomForm(btnText, btnClass) {
     const form = setForm("area-form")
-    const title = setTitleOrP("H2", "Datos de la habitacion")
+    const title = setTitleOrP("H4", "Datos de la habitacion")
     const btnDiv = setDiv("btn-form-con")
     //botones
     const btnSubmit = document.createElement("button")

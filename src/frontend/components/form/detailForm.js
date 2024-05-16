@@ -39,7 +39,7 @@ function detailForm({ formServicesDiv, addService, detailServices }) {
 
     moneyDiv.appendChild(moneyP)
     appendChildList(togleMoneyDiv, [
-        tbIsActive,
+        // tbIsActive,
         moneyDiv
     ])
     appendChildList(btnDiv, [

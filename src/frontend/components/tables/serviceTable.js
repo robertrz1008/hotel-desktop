@@ -18,7 +18,7 @@ function  servicesTable(parent, services){
     
 
     //cabezera de la tabla
-    appendThList(tr, ["id", "descripcion", "Monto", "Observacion", "Accion"])
+    appendThList(tr, ["Id", "descripcion", "Observacion", "Monto","Accion"])
     tHead.appendChild(tr)
     table.appendChild(tHead)
     tr.className = "table-head"

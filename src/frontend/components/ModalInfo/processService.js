@@ -4,7 +4,7 @@ import detailServiceInfoTable from "../tables/ServiceDetailInfoTable.js";
 
 function processServiceInfo( stayId){
     const div = setDiv("process-service-info-con")
-    const title = setTitleOrP("h4", "Servicios realizados")
+    const title = setTitleOrP("h4", "Consumiciones realizados")
     const tablediv = setDiv("process-table-con")
 
     let servicesFound = []

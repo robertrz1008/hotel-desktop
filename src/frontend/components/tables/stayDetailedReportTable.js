@@ -10,7 +10,7 @@ function  stayDetailedReportTable( div,list ){
     const tbody = document.createElement("tbody")
     const tr = document.createElement("tr")
 
-    table.innerHTML = ""
+    table.innerHTML = "" 
 
     //cabezera de la tabla
 

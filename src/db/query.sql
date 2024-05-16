@@ -69,37 +69,26 @@ select * from detalles;
 
 alter table habitaciones add COLUMN estado INT DEFAULT 1;
 
-
- select det.id, det.estadia_id, ser.descripcion, det.cantidad , det.costo, det.subtotal 
-        from servicios as ser join detalles as det 
-        on ser.id = det.servicio_id 
-        where det.estadia_id = 43;
+delete from clientes where id >41;
 
 
-        select 
-        es.id,  
-        cli.id as "cliente_id",
-        cli.nombre, 
-        cli.apellido, 
-        hab.id as "habitacion_id",
-        hab.descripcion, 
-        hab.montoDia,
-        es.entrada, 
-        es.observacion,
-        es.estado, 
-        es.entrada, 
-        es.salida, 
-        es.observacion AS "est_observacion",
-        es.total
-    from estadias as es 
-        JOIN clientes as cli
-    on es.cli_id = cli.id
-        JOIN habitaciones as hab 
-    on es.hab_id = hab.id
-    where cli.nombre BETWEEN "j" and "s" AND
-     es.entrada BETWEEN "24-04-11 " AND "24-05-12" AND
-     hab.descripcion BETWEEN "habitacion 2" AND "habitacion 4" AND
-     es.estado = 3
-    ORDER BY cli.nombre ASC
-    ;
-    `
+ select 
+            es.id,
+            cli.id as "cliente_id",
+            cli.nombre,
+            cli.apellido,
+            cli.cedula,
+            hab.descripcion,
+            hab.montoDia,
+            es.observacion,
+            es.estado,
+            es.entrada,
+            es.salida,
+            es.observacion AS "est_observacion",
+            es.total
+        from estadias as es
+            JOIN clientes as cli
+        on es.cli_id = cli.id
+            JOIN habitaciones as hab
+        on es.hab_id = hab.id
+        where cli.nombre like "%%" and es.entrada between "2024-05-11" and "2024-05-12" order by es.id asc

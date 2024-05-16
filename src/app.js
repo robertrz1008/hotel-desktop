@@ -53,6 +53,7 @@ app.whenReady().then(() => {
   ipcMain.handle("createCredential", (event, crendetial) => settingController.createCredential(crendetial))
   ipcMain.handle("getCredential", () => settingController.getCredential())
   ipcMain.handle("updateCredential", (event, crendetial) => settingController.updateCredential(crendetial))
+  ipcMain.handle("clearDB", () => settingController.clearDB())
 
   //PDFBuild
   ipcMain.handle("clientReport", (event, route, credential, clients) => PDFBuild.clientReport(route, credential, clients))
@@ -60,7 +61,7 @@ app.whenReady().then(() => {
   ipcMain.handle("servicesReport", (event, route, credential, clients) => PDFBuild.servicesReport(route, credential, clients))
   ipcMain.handle("staysDetailedReport", (event, route, credential, clients) => PDFBuild.staysDetailedReport(route, credential, clients))
   ipcMain.handle("staysSummarizedReport", (event, route, credential, clients) => PDFBuild.staysSummarizedReport(route, credential, clients))
-
+  ipcMain.handle("detailservicesReport", (event, route, credential, stays, detailServices) => PDFBuild.detailservicesReport(route, credential, stays, detailServices))
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow() 

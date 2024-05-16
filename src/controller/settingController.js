@@ -31,9 +31,25 @@ const updateCredential = async (credential) => {
         return false
     }
 }
+const clearDB = async () => {
+    try {
+        await connectdb.query("delete from detalles")
+        await connectdb.query("delete from estadias")
+        await connectdb.query("delete from clientes")
+        await connectdb.query("delete from servicios")
+        await connectdb.query("delete from habitaciones")
+        await connectdb.query("delete from configuracion")
 
+        console.log("se ha borrado todos los datos")
+        return true
+     } catch (error) {
+        console.log(error)
+        return false
+    }
+}
 module.exports = {
     createCredential,
     getCredential,
     updateCredential,
+    clearDB
 }

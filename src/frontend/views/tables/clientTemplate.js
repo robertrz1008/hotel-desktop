@@ -1,6 +1,7 @@
 import {appendChildList, closeConfirmModal, openConfirmModal, setDiv, setInputForm, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { openModal, closeModal } from "../../Components/modal.js"
 import { getClientsRequest,createClientRequest, updateClientRequest, getClientByFilterRequest, verifyCedula, verifyTelephone, deleteClientRequest } from "../../api/clientRequest.js"
+import processMsg from "../../components/confirmContext/processMessage.js"
 import clientsTable from "../../components/tables/clientTable.js"
 import { tablesCountFromHome } from "../home.js"
 
@@ -42,7 +43,11 @@ export function clearform(){
 export const deleteClientById = async (id) => {
     const response = await deleteClientRequest(id)
 
-    if(!response) throw new Error("Hubo un problema al realizar la peticion a la db")
+    if(!response){
+        closeConfirmModal()
+        openConfirmModal(processMsg("Este cliente ya esta regsitrado en los reportes de movimientos"))
+        return 
+    }
 
     renderList()
     closeConfirmModal()

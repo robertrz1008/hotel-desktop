@@ -25,9 +25,33 @@ function nextLetter(letra) {
     codigo++;
     return String.fromCharCode(codigo);
   }
+  function obtenerFechaSiguiente(fechaStr) {
+    // Convertir la cadena de entrada en un objeto Date
+    const [yy, mm, dd] = fechaStr.split('-').map(Number);
+    const year = 2000 + yy;  // Asumiendo que los años son 20xx
+    const date = new Date(year, mm - 1, dd);
+
+    // Sumar un día a la fecha
+    date.setDate(date.getDate() + 1);
+
+    // Obtener los componentes de la nueva fecha
+    const newYy = String(date.getFullYear()).slice(-2);
+    const newMm = String(date.getMonth() + 1).padStart(2, '0');
+    const newDd = String(date.getDate()).padStart(2, '0');
+
+    // Formatear la nueva fecha como 'yy-mm-dd'
+    return `${newYy}-${newMm}-${newDd}`;
+}
+  
+  // Ejemplo de uso
+//   let fechaActual = new Date('2024-05-13');
+//   let fechaSiguiente = obtenerDiaSiguiente(fechaActual);
+  
+//   console.log(fechaSiguiente);
   
 
 module.exports = {
     getDate,
-    nextLetter
+    nextLetter,
+    obtenerFechaSiguiente
 }

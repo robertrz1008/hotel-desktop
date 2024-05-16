@@ -45,11 +45,12 @@ contextBridge.exposeInMainWorld('ipcApi', {
   createCredential: ( credential) =>  ipcRenderer.invoke("createCredential", credential),
   getCredential: () =>  ipcRenderer.invoke("getCredential"),
   updateCredential: ( credential) =>  ipcRenderer.invoke("updateCredential", credential),
+  clearDB: () =>  ipcRenderer.invoke("clearDB"),
   
   clientReport: (route, credential, clients) =>  ipcRenderer.invoke("clientReport", route, credential, clients),
   roomsReport: (route, credential, clients) =>  ipcRenderer.invoke("roomsReport", route, credential, clients),
   servicesReport: (route, credential, clients) =>  ipcRenderer.invoke("servicesReport", route, credential, clients),
   staysDetailedReport: (route, credential, stays) =>  ipcRenderer.invoke("staysDetailedReport", route, credential, stays),
   staysSummarizedReport: (route, credential, stays) =>  ipcRenderer.invoke("staysSummarizedReport", route, credential, stays),
-
+  detailservicesReport: (route, credential, stay, detailServices) =>  ipcRenderer.invoke("detailservicesReport", route, credential, stay,detailServices),
 })

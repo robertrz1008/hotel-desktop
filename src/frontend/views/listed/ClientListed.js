@@ -3,6 +3,7 @@ import { getClientListedRequest } from "../../api/clientRequest.js"
 import { clientReportRequest } from "../../api/reportPDFRequest.js"
 import clientReport from "../../components/ModalInfo/clientReport.js"
 import clientReportTable from "../../components/tables/clientReportTable.js"
+import { credential } from "../system/settingTemplate.js"
 
 function clientListedTemplate(){
     const div = setDiv("area-table-con")
@@ -10,10 +11,9 @@ function clientListedTemplate(){
     const title = setTitleOrP("h3", "Listado de Clientes")
 
     const formDiv = setDiv("listed-form-con")
-    const formTitle = setTitleOrP("h3", "Filtro de datos para listado de Clientes")
 
     const rangoDiv = setDiv("form-rango-con")
-    const rengoTitle = setTitleOrP("h3", "Filtros")
+    const rengoTitle = setTitleOrP("h4", "Filtros")
     const rangoDivName = setDiv("form-rangosub-con")
     const rangoDivLasName = setDiv("form-rangosub-con")
     const rangoDivId = setDiv("form-rangosub-con")
@@ -26,7 +26,7 @@ function clientListedTemplate(){
     const tfNameHasta = setInputForm("Hasta", "text", "")
     const tfLastNameDesde = setInputForm("Desde", "text", "")
     const tfLastNameHasta = setInputForm("Hasta", "text", "")
-    const ordenTitle = setTitleOrP("h3", "Ordenamiento")
+    const ordenTitle = setTitleOrP("h4", "Ordenamiento")
     const selectDiv = setDiv("form-select-con")
     const selectDiv1 = setDiv("lidted-form-select-div")
     const selectDiv2 = setDiv("lidted-form-select-div")
@@ -58,17 +58,18 @@ function clientListedTemplate(){
         inputSelect.value = "1"
         inputSelectOrder.value= "1"
     }
-    async function clientReportBuild(route, credential, clients){
-        const response = await clientReportRequest(route, credential, clients)
+    // async function clientReportBuild(route, credential, clients){
+    //     const response = await clientReportRequest(route, credential, clients)
 
-        if(!response) throw new Error("no se ha podido generar el reporte")
+    //     if(!response) throw new Error("no se ha podido generar el reporte")
 
-        closeModalForm()
-    }
+    //     closeModalForm()
+    // }
     async function getClientListed(filter){
         listed= await getClientListedRequest(filter)
-        console.log(listed)
-        openModalForm(clientReport({ filter, listed, clientReportBuild}))
+        const data = credential[0]
+        await clientReportRequest(data, listed)
+        // openModalForm(clientReport({ filter, listed, clientReportBuild}))
     }
 
     btnAdd.addEventListener("click", () =>{
@@ -99,7 +100,7 @@ function clientListedTemplate(){
     appendChildList(btnDiv, [btnClear,btnAdd])
     btnDiv1.appendChild(btnDiv)
     appendChildList(rangoDiv, [rangoDivId, rangoDivName, rangoDivLasName])
-    appendChildList(formDiv,[formTitle, rengoTitle, rangoDiv, ordenTitle, selectDiv, btnDiv1])
+    appendChildList(formDiv,[ rengoTitle, rangoDiv, ordenTitle, selectDiv, btnDiv1])
     appendChildList(div,[titleDiv, formDiv])
     return div
 }

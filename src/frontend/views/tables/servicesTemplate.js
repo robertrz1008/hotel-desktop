@@ -1,6 +1,7 @@
-import {appendChildList, closeConfirmModal, closeModalForm, setDiv, setInputForm, setTextArea, setTitleOrP, } from "../../../utils/functionsGlobal.js"
+import {appendChildList, closeConfirmModal, closeModalForm, openConfirmModal, setDiv, setInputForm, setTextArea, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { closeModal } from "../../Components/modal.js"
 import { createServiceRequest, deleteServiceRequest, getServicesByFilterRequest, getServicesRequest, updateServiceRequest } from "../../api/serviceRequest.js"
+import processMsg from "../../components/confirmContext/processMessage.js"
 import servicesTable from "../../components/tables/serviceTable.js"
 import { tablesCountFromHome } from "../home.js"
 
@@ -72,7 +73,11 @@ export const createService = async(service) =>{
 export const deleteService = async(id) => {
     const response = await deleteServiceRequest(id)
 
-    if(!response) throw new Error("NO se pudo eliminar el servicio")
+    if(!response){
+        closeConfirmModal()
+        openConfirmModal(processMsg("Este cliente ya esta regsitrado en los reportes de movimientos"))
+        return 
+    }
 
     renderList()
     closeConfirmModal()

@@ -22,7 +22,7 @@
 
 
   .process-con {
-    width: 98%;
+    width: 97%;
     height: 90%;
     padding: 10px;
     display: grid;
@@ -101,9 +101,18 @@
   color: white;
   cursor: pointer;
 }
+.process-btn-disabled{
+  width: 70px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(25, 122, 248, 0.5);
+  color: white;
+}
 .process-btn:hover{
   background-color: rgb(25, 110, 223);
 }
+
 .process-btn-add{
   width: 100%;
   height: 35px;
@@ -132,8 +141,9 @@
 
 .process-detail-btn{ 
   position: relative;
-  bottom: 25px;
-  left: 82%;
+  bottom: 24px;
+  left: 85%;
+  color: white;
 }
 /* detail service */
 .process-table-con{
@@ -195,11 +205,11 @@
   position: relative;
   display: flex;
   padding-left: 5px;
-  justify-content: space-between;
+  justify-content: end;
   bottom: 7px;
 }
 .money-con{
-  width: 200px;
+  width: 250px;
   height: 35px;
   color: green;
   background-color: #bdb5b5;
@@ -312,7 +322,7 @@
   height: 100%;
   margin-top: 30px;
 }
-.process-detail-section2 h3{
+.process-detail-section2 h4{
   font-family: sans-serif;
   color: rgb(44, 42, 42);
 }
@@ -336,15 +346,19 @@
 }
 .detail-text-con-title{
   font-family: sans-serif;
-  color: black;
+  color: rgb(51, 50, 50);
+
 }
 
 .detail-text-con-p{
   margin-top: 3px;
-  color: rgb(77, 74, 74);
+  font-weight: lighter;
 }
 
 .process-service-info-con{
   width: 300px;
   height: 400px;
+}
+.process-service-info-con h4{
+  color: rgb(51, 50, 50);
 }

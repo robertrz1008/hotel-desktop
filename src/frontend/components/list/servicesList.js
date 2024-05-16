@@ -21,6 +21,7 @@ function servicesList(parent,body, list){
         trB.className= "trb"
         td0.className = "td0"
         tdAction.className = "tdAction"
+        td2.className = "td-monto"
 
         appendChildList(tdAction, [
             iconDel,
@@ -43,8 +44,8 @@ function servicesList(parent,body, list){
         appendChildList(trB, [
             td0,
             td,
-            td2,
             td3,
+            td2,
             tdAction
         ])
         body.appendChild(trB)

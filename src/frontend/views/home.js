@@ -3,12 +3,10 @@ import {
   appendChildList,
   navigation,
   setBoxLink,
-  setButtonLink,
   setDiv,
   setTitleOrP,
 } from "../../utils/functionsGlobal.js";
 import router from "../../router/router.js";
-import { clientsLength } from "../schema/entityCount.js";
 import { getClientsRequest } from "../api/clientRequest.js";
 import { getServicesRequest } from "../api/serviceRequest.js";
 import { getRoomsRequest } from "../api/roomRequest.js";
@@ -16,7 +14,7 @@ import { getProcessRequest } from "../api/processRequest.js";
 
 const div = setDiv("home-table-con");
 const titleDiv = setDiv("title-con");
-const title = setTitleOrP("h2", "Inicio del Sistema");
+const title = setTitleOrP("h3", "Inicio del Sistema");
 const name = setTitleOrP("P", "© 2024 | Roberto Ramirez - Facitec");
 name.className = "copy-text";
 
@@ -50,24 +48,9 @@ const appName = setTitleOrP("h2", "RoomsSys 1.1");
 const devName = setTitleOrP("h3", "Desarrollador: Roberto Ramirez");
 const appTextDiv = setDiv("app-text-con");
 
-function isNumber(client, service, room, stay) {
-  if (!Boolean(client)) {
-    client = [];
-  }
-  if (!Boolean(service)) {
-    service = [];
-  }
-  if (!Boolean(room)) {
-    room = [];
-  }
-  if (!Boolean(stay)) {
-    stay = [];
-  }
-}
-
 export async function tablesCountFromHome() {
   linksDiv.innerHTML = ""
- try {
+
    let clientC = await getClientsRequest();
    let serviceC = await getServicesRequest();
    let roomC = await getRoomsRequest();
@@ -78,10 +61,6 @@ export async function tablesCountFromHome() {
    booksLink.firstElementChild.firstElementChild.textContent = roomC.length;
    areaLink.firstElementChild.firstElementChild.textContent = stayC.length;
  
-   appendChildList(linksDiv, [roadersLink, booksLink, servicesLink, areaLink]);
- } catch (error) {
-  appendChildList(linksDiv, [roadersLink, booksLink, servicesLink, areaLink]);
- }
 }
 
 export default function homeTemplate() {
@@ -100,6 +79,9 @@ export default function homeTemplate() {
     servicesLink.addEventListener("click", () => {
       navigate(hash.servicesTable);
     });
+    areaLink.addEventListener("click", () => {
+      navigate(hash.stayProcess);
+    });
   }
 
   events();
@@ -108,7 +90,7 @@ export default function homeTemplate() {
   appendChildList(appTextDiv, [appName, devName]);
 
   titleDiv.appendChild(title);
-
+  appendChildList(linksDiv, [roadersLink, booksLink, servicesLink, areaLink]);
   appendChildList(div, [titleDiv, linksDiv, appTextDiv, name]);
 
   return div;

@@ -1,14 +1,16 @@
 import { appendChildList, closeModalForm, openModalForm, setButton, setDiv, setInputForm, setInputSelect, setTitleOrP } from "../../../utils/functionsGlobal.js"
 import { getClientListedRequest } from "../../api/clientRequest.js"
 import { getDetailsByStayRequest, getStaysListedRequest } from "../../api/processRequest.js"
-import { staysDetailedReportRequest, staysSummarizedReportRequest } from "../../api/reportPDFRequest.js"
+import { detailservicesReportRequest, staysDetailedReportRequest, staysSummarizedReportRequest } from "../../api/reportPDFRequest.js"
 import staysDetiledReport from "../../components/ModalInfo/stayDetailedReport.js"
 import staysSummarizedReport from "../../components/ModalInfo/staySummarizedReport.js"
+import { credential, pathPDF } from "../system/settingTemplate.js"
 
 export async function detailServiceReportBuild(stay){
     const detailServices = await getDetailsByStayRequest(stay.id)
     console.log(stay)
-    console.log(detailServices)
+    await detailservicesReportRequest(pathPDF, credential[0], stay, detailServices)
+    closeModalForm()
 }
 
 function stayReportTemplate(){
@@ -79,7 +81,7 @@ function stayReportTemplate(){
         tfClienteHasta.lastElementChild.firstElementChild.value = ""
         tfRoomDesde.lastElementChild.firstElementChild.value = ""
         tfRoomHasta.lastElementChild.firstElementChild.value = ""
-        stateSelect.value= "1"
+        stateSelect.value= "0"
         inputSelect.value = "1"
         inputSelectOrder.value = "1"
 
@@ -120,6 +122,7 @@ function stayReportTemplate(){
             orderBy: inputSelect.value,
             order: inputSelectOrder.value,
         }
+        console.log(filters)
         hanldeListed(filters)
     })
     btnClear.addEventListener("click", () => {

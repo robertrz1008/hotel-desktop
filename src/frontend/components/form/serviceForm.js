@@ -4,7 +4,7 @@ import {tfMonto, tfobservacion, tfDescripcion, clearServiceform, createService, 
 
 function serviceForm(btnText, btnClass) {
     const form = setForm("area-form")
-    const title = setTitleOrP("H2", "Datos del Servicio")
+    const title = setTitleOrP("H3", "Datos del Servicio")
     const btnDiv = setDiv("btn-form-con")
     const alertDiv = setDiv("")
     //botones

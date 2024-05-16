@@ -1,5 +1,4 @@
-import { hashTxt } from "../../utils/validator.js"
-import { verificationMesages, verifyDates } from "../views/tables/clientTemplate.js";
+import { hashNumber, hashTxt } from "../../utils/validator.js"
 
 function validateService(descripcion, monto, observacion){
 
@@ -10,7 +9,10 @@ function validateService(descripcion, monto, observacion){
     });
     
     const vDireccion = hashTxt(descripcion, "La descripcion es requerida")
-    const vMonto = hashTxt(monto, "El monto es requerido")
+    const vMonto = hashNumber(monto, {
+        void: "El monto es requirido",
+        zero: "Ingresa un monto valido"
+    })
     const vObservacion = hashTxt(observacion, "La observacion es requerida")
 
     const items = [vDireccion, vMonto, vObservacion]

@@ -1,34 +1,37 @@
 import { appendChildList, closeConfirmModal, setButton, setDiv, setIcon, setTitleOrP } from "../../../utils/functionsGlobal.js"
 
-function processMsg(msg){
-    const title = setTitleOrP("h2", "Error")
-    const messaage = setTitleOrP("h3", msg)
+export default function clearDBContext({clearDB}){
+    const messaage = setTitleOrP("p", "¿Desea borrar todos los datos?")
     const modalCon = setDiv("modalC-con")
     const btnDiv = setDiv("btn-form-con")
-    const btnReset = setButton("Cancelar", "btn-form-res")
-    const btnAccept = setButton("Aceptar", "btn-form-add")
+    const btnReset = setButton("Cancelar", "btn-form-res") 
+    const btnAccept = setButton("Eliminar", "btn-form-add")
     const alertIconDiv = setDiv("icon-alert-div")
     const alertIcon = setIcon(["fa-solid", "fa-exclamation", "alert-Icon"])
 
     //los botones
-    btnAccept.addEventListener("click", () => {
+    btnReset.addEventListener("click", () => {
         closeConfirmModal()
+    })
+    btnAccept.addEventListener("click", () => {
+        clearDB()
     })
 
     alertIconDiv.appendChild(alertIcon)
 
+
     appendChildList(btnDiv, [
-        // btnReset,
+        btnReset,
         btnAccept
+    ])
+    appendChildList(alertIconDiv, [
+        alertIcon,
     ])
     appendChildList(modalCon, [
         alertIconDiv,
-        title,
         messaage,
         btnDiv
     ])
 
     return modalCon
 }
-
-export default processMsg

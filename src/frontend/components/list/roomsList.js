@@ -1,5 +1,5 @@
 import { appendChildList, openConfirmModal, openModalForm, setDiv, setIcon, setTd, setTitleOrP } from "../../../utils/functionsGlobal.js"
-import { roomsOcuppedId, roomsReservedId, updateModeRoom } from "../../views/tables/roomTemplate.js"
+import { updateModeRoom } from "../../views/tables/roomTemplate.js"
 import deleteRoomC from "../confirmContext/deleteRoomContext.js"
 import roomForm from "../form/roomForm.js"
 
@@ -7,25 +7,9 @@ function roomsList(parent,body, list){
 
     body.innerHTML = ""
 
-    function viewState(n){
-        const idtatediv = setDiv("")
-       
-        if(roomsReservedId.includes(n)){
-            idtatediv.className = "service-state-2"
-        }if(roomsOcuppedId.includes(n)){
-            idtatediv.className = "service-state-3"
-        }
-        if(!roomsOcuppedId.includes(n) && !roomsReservedId.includes(n)){
-            idtatediv.className = "service-state-1"
-        }
-
-        idtatediv.textContent = n
-        return idtatediv
-    }
-
     list.map((data, id) =>{
         const trB = document.createElement("tr")
-        const td0 = document.createElement("td")
+        const td0 = setTd(data.id)
         const td = setTd(data.descripcion)
         const td2 = setTd(parseFloat(data.montoDia))
         const td3 = setTd(data.observacion)
@@ -36,8 +20,8 @@ function roomsList(parent,body, list){
 
         trB.className= "trb"
         td0.className = "td0"
-        td0.appendChild(viewState(data.id))
         tdAction.className = "tdAction"
+        td2.className = "td-monto"
 
         appendChildList(tdAction, [
             iconDel,
@@ -60,8 +44,8 @@ function roomsList(parent,body, list){
         appendChildList(trB, [
             td0,
             td,
-            td2,
             td3,
+            td2,
             tdAction,
         ])
         body.appendChild(trB)

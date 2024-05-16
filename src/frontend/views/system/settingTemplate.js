@@ -4,10 +4,11 @@ import credentialForm from "../../components/form/credentialForm.js";
 
 const div = setDiv("area-table-con");
 const titleDiv = setDiv("title-con");
-const title = setTitleOrP("h3", "Registro de Habitaciones");
+const title = setTitleOrP("h4", "Registro de Habitaciones");
 const formDiv = setDiv("setting-con");
+const formDiv2 = setDiv("setting-con2");
 
-const credentialTitle = setTitleOrP("h3", "Credenciales");
+const credentialTitle = setTitleOrP("h4", "Credenciales");
 const credentialDiv = setDiv("credential-con");
 const credentialTextsDiv = setDiv("credential-texts-con");
 const empresaTitle = setTitleOrP("h4", "Empresa");
@@ -131,7 +132,9 @@ function settingTemplate() {
   appendChildList(credentialTextsDiv, [empresaDiv, telefonoDiv, direccionDiv]);
   appendChildList(credentialDiv, [credentialTextsDiv]);
   appendChildList(formDiv, [credentialTitle, credentialDiv, btnDiv, pathTTitle, pathDiv]);
-  appendChildList(div, [titleDiv, formDiv]);
+  appendChildList(formDiv2, [pathTTitle, pathDiv]);
+
+  appendChildList(div, [titleDiv, formDiv, formDiv2]);
 
   return div;
 }

@@ -7,3 +7,5 @@ export const servicesReportRequest = (route, credential, clients) => window.ipcA
 export const staysDetailedReportRequest = (route, credential, stays) => window.ipcApi.staysDetailedReport(route, credential, stays)
 
 export const staysSummarizedReportRequest = (route, credential, stays) => window.ipcApi.staysSummarizedReport(route, credential, stays)
+
+export const detailservicesReportRequest = (route, credential, stay, detailServices) => window.ipcApi.detailservicesReport(route, credential, stay, detailServices)

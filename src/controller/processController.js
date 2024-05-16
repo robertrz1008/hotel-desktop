@@ -1,5 +1,5 @@
 const connectdb = require("../db/conectiondb")
-const { nextLetter } = require("../lib/date")
+const { nextLetter,  obtenerFechaSiguiente } = require("../lib/date")
 
 const createStay = async (stay, state) =>{
     const {cli_id, hab_id, total, estado, observacion, entrada} = stay
@@ -246,19 +246,20 @@ const staysListed = async (filter) =>{
         }
 
         if(filtro.fechaDesde && filtro.fechaHasta){
-            script += `and id between ${filtro.fechaDesde} and ${filtro.fechaHasta} `
+            script += `and es.entrada between "${filtro.fechaDesde}" and "${obtenerFechaSiguiente(filtro.fechaHasta)}" `
         }
         if(filtro.clientDesde && filtro.clientHasta){
-            script += `and nombre between "${filtro.clientDesde}" and "${nextLetter(filtro.clientHasta)}" `
+            script += `and cli.nombre between "${filtro.clientDesde}" and "${nextLetter(filtro.clientHasta)}" `
         }
         if(filtro.roomHasta && filtro.roomHasta){
-            script += `and apellido between "${filtro.roomHasta}" and "${nextLetter(filtro.roomHasta)}" `
+            script += `and hab.descripcion between "${filtro.roomDesde}" and "${filtro.roomHasta}" `
         }
         if(filtro.state != 4){
             script += `and es.estado = ${filtro.state} `
         }
         script += `order by ${orderobj[filtro.orderBy]} ${orderDirection[filtro.order]}`
 
+        console.log(script)
         return script
     }
     try {

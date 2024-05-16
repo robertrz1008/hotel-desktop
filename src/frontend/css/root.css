@@ -219,6 +219,16 @@ tr:hover{
     border-radius: 3px;
     background-color: white;
     box-shadow: 0 0 2px gray;
+    color: rgb(51, 50, 50);
+}
+.setting-con2{
+    width: 89%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0 0 2px gray;
+    color: rgb(51, 50, 50);
 }
 .setting-btn-con{
     width: 98%;
@@ -229,6 +239,7 @@ tr:hover{
     width: 98%;
     border: 1px solid rgb(202, 199, 199);
     padding: 10px;
+    color: rgb(51, 50, 50);
 }
 .credential-texts-con{
     width: 98%;
@@ -287,4 +298,26 @@ tr:hover{
     background-color: rgb(185, 181, 181);
     border: #494949d2;
     color: rgb(14, 13, 13);
+}
+
+/* table*/
+.th-Id{
+    text-align: end;
+    padding-right: 10px;
+}
+.th-Monto, .th-MontoDia{
+    text-align: end;
+    padding-right: 20px;
+}
+.th-Action{
+    width: 60px;
+    padding-right: 10px;
+}
+.th-Id, .td0{
+    width: 40px;
+    text-align: end;
+}
+.td-monto{
+    text-align: end;
+    padding-right: 20px;
 }

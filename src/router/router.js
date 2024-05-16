@@ -4,6 +4,7 @@ import roomsListedTemplate from "../frontend/views/listed/roomListed.js"
 import servicesListedTemplate from "../frontend/views/listed/servicesListed.js"
 import stayProcessTemplate from "../frontend/views/processes/stayTemplate.js"
 import stayReportTemplate from "../frontend/views/reports/stayReportTemplate.js"
+import dbTemplate from "../frontend/views/system/databaseTemplate.js"
 import settingTemplate from "../frontend/views/system/settingTemplate.js"
 import clientTableTemplate from "../frontend/views/tables/clientTemplate.js"
 import roomTemplate from "../frontend/views/tables/roomTemplate.js"
@@ -46,6 +47,11 @@ const routes = [
         route:hash.setting,
         li: itensList.sistem,
         template: settingTemplate()
+    },
+    {
+        route:hash.dataInit,
+        li: itensList.sistem,
+        template: dbTemplate()
     },
     {
         route:hash.clientsList,

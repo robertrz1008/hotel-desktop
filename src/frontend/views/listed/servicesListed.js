@@ -9,10 +9,9 @@ function clientListedTemplate(){
     const title = setTitleOrP("h3", "Listado de Consumiciones")
 
     const formDiv = setDiv("listed-form-con")
-    const formTitle = setTitleOrP("h3", "Filtro de datos para listado de Consumiciones")
 
     const rangoDiv = setDiv("form-rango-con")
-    const rengoTitle = setTitleOrP("h3", "Filtros")
+    const rengoTitle = setTitleOrP("h4", "Filtros")
     const rangoDivDescription = setDiv("form-rangosub-con")
     const rangoDivMontoDia = setDiv("form-rangosub-con")
     const rangoDivId = setDiv("form-rangosub-con")
@@ -25,7 +24,7 @@ function clientListedTemplate(){
     const tfDescriptionHasta = setInputForm("Hasta", "text", "")
     const tfMontoDiaDesde = setInputForm("Desde", "number", "")
     const tfMontoDiaHasta = setInputForm("Hasta", "number", "")
-    const ordenTitle = setTitleOrP("h3", "Ordenamiento")
+    const ordenTitle = setTitleOrP("h4", "Ordenamiento")
     const selectDiv = setDiv("form-select-con")
     const selectDiv1 = setDiv("lidted-form-select-div")
     const selectDiv2 = setDiv("lidted-form-select-div")
@@ -96,7 +95,7 @@ function clientListedTemplate(){
     appendChildList(btnDiv, [btnClear,btnAdd])
     btnDiv1.appendChild(btnDiv)
     appendChildList(rangoDiv, [rangoDivId, rangoDivDescription, rangoDivMontoDia])
-    appendChildList(formDiv,[formTitle, rengoTitle, rangoDiv, ordenTitle, selectDiv, btnDiv1])
+    appendChildList(formDiv,[rengoTitle, rangoDiv, ordenTitle, selectDiv, btnDiv1])
     appendChildList(div,[titleDiv, formDiv])
     return div
 }

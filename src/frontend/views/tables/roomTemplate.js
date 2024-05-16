@@ -1,7 +1,7 @@
-import {appendChildList, closeConfirmModal, closeModalForm, setDiv, setInputForm, setTextArea, setTitleOrP, } from "../../../utils/functionsGlobal.js"
+import {appendChildList, closeConfirmModal, closeModalForm, openConfirmModal, setDiv, setInputForm, setTextArea, setTitleOrP, } from "../../../utils/functionsGlobal.js"
 import { closeModal } from "../../Components/modal.js"
-import { getProcessRequest } from "../../api/processRequest.js"
 import { createRoomRequest, deleteRoomRequest, getRoomsByFilterRequest, getRoomsRequest, updateRoomRequest } from "../../api/roomRequest.js"
+import processMsg from "../../components/confirmContext/processMessage.js"
 import roomTable from "../../components/tables/roomTable.js"
 import { tablesCountFromHome } from "../home.js"
 
@@ -20,23 +20,7 @@ export let idRoom;
 export let roomsOcuppedId = []
 export let roomsReservedId = []
 
-async function getDetailOccupedReserved(){
-    const stays = await getProcessRequest()
-    let staysOcupped = stays.filter(data => data.estado == 0)
-    let staysReserved = stays.filter(data => data.estado == 1)
-    
-    for (const stay of staysOcupped) {
-        roomsOcuppedId.push(stay.habitacion_id)
-    }
-    for (const stay of staysReserved) {
-        roomsReservedId.push(stay.habitacion_id)
-    }
-    console.log(roomsOcuppedId)
-    console.log(roomsReservedId)
-}
-
 const renderList = async () => {
-    getDetailOccupedReserved()
     rooms = await getRoomsRequest()
     div.innerHTML = ""
     titleDiv.appendChild(title)
@@ -89,7 +73,11 @@ export const createRoom = async(room) =>{
 export const deleteRoom = async(id) => {
     const response = await deleteRoomRequest(id)
 
-    if(!response) throw new Error("no se pudo eliminar los datos")
+    if(!response){
+        closeConfirmModal()
+        openConfirmModal(processMsg("Esta habitacion ya esta regsitrado en los reportes de movimientos"))
+        return 
+    }
 
     renderList()
     closeConfirmModal()

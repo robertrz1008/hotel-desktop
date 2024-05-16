@@ -1,6 +1,8 @@
 const PDFDocument = require('pdfkit-table');
 const fs = require("fs");
-const {getDate} = require("./date")
+const {getDate} = require("./date");
+const path = require('path');
+const { PDFWindowBuild } = require('../main');
 
 function setArray(data) {
     let array = []
@@ -24,18 +26,29 @@ function setArray(data) {
     }
     return newArr
 }
+function formatStatus(number){
+  let stat = [
+  {value: "0", name: "Ocupado"},
+  { value: "1", name: "Reservado"},
+  { value: "2", name: "Anulado"},
+  { value: "3", name: "Finalizado"}
+  ]
+  let newS = stat.filter(data => data.value == number)
 
-async function clientReport(route, credential, clients){
+  return newS[0].name
+}
+
+async function clientReport( credential, clients){
    try {
      const doc = new PDFDocument();
      console.log("generando pdf")
      doc.margin = 10
  
-     const writeStream = fs.createWriteStream(route+"/clientes-reporte.pdf");
+     const writeStream = fs.createWriteStream(path.join(__dirname, './report.pdf'));
  
     doc.pipe(writeStream);
  
-   doc.moveDown().fontSize(15).text('Listado de Clientes',34, 30,{align: "center",});
+   doc.moveDown().fontSize(15).text('Listado de Clientes',34, 30,{align: "center"});
  
    doc.fontSize(15).text(credential.empresa)
    doc.fontSize(10).moveUp().text(`Tel: ${credential.telefono}`, {align: "center"});
@@ -73,7 +86,7 @@ async function clientReport(route, credential, clients){
  doc.end();
 
  console.log("reporte de clientes generado con exito")
- return true
+ return PDFWindowBuild()
  
    } catch (error) {
     console.error('Error al generar el reporte:', err);
@@ -82,13 +95,13 @@ async function clientReport(route, credential, clients){
 
 }
 
-function roomsReport(route, credential, rooms){
+function roomsReport( credential, rooms){
 
   const doc = new PDFDocument();
   console.log("generando reporte de habitaciones")
   doc.margin = 10
 
-  const writeStream = fs.createWriteStream(route+"/habitaciones-reporte.pdf");
+  const writeStream = fs.createWriteStream(path.join(__dirname, './report.pdf'));
 
 doc.pipe(writeStream);
 
@@ -346,11 +359,88 @@ writeStream.on('error', function(err) {
   console.error('Error al generar el PDF:', err);
 });
 }
+function detailservicesReport(route, credential, stay, list){
 
+  const doc = new PDFDocument();
+  console.log("generando reporte de detalles servicios")
+  doc.margin = 10
+
+  function stay0rderDetail(data){
+    let newArr = []
+    for (const i of data) {
+      let iArr = []
+      iArr.push(i[0])//id
+      iArr.push(i[3])//descripcion
+      iArr.push(i[5])//monto
+      iArr.push(i[4])//cantidad
+      iArr.push(i[6])//subtotal
+
+      newArr.push(iArr)
+    }
+    newArr.push(["Total", "", "", "",stay.total])
+    return newArr
+}
+
+  const writeStream = fs.createWriteStream(route+"/consDetalles-reporte.pdf");
+
+doc.pipe(writeStream);
+
+doc.moveDown().fontSize(15).text('Detalles de consumision del cliente',34, 30,{align: "center",});
+
+doc.fontSize(15).text(credential.empresa)
+doc.fontSize(10).moveUp().text(`Tel: ${credential.telefono}`, {align: "center"});
+doc.fontSize(10).moveUp().text(`Direccion: ${credential.direccion}`, {align: "right"});
+doc.roundedRect(26, 24, 524, 40, 3).stroke();
+doc.fontSize(10).moveDown().text("Cliente: "+stay.nombre+" "+stay.apellido)
+doc.fontSize(10).text("Habitacion: "+stay.descripcion)
+doc.fontSize(10).text("Estado: "+formatStatus(stay.estado))
+
+ const table = {
+  headers: ["Id","Descripcion" , "Monto", "Cantidad","subtotal"],
+  rows: stay0rderDetail(setArray(list)),
+};
+
+doc.fontSize(20).moveDown().table(table, { 
+  width: 500,
+   prepareHeader: () => doc.font("Helvetica-Bold").fontSize(10),
+   prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+     doc.font("Helvetica").fontSize(10);
+     indexColumn === 9;
+   },
+});
+let pages = doc.bufferedPageRange();
+
+//pie de pagina
+for (let i = 0; i < pages.count; i++) {
+doc.switchToPage(i);
+let oldBottomMargin = doc.page.margins.bottom;
+doc.page.margins.bottom = 0 
+doc.fontSize(10)
+  .text(
+    `fecha: ${getDate()}                                                                                           Pag.: ${i + 1} de ${pages.count}`,
+    0,
+     doc.page.height - (oldBottomMargin/2),
+    { align: 'center' }
+  );
+
+doc.page.margins.bottom = oldBottomMargin; 
+}
+doc.end();
+
+
+writeStream.on('finish', function() {
+  console.log('PDF generado con éxito.');
+});
+
+writeStream.on('error', function(err) {
+  console.error('Error al generar el PDF:', err);
+});
+}
 module.exports = {
   clientReport,
   roomsReport,
   servicesReport,
   staysDetailedReport,
-  staysSummarizedReport
+  staysSummarizedReport,
+  detailservicesReport
 }

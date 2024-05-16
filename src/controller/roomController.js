@@ -90,7 +90,7 @@ const roomsListed = async(filter) => {
         script += `and id between ${filtro.idDesde} and ${filtro.idHasta} `
     }
     if(filtro.descriptionDesde && filtro.descriptionHasta){
-        script += `and descripcion between "${filtro.descriptionDesde}" and "${nextLetter(filtro.descriptionHasta)}" `
+        script += `and descripcion between "${filtro.descriptionDesde}" and "${filtro.descriptionHasta}" `
     }
     if(filtro.montoDiaDesde && filtro.montoDiaHasta){
         script += `and montoDia between ${filtro.montoDiaDesde} and ${filtro.montoDiaHasta} `

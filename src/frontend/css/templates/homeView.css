@@ -3,12 +3,12 @@
     height: 40px;
     display: flex;
     align-items: center;
+    padding-left: 20px;
 }
-.title-con h2{
+.title-con h3{
     font-family: sans-serif;
     /* font-weight: lighter; */
-    margin-left: 10px;
-    color: rgb(58, 58, 58);
+    color: rgb(51, 50, 50);
 }
 
 .home-table-con{
